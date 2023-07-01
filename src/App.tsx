@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, ChangeEvent } from 'react';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+function PlayersMenu() {
+    const [player1Name, setPlayerName1] = useState('');
+    const [player2Name, setPlayerName2] = useState('');
+    const [player1Sign, setPlayerSign1] = useState('');
+    const [player2Sign, setPlayerSign2] = useState('');
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const submitNames = () => {
+        const p1Name = player1Name;
+        const p2Name = player2Name;
+        const p1Sign = player1Sign;
+        const p2Sign = player2Sign;
+
+        console.log(`Player 1 Name: ${p1Name}`);
+        console.log(`Player 2 Name: ${p2Name}`);
+        console.log(`Player 1 Sign: ${p1Sign}`);
+        console.log(`Player 2 Sign: ${p2Sign}`);
+
+    };
+
+    const handlePlayerName1 = (event: ChangeEvent<HTMLInputElement>) => {
+        setPlayerName1(event.target.value);
+    };
+
+    const handlePlayerName2 = (event: ChangeEvent<HTMLInputElement>) => {
+        setPlayerName2(event.target.value);
+    };
+
+    const handlePlayerSign1 = (event: ChangeEvent<HTMLInputElement>) => {
+        setPlayerSign1(event.target.value);
+    };
+
+    const handlePlayerSign2 = (event: ChangeEvent<HTMLInputElement>) => {
+        setPlayerSign2(event.target.value);
+    };
+
+    return (
+        <>
+            <input id="player1Name" value={player1Name} onChange={handlePlayerName1} />
+            <input id="player2Name" value={player2Name} onChange={handlePlayerName2} />
+            <input id="player1Sign" value={player1Sign} onChange={handlePlayerSign1} />
+            <input id="player2Sign" value={player2Sign} onChange={handlePlayerSign2} />
+            <button type="button" onClick={submitNames}>
+                Submit Player Sign and Name
+            </button>
+        </>
+    );
 }
 
-export default App
+
+export default PlayersMenu;
