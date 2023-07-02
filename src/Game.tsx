@@ -12,6 +12,12 @@ function Game() {
         /*currentName =
             currentName === "" ? "" : "";*/
     }
+    function resetBoard(){
+        const cells = document.getElementsByClassName("cell");
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].textContent = "";
+        }
+    }
     console.log(currentSign);
     console.log(currentName);
 
@@ -37,6 +43,7 @@ function Game() {
                 <Grid className={"cell"} onClick={handleCellClick} item xs={3}>
                 </Grid>
             </Grid>
+            <button id={"boardReseter"} onClick={resetBoard}>reset grid</button>
         </div>
     );
 }
