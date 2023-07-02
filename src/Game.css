@@ -1,0 +1,31 @@
+body{
+    justify-content: center;
+}
+
+.grid-container {
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: repeat(3, 80px);
+    grid-gap: 5px;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #fffd8c;
+    transition: background-color 0.3s ease;
+}
+
+.cell:hover {
+    background-color: #f2ef1b;
+}

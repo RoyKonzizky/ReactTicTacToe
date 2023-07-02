@@ -1,7 +1,8 @@
 import { useState, ChangeEvent } from 'react';
 import './App.css';
+import {Link} from "react-router-dom";
 
-function PlayersMenu() {
+function App() {
     const [player1Name, setPlayerName1] = useState('');
     const [player2Name, setPlayerName2] = useState('');
     const [player1Sign, setPlayerSign1] = useState('');
@@ -42,12 +43,16 @@ function PlayersMenu() {
             <input id="player2Name" value={player2Name} onChange={handlePlayerName2} />
             <input id="player1Sign" value={player1Sign} onChange={handlePlayerSign1} />
             <input id="player2Sign" value={player2Sign} onChange={handlePlayerSign2} />
-            <button type="button" onClick={submitNames}>
-                Submit Player Sign and Name
-            </button>
+
+            <Link to="/game">
+                <button className={"buttonLink"} type="button" onClick={submitNames}>
+                    Submit Player Sign and Name
+                </button>
+            </Link>
         </>
     );
 }
 
 
-export default PlayersMenu;
+
+export default App;

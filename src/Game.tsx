@@ -1,27 +1,40 @@
 import { Grid } from "@mui/material";
+import './Game.css';
+
 
 function Game() {
+    let currentSign = "";
+    const currentName = "";
+    function handleCellClick(){
+        currentSign = "x";
+        currentSign =
+            currentSign === "x" ? "o" : "x";
+        /*currentName =
+            currentName === "" ? "" : "";*/
+    }
+    console.log(currentSign);
+    console.log(currentName);
 
     return (
         <div>
-            <Grid container spacing={1}>
-                <Grid item xs={4}>
+            <Grid className={"grid"} container spacing={1}>
+                <Grid className={"cell"} onClick={handleCellClick} item xs={3}>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid className={"cell"} onClick={handleCellClick} item xs={3}>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid className={"cell"} onClick={handleCellClick} item xs={3}>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid className={"cell"} onClick={handleCellClick} item xs={3}>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid className={"cell"} onClick={handleCellClick} item xs={3}>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid className={"cell"} onClick={handleCellClick} item xs={3}>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid className={"cell"} onClick={handleCellClick} item xs={3}>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid className={"cell"} onClick={handleCellClick} item xs={3}>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid className={"cell"} onClick={handleCellClick} item xs={3}>
                 </Grid>
             </Grid>
         </div>
