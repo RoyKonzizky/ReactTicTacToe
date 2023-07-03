@@ -1,28 +1,27 @@
 import { Grid } from "@mui/material";
 import "./Game.css";
+import { player1,player2} from "./App.tsx";
 
 function Game() {
-    let currentSign = "";
-    let currentName = "";
-    currentSign = "x";
-    //currentName = p1Name;
+    let currentSign = player1.sign;
+    let currentName = player1.name;
 
     function winCondition(): string {
         const cellValues: string[] = [];
         const cells: HTMLCollectionOf<Element> = document.getElementsByClassName("cell");
 
-        for (let i: number = 1; i == cells.length; i++) {
+        for (let i: number = 0; i < cells.length; i++) {
             cellValues.push((cells[i] as HTMLDivElement).textContent!);
         }
 
         const winConditions: number[][] = [
-            [0, 1, 2], // rows
+            [0, 1, 2],
             [3, 4, 5],
             [6, 7, 8],
-            [0, 3, 6], // columns
+            [0, 3, 6],
             [1, 4, 7],
             [2, 5, 8],
-            [0, 4, 8], // diagonals
+            [0, 4, 8],
             [2, 4, 6],
         ];
 
@@ -41,10 +40,10 @@ function Game() {
 
 
     function handleCellClick(cellId : string) {
-        currentSign = "x";
-        currentSign = currentSign === "x" ? "o" : "x";
+        currentSign = player1.sign;
+        currentSign = currentSign === player1.sign ? player2.sign : player1.sign;
         /*currentName =
-            currentName === p1Name ? p2Name : p1Name;*/
+            currentName === player1.name ? player2.name : player1.name;*/
         document.getElementById(cellId)!.textContent = currentSign;
         let winSign = winCondition();
         if(winSign){
@@ -68,6 +67,13 @@ function Game() {
         <div>
             <div className="grid-container">
                 <Grid className={"grid"} container spacing={1}>
+                    <Grid
+                        id={"0"}
+                        className={"cell"}
+                        onClick={() => handleCellClick("0")}
+                        item
+                        xs={3}
+                    ></Grid>
                     <Grid
                         id={"1"}
                         className={"cell"}
@@ -121,13 +127,6 @@ function Game() {
                         id={"8"}
                         className={"cell"}
                         onClick={() => handleCellClick("8")}
-                        item
-                        xs={3}
-                    ></Grid>
-                    <Grid
-                        id={"9"}
-                        className={"cell"}
-                        onClick={() => handleCellClick("9")}
                         item
                         xs={3}
                     ></Grid>

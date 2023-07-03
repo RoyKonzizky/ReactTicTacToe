@@ -1,51 +1,40 @@
-import { useState, ChangeEvent } from 'react';
 import './App.css';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+
+interface Player {
+    name: string;
+    sign: string;
+    score: number;
+}
+const player1: Player = {
+    name: '',
+    sign: '',
+    score: 0
+};
+
+const player2: Player = {
+    name: '',
+    sign: '',
+    score: 0
+};
 
 function App() {
-    const [player1Name, setPlayerName1] = useState('');
-    const [player2Name, setPlayerName2] = useState('');
-    const [player1Sign, setPlayerSign1] = useState('');
-    const [player2Sign, setPlayerSign2] = useState('');
-
-    const submitNames = () => {
-        const p1Name = player1Name;
-        const p2Name = player2Name;
-        const p1Sign = player1Sign;
-        const p2Sign = player2Sign;
-
-        console.log(`Player 1 Name: ${p1Name}`);
-        console.log(`Player 2 Name: ${p2Name}`);
-        console.log(`Player 1 Sign: ${p1Sign}`);
-        console.log(`Player 2 Sign: ${p2Sign}`);
-
-    };
-
-    const handlePlayerName1 = (event: ChangeEvent<HTMLInputElement>) => {
-        setPlayerName1(event.target.value);
-    };
-
-    const handlePlayerName2 = (event: ChangeEvent<HTMLInputElement>) => {
-        setPlayerName2(event.target.value);
-    };
-
-    const handlePlayerSign1 = (event: ChangeEvent<HTMLInputElement>) => {
-        setPlayerSign1(event.target.value);
-    };
-
-    const handlePlayerSign2 = (event: ChangeEvent<HTMLInputElement>) => {
-        setPlayerSign2(event.target.value);
-    };
+    function submitNames() {
+        player1.name = (document.getElementById("player1Name") as HTMLInputElement).value;
+        player2.name = (document.getElementById("player2Name") as HTMLInputElement).value;
+        player1.sign = (document.getElementById("player1Sign") as HTMLInputElement).value;
+        player2.sign = (document.getElementById("player2Sign") as HTMLInputElement).value;
+    }
 
     return (
         <>
-            <input id="player1Name" value={player1Name} onChange={handlePlayerName1} />
-            <input id="player2Name" value={player2Name} onChange={handlePlayerName2} />
-            <input id="player1Sign" value={player1Sign} onChange={handlePlayerSign1} />
-            <input id="player2Sign" value={player2Sign} onChange={handlePlayerSign2} />
+            <input id="player1Name" />
+            <input id="player2Name" />
+            <input id="player1Sign" />
+            <input id="player2Sign" />
 
             <Link to="/game">
-                <button className={"buttonLink"} type="button" onClick={submitNames}>
+                <button className="buttonLink" type="button" onClick={submitNames}>
                     Submit Player Sign and Name
                 </button>
             </Link>
@@ -53,6 +42,4 @@ function App() {
     );
 }
 
-
-
-export default App;
+export default App;player1;player2;
