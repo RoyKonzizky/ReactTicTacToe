@@ -6,13 +6,13 @@ interface Player {
     sign: string;
     score: number;
 }
-const player1: Player = {
+export const player1: Player = {
     name: '',
     sign: '',
     score: 0
 };
 
-const player2: Player = {
+export const player2: Player = {
     name: '',
     sign: '',
     score: 0
