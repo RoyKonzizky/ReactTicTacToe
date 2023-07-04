@@ -37,14 +37,10 @@ body {
     color: #1a1a1a;
 }
 
-#labelContainer {
+.label {
     display: flex;
     color: black;
     justify-content: center;
-
-}
-.label {
-    color: black;
 }
 
 .overlay {

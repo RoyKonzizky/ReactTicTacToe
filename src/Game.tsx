@@ -59,12 +59,16 @@ function Game() {
 
     function handleCellClick(cellId : string) {
         const cell = document.getElementById(cellId) as HTMLElement;
+        const currentNameLabel = document.getElementById("currentPlayer") as HTMLElement;
+        const currentSignLabel = document.getElementById("currentSign") as HTMLElement;
         if(cell.innerText===""){
             let winnerText;
             const tieText = "both of you suck dudes";
             cell.innerText = currentSign;
             currentSign = currentSign === player1.sign ? player2.sign : player1.sign;
             currentName = currentName === player1.name ? player2.name : player1.name;
+            currentNameLabel.textContent = "current player: " + currentName;
+            currentSignLabel.textContent = "current sign: " + currentSign;
             labelUpdate(player1,player2);
             const winSign = winCondition();
             countTurn++;
@@ -100,94 +104,53 @@ function Game() {
         overlay.style.display = 'none';
     }
 
-    /*function createGrid(){
-        //implement this
-    }*/
+    function createGrid() {
+        const cellIds: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
+
+        return (
+            <div className="grid-container">
+                <Grid className={"grid"} container spacing={1}>
+                    {cellIds.map((cellId) => (
+                        <Grid
+                            key={cellId}
+                            id={cellId}
+                            className={"cell"}
+                            onClick={() => handleCellClick(cellId)}
+                            item
+                            xs={3}
+                        ></Grid>
+                    ))}
+                </Grid>
+            </div>
+        );
+    }
 
     return (
         <div>
             <div className="grid-container" >
-                <Grid className={"grid"} container spacing={1}>
-                    <Grid
-                        id={"0"}
-                        className={"cell"}
-                        onClick={() => handleCellClick("0")}
-                        item
-                        xs={3}
-                    ></Grid>
-                    <Grid
-                        id={"1"}
-                        className={"cell"}
-                        onClick={() => handleCellClick("1")}
-                        item
-                        xs={3}
-                    ></Grid>
-                    <Grid
-                        id={"2"}
-                        className={"cell"}
-                        onClick={() => handleCellClick("2")}
-                        item
-                        xs={3}
-                    ></Grid>
-                    <Grid
-                        id={"3"}
-                        className={"cell"}
-                        onClick={() => handleCellClick("3")}
-                        item
-                        xs={3}
-                    ></Grid>
-                    <Grid
-                        id={"4"}
-                        className={"cell"}
-                        onClick={() => handleCellClick("4")}
-                        item
-                        xs={3}
-                    ></Grid>
-                    <Grid
-                        id={"5"}
-                        className={"cell"}
-                        onClick={() => handleCellClick("5")}
-                        item
-                        xs={3}
-                    ></Grid>
-                    <Grid
-                        id={"6"}
-                        className={"cell"}
-                        onClick={() => handleCellClick("6")}
-                        item
-                        xs={3}
-                    ></Grid>
-                    <Grid
-                        id={"7"}
-                        className={"cell"}
-                        onClick={() => handleCellClick("7")}
-                        item
-                        xs={3}
-                    ></Grid>
-                    <Grid
-                        id={"8"}
-                        className={"cell"}
-                        onClick={() => handleCellClick("8")}
-                        item
-                        xs={3}
-                    ></Grid>
-                </Grid>
+                {createGrid()}
             </div>
 
-            <div id={"labelContainer"}>
+            <div>
                 <label className={"label"} id={"currentPlayer"}>
                     current player:{""}
                 </label>
+            </div>
 
+            <div>
                 <label className={"label"} id={"currentSign"}>
                     current sign:{""}
                 </label>
+            </div>
 
+            <div>
                 <label className={"label"} id={"scorePlayer1"}>
                     player 1's score:{""}
                 </label>
+            </div>
 
-                <label id={"scorePlayer2"}>
+            <div>
+                <label className={"label"} id={"scorePlayer2"}>
                     player 2's score:{""}
                 </label>
             </div>
@@ -214,4 +177,3 @@ export default Game;
 
 //add pvp and vs cpu
 //work with figma
-//to fix the errors create a metric ton of consts and add " as HTMLElement" or whatever it is they have
