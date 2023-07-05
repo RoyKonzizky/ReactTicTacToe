@@ -4,10 +4,15 @@ import App from './App.tsx'
 import './index.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Game from "./Game.tsx";
+import GameMode from "./GameMode.tsx";
 
 const router = createBrowserRouter([
     {
         path: '/',
+        element: <GameMode />,
+    },
+    {
+        path: '/App',
         element: <App />,
     },
     {
