@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
 import {Link} from "react-router-dom";
-import "./Game.css";
-import {Player, player1, player2} from "./Player.tsx";
+import "./GameCPU.css";
+import {Player, player1, player2} from "../../Player.tsx";
 
-function Game() {
+function GameCPU() {
     let currentSign = player1.sign;
     let currentName = player1.name;
     let countTurn = 0;
@@ -63,7 +63,7 @@ function Game() {
         const currentSignLabel = document.getElementById("currentSign") as HTMLElement;
         if(cell.innerText===""){
             let winnerText;
-            const tieText = "it's a tie";
+            const tieText = "both of you suck dudes";
             cell.innerText = currentSign;
             currentSign = currentSign === player1.sign ? player2.sign : player1.sign;
             currentName = currentName === player1.name ? player2.name : player1.name;
@@ -77,23 +77,18 @@ function Game() {
                     player1.score+=1;
                     countTurn=0;
                     winnerText = player1.name + " is the winner";
-                    currentName = player2.name;
-                    currentSign = player2.sign;
                     showWinnerPopup(winnerText);
                 }
                 if(winSign===player2.sign){
                     player2.score+=1;
                     countTurn=0;
                     winnerText = player2.name + " is the winner";
-                    currentName = player1.name;
-                    currentSign = player1.sign;
                     showWinnerPopup(winnerText);
                 }
             }
             if(countTurn===9){
                 countTurn=0;
                 showWinnerPopup(tieText);
-                currentName = currentName === player1.name ? player2.name : player1.name;
             }
         }
     }
@@ -178,7 +173,7 @@ function Game() {
     );
 }
 
-export default Game;
+export default GameCPU;
 
-//add pvp and vs cpu
+//add AI
 //work with figma
