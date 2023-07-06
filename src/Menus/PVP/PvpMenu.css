@@ -1,7 +1,7 @@
-#badInputLabel{
-    display: none;
+#badInputLabel {
+    color: red;
 }
 
-#link{
+#link {
     pointer-events: none;
 }
