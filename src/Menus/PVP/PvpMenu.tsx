@@ -23,7 +23,8 @@ function PvpMenu() {
 
     if (player1.sign === "") {
       player1.sign = "X";
-    } else if (player2.sign === "") {
+    }
+    if (player2.sign === "") {
       player2.sign = "O";
     }
     checkInput();
@@ -38,7 +39,6 @@ function PvpMenu() {
     if (player1.sign.length > 1 || player2.sign.length > 1) {
       badInputText = "signs can only be a single character";
       badInputLabel.textContent = badInputText;
-      badInputLabel.style.display = "auto";
       return;
     }
     if (player1.name.length === 0 || player2.name.length === 0) {
