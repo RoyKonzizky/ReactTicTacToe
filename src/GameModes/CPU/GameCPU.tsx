@@ -2,6 +2,7 @@ import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./GameCPU.css";
 import { Player, player1, player2 } from "../../PlayableCharacters/Player.ts";
+import res from "../../PlayableCharacters/Minimax.tsx";
 
 function GameCPU() {
   let currentSign = player1.sign;
@@ -61,6 +62,7 @@ function GameCPU() {
 
   function handleCellClick(cellId: string) {
     const cell = document.getElementById(cellId) as HTMLElement;
+    let cellAiMove;
     const currentNameLabel = document.getElementById(
       "currentPlayer",
     ) as HTMLElement;
@@ -76,6 +78,8 @@ function GameCPU() {
       currentNameLabel.textContent = "current player: " + currentName;
       currentSignLabel.textContent = "current sign: " + currentSign;
       labelUpdate(player1, player2);
+      cellAiMove = document.getElementById(res) as HTMLElement;
+      cellAiMove.innerText = player2.sign;
       const winSign = winCondition();
       countTurn++;
       if (winSign) {
@@ -178,5 +182,5 @@ function GameCPU() {
 
 export default GameCPU;
 
-//TODO add AI
+//TODO need to figure out how to do the placement in the grid
 //work with figma
