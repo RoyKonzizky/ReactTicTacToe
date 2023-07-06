@@ -1,6 +1,6 @@
 import "./CpuMenu.css";
 import { Link } from "react-router-dom";
-import { player1, player2 } from "../../Player.tsx";
+import { player1, player2 } from "../../PlayableCharacters/Player.ts";
 
 function CpuMenu() {
   let badInputText = "";

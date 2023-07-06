@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./GamePVP.css";
-import { Player, player1, player2 } from "../../Player.tsx";
+import { Player, player1, player2 } from "../../PlayableCharacters/Player.ts";
 
 function GamePVP() {
   let currentSign = player1.sign;
