@@ -1,3 +1,7 @@
 #badInputLabel{
     display: none;
 }
+
+#link{
+    pointer-events: none;
+}
