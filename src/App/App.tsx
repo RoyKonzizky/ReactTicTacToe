@@ -5,14 +5,11 @@ function App() {
     return (
         <div>
             <Link to="/pvpmenu">
-                <button className="pvpButton" type="button">
-                    duel another human(fight to the death)
-                </button>
+                <button><img src={'.assets/rocklee_vs_garra.jpg'} alt="PvP"/></button>
             </Link>
+
             <Link to="/cpumenu">
-                <button className="vsCpuButton" type="button">
-                    duel the machine(screw skynet)
-                </button>
+                <button><img src={'.assets/humans-vs-robots.jpg'} alt="vs CPU"/></button>
             </Link>
         </div>
     );

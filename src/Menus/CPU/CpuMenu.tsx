@@ -51,7 +51,7 @@ function CpuMenu() {
       <input id="player1Sign" placeholder={"player 1's sign"} />
       <br></br>
       <button className="buttonLink" type="button" onClick={submitPlayers}>
-        <Link id={"link"} to="/gamepvp">
+        <Link id={"link"} to="/gamecpu">
           Submit Player Sign and Name
         </Link>
       </button>
