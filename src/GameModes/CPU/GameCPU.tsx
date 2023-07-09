@@ -2,7 +2,6 @@ import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./GameCPU.css";
 import { Player, player1, player2 } from "../../PlayableCharacters/Player.ts";
-import { minimax } from "../../PlayableCharacters/Minimax.tsx";
 
 function GameCPU() {
   let currentSign = player1.sign;
@@ -62,8 +61,6 @@ function GameCPU() {
 
   function handleCellClick(cellId: string) {
     const cell = document.getElementById(cellId) as HTMLElement;
-    let cellAiMove;
-    let cellAiChoice;
     const currentNameLabel = document.getElementById(
       "currentPlayer",
     ) as HTMLElement;
@@ -72,7 +69,7 @@ function GameCPU() {
     ) as HTMLElement;
     if (cell.innerText === "") {
       let winnerText;
-      const tieText = "both of you suck dudes";
+      const tieText = "it's a tie";
       cell.innerText = currentSign;
       currentSign = currentSign === player1.sign ? player2.sign : player1.sign;
       currentName = currentName === player1.name ? player2.name : player1.name;
@@ -86,25 +83,24 @@ function GameCPU() {
           player1.score += 1;
           countTurn = 0;
           winnerText = player1.name + " is the winner";
+          currentName = player2.name;
+          currentSign = player2.sign;
           showWinnerPopup(winnerText);
         }
         if (winSign === player2.sign) {
           player2.score += 1;
           countTurn = 0;
           winnerText = player2.name + " is the winner";
+          currentName = player1.name;
+          currentSign = player1.sign;
           showWinnerPopup(winnerText);
         }
       }
       if (countTurn === 9) {
         countTurn = 0;
         showWinnerPopup(tieText);
-      }
-      if (currentName === player2.name && countTurn < 9) {
-        cellAiChoice = minimax();
-        cellAiMove = document.getElementById(
-          cellAiChoice.toString(),
-        ) as HTMLElement;
-        cellAiMove.innerText = player2.sign;
+        currentName =
+          currentName === player1.name ? player2.name : player1.name;
       }
     }
   }
@@ -188,5 +184,5 @@ function GameCPU() {
 
 export default GameCPU;
 
-//TODO need to figure out how to do the placement in the grid
 //work with figma
+//TODO figure out how to add the AI
