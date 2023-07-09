@@ -5,8 +5,8 @@ import humansvsrobots from "../assets/humans-vs-robots.jpg";
 
 function App() {
   return (
-    <div id={"main"}>
-      <div id={"div1"}>
+    <div className={"main"}>
+      <div className={"main"}>
         <button className={"buttons"}>
           <Link className={"links"} to="/pvpmenu">
             <img className={"images"} src={rockleevsgaara} alt="PvP" />
@@ -14,7 +14,7 @@ function App() {
         </button>
       </div>
 
-      <div id={"div2"}>
+      <div className={"main"}>
         <button className={"buttons"}>
           <Link className={"links"} to="/cpumenu">
             <img className={"images"} src={humansvsrobots} alt="PvPC" />
