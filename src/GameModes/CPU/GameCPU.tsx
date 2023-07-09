@@ -59,6 +59,8 @@ function GameCPU() {
     overlay.style.display = "block";
   }
 
+
+
   function handleCellClick(cellId: string) {
     const cell = document.getElementById(cellId) as HTMLElement;
     const currentNameLabel = document.getElementById(
@@ -103,7 +105,62 @@ function GameCPU() {
           currentName === player1.name ? player2.name : player1.name;
       }
     }
+    const cells = document.getElementsByClassName("cell");
+    const cellValues = Array.from(cells).map((cell) => cell.textContent);
+
+    const aiChoice = minmax(cellValues, currentSign, player2.sign);
+    const cellChosen = document.getElementById(aiChoice.toString()) as HTMLElement;
+    cellChosen.textContent = player2.sign;
   }
+
+  function minmax(board, maximizingPlayer, currentPlayer) {
+    const availableMoves = [];
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === "") {
+        availableMoves.push(i);
+      }
+    }
+
+    if (winCondition() === player1.sign) {
+      return -1;
+    } else if (winCondition() === player2.sign) {
+      return 1;
+    } else if (availableMoves.length === 0) {
+      return 0;
+    }
+
+    let bestMove;
+    let bestScore;
+
+    if (currentPlayer === player2.sign) {
+      bestScore = -Infinity;
+      for (let i = 0; i < availableMoves.length; i++) {
+        const move = availableMoves[i];
+        board[move] = currentPlayer;
+        const score = minmax(board, maximizingPlayer, player1.sign);
+        board[move] = "";
+        if (score > bestScore) {
+          bestScore = score;
+          bestMove = move;
+        }
+      }
+    } else {
+      bestScore = Infinity;
+      for (let i = 0; i < availableMoves.length; i++) {
+        const move = availableMoves[i];
+        board[move] = currentPlayer;
+        const score = minmax(board, maximizingPlayer, player2.sign);
+        board[move] = "";
+        if (score < bestScore) {
+          bestScore = score;
+          bestMove = move;
+        }
+      }
+    }
+
+    return bestMove;
+  }
+
 
   function resetBoard() {
     const cells = document.getElementsByClassName("cell");
