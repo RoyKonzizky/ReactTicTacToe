@@ -2,6 +2,7 @@ import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./GameCPU.css";
 import { Player, player1, player2 } from "../../PlayableCharacters/Player.ts";
+import { minimax } from "../../PlayableCharacters/Minimax.tsx";
 
 function GameCPU() {
   let currentSign = player1.sign;
@@ -11,7 +12,7 @@ function GameCPU() {
   function winCondition(): string {
     const cellValues: string[] = [];
     const cells: HTMLCollectionOf<Element> =
-        document.getElementsByClassName("cell");
+      document.getElementsByClassName("cell");
 
     for (let i = 0; i < cells.length; i++) {
       cellValues.push((cells[i] as HTMLDivElement).innerText);
@@ -31,9 +32,9 @@ function GameCPU() {
     for (const condition of winConditions) {
       const [a, b, c]: number[] = condition;
       if (
-          cellValues[a] !== "" &&
-          cellValues[a] === cellValues[b] &&
-          cellValues[a] === cellValues[c]
+        cellValues[a] !== "" &&
+        cellValues[a] === cellValues[b] &&
+        cellValues[a] === cellValues[c]
       ) {
         return cellValues[a];
       }
@@ -52,7 +53,7 @@ function GameCPU() {
     const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
     const overlay = document.getElementById("overlay") as HTMLElement;
     const winnerTextElement = document.getElementById(
-        "winnerText",
+      "winnerText",
     ) as HTMLElement;
     winnerTextElement.innerText = winnerText;
     winnerPopup.style.display = "block";
@@ -61,12 +62,13 @@ function GameCPU() {
 
   function handleCellClick(cellId: string) {
     const cell = document.getElementById(cellId) as HTMLElement;
-    let cellAiMove = "";
+    let cellAiMove;
+    let cellAiChoice;
     const currentNameLabel = document.getElementById(
-        "currentPlayer",
+      "currentPlayer",
     ) as HTMLElement;
     const currentSignLabel = document.getElementById(
-        "currentSign",
+      "currentSign",
     ) as HTMLElement;
     if (cell.innerText === "") {
       let winnerText;
@@ -97,6 +99,13 @@ function GameCPU() {
         countTurn = 0;
         showWinnerPopup(tieText);
       }
+      if (currentName === player2.name && countTurn < 9) {
+        cellAiChoice = minimax();
+        cellAiMove = document.getElementById(
+          cellAiChoice.toString(),
+        ) as HTMLElement;
+        cellAiMove.innerText = player2.sign;
+      }
     }
   }
 
@@ -115,65 +124,65 @@ function GameCPU() {
     const cellIds: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
 
     return (
-        <div className="grid-container">
-          <Grid className={"grid"} container spacing={1}>
-            {cellIds.map((cellId) => (
-                <Grid
-                    key={cellId}
-                    id={cellId}
-                    className={"cell"}
-                    onClick={() => handleCellClick(cellId)}
-                    item
-                    xs={3}
-                ></Grid>
-            ))}
-          </Grid>
-        </div>
+      <div className="grid-container">
+        <Grid className={"grid"} container spacing={1}>
+          {cellIds.map((cellId) => (
+            <Grid
+              key={cellId}
+              id={cellId}
+              className={"cell"}
+              onClick={() => handleCellClick(cellId)}
+              item
+              xs={3}
+            ></Grid>
+          ))}
+        </Grid>
+      </div>
     );
   }
 
   return (
+    <div>
+      <div className="grid-container">{createGrid()}</div>
+
       <div>
-        <div className="grid-container">{createGrid()}</div>
-
-        <div>
-          <label className={"label"} id={"currentPlayer"}>
-            current player:{""}
-          </label>
-        </div>
-
-        <div>
-          <label className={"label"} id={"currentSign"}>
-            current sign:{""}
-          </label>
-        </div>
-
-        <div>
-          <label className={"label"} id={"scorePlayer1"}>
-            player 1's score:{""}
-          </label>
-        </div>
-
-        <div>
-          <label className={"label"} id={"scorePlayer2"}>
-            player 2's score:{""}
-          </label>
-        </div>
-
-        <div id="overlay" className="overlay"></div>
-
-        <div id="winnerPopup" className="popup">
-          <h2 id="winnerText"></h2>
-          <Link to="/">
-            <button type="button" id={"retMenuButton"}>
-              back to menu
-            </button>
-          </Link>
-          <button id={"boardReseter"} onClick={resetBoard}>
-            reset grid
-          </button>
-        </div>
+        <label className={"label"} id={"currentPlayer"}>
+          current player:{""}
+        </label>
       </div>
+
+      <div>
+        <label className={"label"} id={"currentSign"}>
+          current sign:{""}
+        </label>
+      </div>
+
+      <div>
+        <label className={"label"} id={"scorePlayer1"}>
+          player 1's score:{""}
+        </label>
+      </div>
+
+      <div>
+        <label className={"label"} id={"scorePlayer2"}>
+          player 2's score:{""}
+        </label>
+      </div>
+
+      <div id="overlay" className="overlay"></div>
+
+      <div id="winnerPopup" className="popup">
+        <h2 id="winnerText"></h2>
+        <Link to="/">
+          <button type="button" id={"retMenuButton"}>
+            back to menu
+          </button>
+        </Link>
+        <button id={"boardReseter"} onClick={resetBoard}>
+          reset grid
+        </button>
+      </div>
+    </div>
   );
 }
 
