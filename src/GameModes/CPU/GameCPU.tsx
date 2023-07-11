@@ -62,16 +62,15 @@ function GameCPU() {
             const cellValues = Array.from(cells).map((cell) => cell.textContent);
             let cellChosen: HTMLElement;
 
-            const winSign = winCondition(cellValues);
-
             countTurn++;
+
+            const winSign = winCondition(cellValues);
 
             const aiChoice: number = minmax(cellValues, player2.sign, player1.sign);
             if (aiChoice <= 8 && aiChoice >= 0) {
                 cellChosen = document.getElementById(aiChoice.toString()) as HTMLElement;
-                cellChosen.textContent = player2.sign;
-                if (winSign === player2.sign) {
-                    showWinnerPopup("THE MACHINES RISE");
+                if (cellChosen.textContent === "") {
+                    cellChosen.textContent = player2.sign;
                 }
             }
 
@@ -86,13 +85,14 @@ function GameCPU() {
                     countTurn = 0;
                     winnerText = player2.name + " is the winner";
                     showWinnerPopup(winnerText);
-                } else if (countTurn === 5) {
+                } else if (countTurn === 4) {
                     countTurn = 0;
                     showWinnerPopup(tieText);
                 }
             }
         }
     }
+
 
     function minmax(board: (string)[], maximizingPlayer: string, currentPlayer: string): number {
         const availableMoves = [];
@@ -110,8 +110,8 @@ function GameCPU() {
             return 0;
         }
 
-        let bestMove: number;
         let bestScore: number;
+        let bestMove: number;
 
         if (currentPlayer === player2.sign) {
             bestScore = -Infinity;
@@ -119,7 +119,7 @@ function GameCPU() {
                 const move = availableMoves[i];
                 board[move] = currentPlayer;
                 const score = minmax(board, maximizingPlayer, player1.sign);
-                board[move] = null;
+                board[move] = "";
                 if (score > bestScore) {
                     bestScore = score;
                     bestMove = move;
@@ -131,15 +131,22 @@ function GameCPU() {
                 const move = availableMoves[i];
                 board[move] = currentPlayer;
                 const score = minmax(board, maximizingPlayer, player2.sign);
-                board[move] = null;
+                board[move] = "";
                 if (score < bestScore) {
                     bestScore = score;
                     bestMove = move;
                 }
             }
         }
-        return bestMove;
+
+        if (currentPlayer === maximizingPlayer) {
+            return bestScore;
+        } else {
+            return bestMove;
+        }
     }
+
+
 
     function resetBoard() {
         const cells = document.getElementsByClassName("cell");
