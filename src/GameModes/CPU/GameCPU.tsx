@@ -5,15 +5,10 @@ import {Player, player1, player2} from "../../PlayableCharacters/Player.ts";
 
 function GameCPU() {
     let countTurn = 0;
+    player1.sign = 'X';
+    player2.sign = 'O';
 
-    function winCondition(): string {
-        const cellValues: string[] = [];
-        const cells = document.getElementsByClassName("cell") as HTMLCollection;
-
-        for (let i = 0; i < cells.length; i++) {
-            cellValues.push((cells[i] as HTMLDivElement).innerText);
-        }
-
+    function winCondition(cellValues: string[]): string {
         const winConditions: number[][] = [
             [0, 1, 2],
             [3, 4, 5],
@@ -63,15 +58,16 @@ function GameCPU() {
             const tieText = "it's a tie";
             cell.innerText = player1.sign;
             labelUpdate(player1, player2);
-            const winSign = winCondition();
-            countTurn++;
-
             const cells = document.getElementsByClassName("cell") as HTMLCollection;
             const cellValues = Array.from(cells).map((cell) => cell.textContent);
             let cellChosen: HTMLElement;
 
-            const aiChoice: number = minmax(cellValues, player1.sign, player2.sign);
-            if (aiChoice < 10 && aiChoice > -1) {
+            const winSign = winCondition(cellValues);
+
+            countTurn++;
+
+            const aiChoice: number = minmax(cellValues, player2.sign, player1.sign);
+            if (aiChoice <= 8 && aiChoice >= 0) {
                 cellChosen = document.getElementById(aiChoice.toString()) as HTMLElement;
                 cellChosen.textContent = player2.sign;
                 if (winSign === player2.sign) {
@@ -85,13 +81,12 @@ function GameCPU() {
                     countTurn = 0;
                     winnerText = player1.name + " is the winner";
                     showWinnerPopup(winnerText);
-                }
-                if (winSign === player2.sign) {
+                } else if (winSign === player2.sign) {
                     player2.score += 1;
                     countTurn = 0;
                     winnerText = player2.name + " is the winner";
                     showWinnerPopup(winnerText);
-                } else if (countTurn === 9) {
+                } else if (countTurn === 5) {
                     countTurn = 0;
                     showWinnerPopup(tieText);
                 }
@@ -99,7 +94,7 @@ function GameCPU() {
         }
     }
 
-    function minmax(board: (string | null)[], maximizingPlayer: string, currentPlayer: string) {
+    function minmax(board: (string)[], maximizingPlayer: string, currentPlayer: string): number {
         const availableMoves = [];
         for (let i = 0; i < board.length; i++) {
             if (board[i] === "") {
@@ -107,9 +102,9 @@ function GameCPU() {
             }
         }
 
-        if (winCondition() === player1.sign) {
+        if (winCondition(board) === player1.sign) {
             return -1;
-        } else if (winCondition() === player2.sign) {
+        } else if (winCondition(board) === player2.sign) {
             return 1;
         } else if (availableMoves.length === 0) {
             return 0;
@@ -124,7 +119,7 @@ function GameCPU() {
                 const move = availableMoves[i];
                 board[move] = currentPlayer;
                 const score = minmax(board, maximizingPlayer, player1.sign);
-                board[move] = "";
+                board[move] = null;
                 if (score > bestScore) {
                     bestScore = score;
                     bestMove = move;
@@ -136,7 +131,7 @@ function GameCPU() {
                 const move = availableMoves[i];
                 board[move] = currentPlayer;
                 const score = minmax(board, maximizingPlayer, player2.sign);
-                board[move] = "";
+                board[move] = null;
                 if (score < bestScore) {
                     bestScore = score;
                     bestMove = move;
@@ -214,6 +209,5 @@ function GameCPU() {
 export default GameCPU;
 
 //work with figma
-//TODO figure out how to add the AI
-//add onchange to input fields with funcs that if they return true the link activates
-//TODO to solve the minmax either:  a. change the winCon so it receives the board instead of reading. b. the winCon calls the minmax instead
+//TODO add onchange to input fields with funcs that if they return true the link activate
+//TODO fix the win call, fix the bug that steals place, can still be beat but not 100%
