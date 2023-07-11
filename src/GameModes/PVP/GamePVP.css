@@ -71,3 +71,8 @@ body {
 h2{
     color: black;
 }
+
+.cellImages{
+    width: 50px;
+    height: 50px;
+}
