@@ -73,7 +73,7 @@ function GamePVP() {
       let winnerText;
       const tieText = "It's a tie";
       const imageSrc = currentSign === player1.sign ? xImage : oImage;
-      cell.innerHTML = `<img src="${imageSrc}" alt="${currentSign}" />`;
+      cell.innerHTML = `<img class="cellImages" src="${imageSrc}" alt="${currentSign}" />`;
       currentSign = currentSign === player1.sign ? player2.sign : player1.sign;
       currentName = currentName === player1.name ? player2.name : player1.name;
       currentNameLabel.textContent = "Current player: " + currentName;
