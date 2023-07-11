@@ -219,4 +219,5 @@ export default GameCPU;
 
 //work with figma
 //TODO add onchange to input fields with funcs that if they return true the link activate
-//TODO fix the win call, fix the bug that steals place, can still be beat but not 100%
+//TODO fix the win call, fix the bug that steals place
+//TODO iron-out bugs and clean up.
