@@ -17,7 +17,16 @@ function GamePVP() {
         const cells: HTMLCollectionOf<Element> = document.getElementsByClassName("cell");
 
         for (let i = 0; i < cells.length; i++) {
-            cellValues.push((cells[i] as HTMLDivElement).innerHTML);
+            const cell = document.getElementById(i.toString()) as HTMLElement;
+            //console.log(cell.textContent);
+            if (cell.innerHTML === "<img class=\"cellImages\" src=\"/src/assets/X.svg.png\" alt=\"/src/assets/X.svg.png\">") {
+                cellValues.push('x');
+                console.log('x');
+            } else if (cell.innerHTML === "<img class=\"cellImages\" src=\"/src/assets/o.png\" alt=\"/src/assets/o.png\">") {
+                cellValues.push('o');
+                console.log('o');
+            }
+            //console.log(cellValues[i]);
         }
 
         const winConditions: number[][] = [
@@ -66,12 +75,8 @@ function GamePVP() {
 
     function handleCellClick(cellId: string) {
         const cell = document.getElementById(cellId) as HTMLElement;
-        const currentNameLabel = document.getElementById(
-            "currentPlayer",
-        ) as HTMLElement;
-        const currentSignLabel = document.getElementById(
-            "currentSign",
-        ) as HTMLElement;
+        const currentNameLabel = document.getElementById("currentPlayer") as HTMLElement;
+        const currentSignLabel = document.getElementById("currentSign") as HTMLElement;
         if (cell.getAttribute("alt") === null) {
             let winnerText;
             const tieText = "It's a tie";
