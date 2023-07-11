@@ -71,7 +71,7 @@ function GameCPU() {
             let cellChosen: HTMLElement;
 
             const aiChoice: number = minmax(cellValues, player1.sign, player2.sign);
-            if (aiChoice <= 8 && aiChoice >= 0) {
+            if (aiChoice < 10 && aiChoice > -1) {
                 cellChosen = document.getElementById(aiChoice.toString()) as HTMLElement;
                 cellChosen.textContent = player2.sign;
                 if (winSign === player2.sign) {
@@ -216,3 +216,4 @@ export default GameCPU;
 //work with figma
 //TODO figure out how to add the AI
 //add onchange to input fields with funcs that if they return true the link activates
+//TODO to solve the minmax either:  a. change the winCon so it receives the board instead of reading. b. the winCon calls the minmax instead
