@@ -192,3 +192,6 @@ function GamePVP() {
 }
 
 export default GamePVP;
+
+//TODO winCondition doesnt work, need fix
+//TODO to solve the minmax either:  a. change the winCon so it receives the board instead of reading. b. the winCon calls the minmax instead
