@@ -9,6 +9,8 @@ function GamePVP() {
   let currentSign = player1.sign;
   let currentName = player1.name;
   let countTurn = 0;
+  player1.sign = xImage;
+  player2.sign=oImage;
 
   function winCondition(): string {
     const cellValues: string[] = [];
@@ -16,7 +18,7 @@ function GamePVP() {
         document.getElementsByClassName("cell");
 
     for (let i = 0; i < cells.length; i++) {
-      cellValues.push((cells[i] as HTMLDivElement).getAttribute("alt"));
+      cellValues.push((cells[i] as HTMLDivElement).innerText);
     }
 
     const winConditions: number[][] = [
