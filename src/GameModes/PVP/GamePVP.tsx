@@ -51,9 +51,7 @@ function GamePVP() {
   function showWinnerPopup(winnerText: string): void {
     const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
     const overlay = document.getElementById("overlay") as HTMLElement;
-    const winnerTextElement = document.getElementById(
-        "winnerText",
-    ) as HTMLElement;
+    const winnerTextElement = document.getElementById("winnerText") as HTMLElement;
     winnerTextElement.innerText = winnerText;
     winnerPopup.style.display = "block";
     overlay.style.display = "block";
@@ -61,23 +59,28 @@ function GamePVP() {
 
   function handleCellClick(cellId: string) {
     const cell = document.getElementById(cellId) as HTMLElement;
-    const currentNameLabel = document.getElementById(
-        "currentPlayer",
-    ) as HTMLElement;
-    const currentSignLabel = document.getElementById(
-        "currentSign",
-    ) as HTMLElement;
+    const currentNameLabel = document.getElementById("currentPlayer") as HTMLElement;
+    const currentSignLabel = document.getElementById("currentSign") as HTMLElement;
+
     if (cell.innerText === "") {
       let winnerText;
       const tieText = "it's a tie";
       cell.innerText = currentSign;
+
+      const imageForSign = document.createElement("img");
+      imageForSign.src = currentSign === player1.sign ? "X.svg.png" : "o.png";
+      cell.innerHTML = "";
+      cell.appendChild(imageForSign);
+
       currentSign = currentSign === player1.sign ? player2.sign : player1.sign;
       currentName = currentName === player1.name ? player2.name : player1.name;
+
       currentNameLabel.textContent = "current player: " + currentName;
       currentSignLabel.textContent = "current sign: " + currentSign;
       labelUpdate(player1, player2);
       const winSign = winCondition();
       countTurn++;
+
       if (winSign) {
         if (winSign === player1.sign) {
           player1.score += 1;
@@ -99,21 +102,10 @@ function GamePVP() {
       if (countTurn === 9) {
         countTurn = 0;
         showWinnerPopup(tieText);
-        currentName =
-            currentName === player1.name ? player2.name : player1.name;
+        currentName =currentName === player1.name ? player2.name : player1.name;
       }
     }
-  }
-
-  function resetBoard() {
-    const cells = document.getElementsByClassName("cell");
-    for (let i = 0; i < cells.length; i++) {
-      cells[i].textContent = "";
-    }
-    const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
-    winnerPopup.style.display = "none";
-    const overlay = document.getElementById("overlay") as HTMLElement;
-    overlay.style.display = "none";
+    cell.style.pointerEvents = 'none';
   }
 
   function createGrid() {
@@ -130,11 +122,27 @@ function GamePVP() {
                     onClick={() => handleCellClick(cellId)}
                     item
                     xs={3}
-                ></Grid>
+                >
+                  <img src="" alt=""/>
+                </Grid>
             ))}
           </Grid>
         </div>
     );
+  }
+
+
+  function resetBoard() {
+    const cells = document.getElementsByClassName("cell");
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].textContent = "";
+      const cell = cells[i] as HTMLElement;
+      cell.style.pointerEvents='auto';
+    }
+    const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
+    winnerPopup.style.display = "none";
+    const overlay = document.getElementById("overlay") as HTMLElement;
+    overlay.style.display = "none";
   }
 
   return (
@@ -185,3 +193,4 @@ function GamePVP() {
 export default GamePVP;
 
 //work with figma
+//TODO fix winCon
