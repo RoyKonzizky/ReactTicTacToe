@@ -17,11 +17,17 @@ function GamePVP() {
             let winnerText;
             const tieText = "it's a tie";
             cell.innerText = currentSign;
-            const imageForSign = document.createElement("img");
+            const imageForSign = document.createElement("img");//the source of the problem probably
             const winSign = winCondition();
 
-            imageForSign.src = currentSign === player1.sign ? "X.svg.png" : "o.png";
-            imageForSign.alt = currentSign === player1.sign ? 'X' : 'O';
+            if (currentSign === player1.sign) {
+                imageForSign.src = "X.svg.png";
+                imageForSign.alt = 'X';
+            }
+            if (currentSign === player2.sign) {
+                imageForSign.src = "o.png";
+                imageForSign.alt = 'O';
+            }
             imageForSign.style.opacity = '1.0';
 
             cell.innerHTML = "";
@@ -44,7 +50,7 @@ function GamePVP() {
                     currentSign = player2.sign;
                     showWinnerPopup(winnerText);
                 }
-                if (winSign === 'O') {
+                if (winSign === player2.sign) {
                     player2.score += 1;
                     countTurn = 0;
                     winnerText = player2.name + " is the winner";
@@ -67,7 +73,7 @@ function GamePVP() {
         const cells: HTMLCollectionOf<HTMLImageElement> = document.getElementsByTagName("img");
 
         for (let i = 0; i < cells.length; i++) {
-            cellValues.push((cells[i] as HTMLDivElement).innerText);
+            cellValues.push((cells[i] as HTMLImageElement).alt);
         }
 
         const winConditions: number[][] = [
@@ -83,16 +89,14 @@ function GamePVP() {
 
         for (const condition of winConditions) {
             const [a, b, c]: number[] = condition;
-            if (
-                cellValues[a] !== "" &&
-                cellValues[a] === cellValues[b] &&
-                cellValues[a] === cellValues[c]
-            ) {
+            if (cellValues[a] !== "" && cellValues[a] === cellValues[b] && cellValues[a] === cellValues[c]) {
                 return cellValues[a];
             }
         }
         return "";
     }
+
+    //after reset it says undefined
 
     function labelUpdate(player1: Player, player2: Player) {
         const score1 = document.getElementById("scorePlayer1") as HTMLElement;
@@ -198,4 +202,4 @@ export default GamePVP;
 //work with figma
 //fixed the image issue with opacity style attribute but need to find a better way, ask roy about it
 // instead document import the component with function components
-//read about sty
+//read about styled components
