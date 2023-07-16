@@ -10,13 +10,10 @@ function GamePVP() {
 
   function winCondition(): string {
     const cellValues: string[] = [];
-    const cells: HTMLCollectionOf<Element> =
-        document.getElementsByClassName("cell");
-
+    const cells: HTMLCollectionOf<Element> = document.getElementsByClassName("cell-image");
     for (let i = 0; i < cells.length; i++) {
-      cellValues.push((cells[i] as HTMLDivElement).innerText);
+      cellValues.push((cells[i] as HTMLImageElement).alt);
     }
-
     const winConditions: number[][] = [
       [0, 1, 2],
       [3, 4, 5],
@@ -41,23 +38,7 @@ function GamePVP() {
     return "";
   }
 
-  function labelUpdate(player1: Player, player2: Player) {
-    const score1 = document.getElementById("scorePlayer1") as HTMLElement;
-    score1.innerText = player1.name + "'s score: " + player1.score;
-    const score2 = document.getElementById("scorePlayer2") as HTMLElement;
-    score2.innerText = player2.name + "'s score: " + player2.score;
-  }
-
-  function showWinnerPopup(winnerText: string): void {
-    const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
-    const overlay = document.getElementById("overlay") as HTMLElement;
-    const winnerTextElement = document.getElementById("winnerText") as HTMLElement;
-    winnerTextElement.innerText = winnerText;
-    winnerPopup.style.display = "block";
-    overlay.style.display = "block";
-  }
-
-  function handleCellClick(cellId: string) {
+  function handleCellClick(cellId:string) {
     const cell = document.getElementById(cellId) as HTMLElement;
     const currentNameLabel = document.getElementById("currentPlayer") as HTMLElement;
     const currentSignLabel = document.getElementById("currentSign") as HTMLElement;
@@ -65,20 +46,26 @@ function GamePVP() {
     if (cell.innerText === "") {
       let winnerText;
       const tieText = "it's a tie";
-      cell.innerText = currentSign;
 
-      const imageForSign = document.createElement("img");
-      imageForSign.src = currentSign === player1.sign ? "X.svg.png" : "o.png";
-      cell.innerHTML = "";
-      cell.appendChild(imageForSign);
+      const imageForSign = document.getElementById(`image-${cellId}`) as HTMLImageElement;
+
+      if (imageForSign) {
+        imageForSign.src = currentSign === player1.sign ? "X.svg.png" : "o.png";
+        imageForSign.style.opacity = '1';
+        imageForSign.alt = currentSign;
+        console.log(imageForSign.alt);
+      }
 
       currentSign = currentSign === player1.sign ? player2.sign : player1.sign;
       currentName = currentName === player1.name ? player2.name : player1.name;
 
       currentNameLabel.textContent = "current player: " + currentName;
       currentSignLabel.textContent = "current sign: " + currentSign;
+
       labelUpdate(player1, player2);
+
       const winSign = winCondition();
+
       countTurn++;
 
       if (winSign) {
@@ -90,6 +77,7 @@ function GamePVP() {
           currentSign = player2.sign;
           showWinnerPopup(winnerText);
         }
+
         if (winSign === player2.sign) {
           player2.score += 1;
           countTurn = 0;
@@ -99,12 +87,14 @@ function GamePVP() {
           showWinnerPopup(winnerText);
         }
       }
+
       if (countTurn === 9) {
         countTurn = 0;
         showWinnerPopup(tieText);
-        currentName =currentName === player1.name ? player2.name : player1.name;
+        currentName = currentName === player1.name ? player2.name : player1.name;
       }
     }
+
     cell.style.pointerEvents = 'none';
   }
 
@@ -123,7 +113,12 @@ function GamePVP() {
                     item
                     xs={3}
                 >
-                  <img src="" alt=""/>
+                  <img
+                      id={`image-${cellId}`}
+                      className={"cell-image"}
+                      src=""
+                      alt=""
+                  />
                 </Grid>
             ))}
           </Grid>
@@ -131,13 +126,28 @@ function GamePVP() {
     );
   }
 
+  function labelUpdate(player1: Player, player2: Player) {
+    const score1 = document.getElementById("scorePlayer1") as HTMLElement;
+    score1.innerText = player1.name + "'s score: " + player1.score;
+    const score2 = document.getElementById("scorePlayer2") as HTMLElement;
+    score2.innerText = player2.name + "'s score: " + player2.score;
+  }
+
+  function showWinnerPopup(winnerText: string): void {
+    const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
+    const overlay = document.getElementById("overlay") as HTMLElement;
+    const winnerTextElement = document.getElementById("winnerText") as HTMLElement;
+    winnerTextElement.innerText = winnerText;
+    winnerPopup.style.display = "block";
+    overlay.style.display = "block";
+  }
 
   function resetBoard() {
     const cells = document.getElementsByClassName("cell");
     for (let i = 0; i < cells.length; i++) {
       cells[i].textContent = "";
       const cell = cells[i] as HTMLElement;
-      cell.style.pointerEvents='auto';
+      cell.style.pointerEvents = 'auto';
     }
     const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
     winnerPopup.style.display = "none";
@@ -151,25 +161,23 @@ function GamePVP() {
 
         <div>
           <label className={"label"} id={"currentPlayer"}>
-            current player:{""}
+            current player:
           </label>
         </div>
 
         <div>
           <label className={"label"} id={"currentSign"}>
-            current sign:{""}
+            current sign:
           </label>
         </div>
-
         <div>
           <label className={"label"} id={"scorePlayer1"}>
-            player 1's score:{""}
+            player 1's score:
           </label>
         </div>
-
         <div>
           <label className={"label"} id={"scorePlayer2"}>
-            player 2's score:{""}
+            player 2's score:
           </label>
         </div>
 
@@ -192,5 +200,12 @@ function GamePVP() {
 
 export default GamePVP;
 
-//work with figma
+
+
+
 //TODO fix winCon
+//TODO find out why it doesnt work after reset
+//work with figma
+//fixed the image issue with opacity style attribute but need to find a better way, ask roy about it
+// instead document import the component with function components
+//read about styled components
