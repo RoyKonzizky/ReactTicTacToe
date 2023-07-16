@@ -17,9 +17,14 @@ function GamePVP() {
             let winnerText;
             const tieText = "it's a tie";
             cell.innerText = currentSign;
-
             const imageForSign = document.createElement("img");
+            const winSign = winCondition();
+
             imageForSign.src = currentSign === player1.sign ? "X.svg.png" : "o.png";
+            imageForSign.alt = currentSign === player1.sign ? 'X' : 'O';
+            imageForSign.style.opacity = '1.0';
+            console.log(imageForSign.alt);
+
             cell.innerHTML = "";
             cell.appendChild(imageForSign);
 
@@ -29,7 +34,6 @@ function GamePVP() {
             currentNameLabel.textContent = "current player: " + currentName;
             currentSignLabel.textContent = "current sign: " + currentSign;
             labelUpdate(player1, player2);
-            const winSign = winCondition();
             countTurn++;
 
             if (winSign) {
@@ -61,7 +65,7 @@ function GamePVP() {
 
     function winCondition(): string {
         const cellValues: string[] = [];
-        const cells: HTMLCollectionOf<Element> = document.getElementsByClassName("cell");
+        const cells: HTMLCollectionOf<HTMLImageElement> = document.getElementsByTagName("img");
 
         for (let i = 0; i < cells.length; i++) {
             cellValues.push((cells[i] as HTMLDivElement).innerText);
@@ -106,7 +110,7 @@ function GamePVP() {
         winnerPopup.style.display = "block";
         overlay.style.display = "block";
     }
-    
+
     function createGrid() {
         const cellIds: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
 
@@ -192,3 +196,4 @@ export default GamePVP;
 
 //work with figma
 //TODO fix winCon
+//fixed the image issue with opacity style attribute but need to find a better way, ask roy about it
