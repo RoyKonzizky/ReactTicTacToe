@@ -1,10 +1,11 @@
 import "./PvpMenu.css";
 import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import {Link} from "react-router-dom";
+import {useState} from "react";
 
 function PvpMenu() {
     let badInputText = "";
-
+    const [toValue, setToValue] = useState('');
     function submitPlayers() {
         player1.name = (document.getElementById("player1Name") as HTMLInputElement).value;
         player2.name = (document.getElementById("player2Name") as HTMLInputElement).value;
@@ -26,7 +27,6 @@ function PvpMenu() {
 
     function checkInput() {
         const badInputLabel = document.getElementById("badInputLabel") as HTMLElement;
-        const link = document.getElementById("link") as HTMLElement;
 
         // if (imageExists(player1.sign) || imageExists(player2.sign)) {
         //     badInputText = "image not found, enter a different path";
@@ -34,19 +34,21 @@ function PvpMenu() {
         //     return;
         // }
 
-        if (player1.sign === "" || player2.sign === "") {
-            badInputText = "image not found, enter a different path";
-            badInputLabel.textContent = badInputText;
-            return;
+        if (player1.name.length === 0 || player2.name.length === 0 || player1.sign === "" || player2.sign === ""){
+            if (player1.sign === "" || player2.sign === "") {
+                badInputText = "image not found, enter a different path";
+                badInputLabel.textContent = badInputText;
+                setToValue('');
+            }
+            if (player1.name.length === 0 || player2.name.length === 0) {
+                badInputText = "players names not entered";
+                badInputLabel.textContent = badInputText;
+                setToValue('');
+            }
+        }else {
+            setToValue('/gamepvp');
         }
 
-        if (player1.name.length === 0 || player2.name.length === 0) {
-            badInputText = "players names not entered";
-            badInputLabel.textContent = badInputText;
-            return;
-        } else {
-            link.style.pointerEvents = "auto";
-        }
     }
 
     // function imageExists(imagePath):boolean{
@@ -59,27 +61,25 @@ function PvpMenu() {
     return (
         <>
             <div>
-                <input id="player1Name" placeholder={"player 1's name"}/>
+                <input id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
             </div>
 
             <div>
-                <input id="player1Sign" placeholder={"player 1's sign"}/>
+                <input id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
             </div>
 
             <div>
-                <input id="player2Name" placeholder={"player 2's name"}/>
+                <input id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
             </div>
 
             <div>
-                <input id="player2Sign" placeholder={"player 2's sign"}/>
+                <input id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
             </div>
 
             <div>
-                <button className="buttonLink" type="button" onClick={submitPlayers}>
-                    <Link id="link" to="/gamepvp">
-                        Submit Player Sign and Name
-                    </Link>
-                </button>
+                <Link className="link" to={toValue}>
+                    Submit Player Sign and Name
+                </Link>
             </div>
 
             <div>
@@ -94,3 +94,4 @@ player1;
 player2;
 
 //TODO fix the link button, find a way to change it's 'to' attribute
+//ask roy why it doesnt work if i refer to it with id
