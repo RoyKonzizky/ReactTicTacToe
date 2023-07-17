@@ -76,7 +76,7 @@ function PvpMenu() {
 
             <div>
                 <button className="buttonLink" type="button" onClick={submitPlayers}>
-                    <Link id="link" to="/gamepvp" onClick={submitPlayers}>
+                    <Link id="link" to="/gamepvp">
                         Submit Player Sign and Name
                     </Link>
                 </button>
