@@ -2,7 +2,16 @@
     color: red;
 }
 
-#link {
-    pointer-events: none;
-    color: white;
+.link {
+    pointer-events: auto;
+    color: black;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4285f4;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.link:hover {
+    color: black;
 }
