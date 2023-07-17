@@ -42,7 +42,6 @@ function GamePVP() {
     function handleCellClick(cellId: string) {
         const cell = document.getElementById(cellId) as HTMLElement;
         const currentNameLabel = document.getElementById("currentPlayer") as HTMLElement;
-        //const currentSignLabel = document.getElementById("currentSign") as HTMLElement;
         const imgLbl = document.getElementById("imgLbl") as HTMLImageElement;
 
         if (cell.innerText === "") {
@@ -52,7 +51,7 @@ function GamePVP() {
             const imageForSign = document.getElementById(`image-${cellId}`) as HTMLImageElement;
 
             if (imageForSign) {
-                imageForSign.src = currentSign === player1.sign ? "X.svg.png" : "o.png";
+                imageForSign.src = currentSign;
                 imageForSign.style.opacity = '1';
                 imageForSign.alt = currentSign;
             }
@@ -61,9 +60,8 @@ function GamePVP() {
             currentName = currentName === player1.name ? player2.name : player1.name;
 
             currentNameLabel.textContent = "current player: " + currentName;
-            //currentSignLabel.textContent = "current sign: " + currentSign;
             if (imgLbl) {
-                imgLbl.src = currentSign === player1.sign ? "X.svg.png" : "o.png";
+                imgLbl.src = currentSign;
                 imgLbl.style.opacity = '1';
                 imgLbl.alt = currentSign;
             }
