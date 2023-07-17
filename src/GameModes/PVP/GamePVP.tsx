@@ -14,6 +14,7 @@ function GamePVP() {
         for (let i = 0; i < cells.length; i++) {
             cellValues.push((cells[i] as HTMLImageElement).alt);
         }
+
         const winConditions: number[][] = [
             [0, 1, 2],
             [3, 4, 5],
@@ -41,7 +42,8 @@ function GamePVP() {
     function handleCellClick(cellId: string) {
         const cell = document.getElementById(cellId) as HTMLElement;
         const currentNameLabel = document.getElementById("currentPlayer") as HTMLElement;
-        const currentSignLabel = document.getElementById("currentSign") as HTMLElement;
+        //const currentSignLabel = document.getElementById("currentSign") as HTMLElement;
+        const imgLbl = document.getElementById("imgLbl") as HTMLImageElement;
 
         if (cell.innerText === "") {
             let winnerText;
@@ -53,15 +55,18 @@ function GamePVP() {
                 imageForSign.src = currentSign === player1.sign ? "X.svg.png" : "o.png";
                 imageForSign.style.opacity = '1';
                 imageForSign.alt = currentSign;
-                console.log(imageForSign.alt);
             }
 
             currentSign = currentSign === player1.sign ? player2.sign : player1.sign;
             currentName = currentName === player1.name ? player2.name : player1.name;
 
             currentNameLabel.textContent = "current player: " + currentName;
-            currentSignLabel.textContent = "current sign: " + currentSign;
-
+            //currentSignLabel.textContent = "current sign: " + currentSign;
+            if (imgLbl) {
+                imgLbl.src = currentSign === player1.sign ? "X.svg.png" : "o.png";
+                imgLbl.style.opacity = '1';
+                imgLbl.alt = currentSign;
+            }
             labelUpdate(player1, player2);
 
             const winSign = winCondition();
@@ -145,7 +150,6 @@ function GamePVP() {
     function resetBoard() {
         const cells = document.getElementsByClassName("cell");
         for (let i = 0; i < cells.length; i++) {
-            //cells[i].textContent = "";
             const cell = cells[i] as HTMLElement;
             cell.style.pointerEvents = 'auto';
             const img = document.getElementById(`image-${i}`) as HTMLImageElement;
@@ -171,7 +175,7 @@ function GamePVP() {
 
             <div>
                 <label className={"label"} id={"currentSign"}>
-                    current sign:
+                    current sign: <img id="imgLbl" src="" alt=""/>
                 </label>
             </div>
             <div>
