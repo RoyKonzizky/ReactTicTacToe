@@ -65,7 +65,6 @@ function GameCPU() {
             countTurn++;
             console.log(countTurn);
 
-            const winSign = winCondition(cellValues);
 
             const aiChoice: number | null = minmax(cellValues, player2.sign, player1.sign, 0);
             if (aiChoice != null) {
@@ -76,6 +75,9 @@ function GameCPU() {
                     }
                 }
             }
+
+            const cellValuesForWinCon = Array.from(cells).map((cell) => cell.textContent);
+            const winSign = winCondition(cellValuesForWinCon);
 
             if (winSign) {
                 if (winSign === player1.sign) {
