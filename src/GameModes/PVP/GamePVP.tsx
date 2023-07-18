@@ -2,6 +2,7 @@ import {Grid} from "@mui/material";
 import {Link} from "react-router-dom";
 import "./GamePVP.css";
 import {Player, player1, player2} from "../../PlayableCharacters/Player.ts";
+import ReactConfetti from "react-confetti";
 
 function GamePVP() {
     let currentSign = player1.sign;
@@ -140,9 +141,11 @@ function GamePVP() {
         const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
         const overlay = document.getElementById("overlay") as HTMLElement;
         const winnerTextElement = document.getElementById("winnerText") as HTMLElement;
+        const confetti = document.getElementById("conf") as HTMLElement;
         winnerTextElement.innerText = winnerText;
         winnerPopup.style.display = "block";
         overlay.style.display = "block";
+        confetti.style.opacity = '1';
     }
 
     function resetBoard() {
@@ -159,6 +162,8 @@ function GamePVP() {
         winnerPopup.style.display = "none";
         const overlay = document.getElementById("overlay") as HTMLElement;
         overlay.style.display = "none";
+        const confetti = document.getElementById("conf") as HTMLElement;
+        confetti.style.opacity = '0';
     }
 
     return (
@@ -188,6 +193,11 @@ function GamePVP() {
             </div>
 
             <div id="overlay" className="overlay"></div>
+
+            <div>
+                <ReactConfetti id="conf">
+                </ReactConfetti>
+            </div>
 
             <div id="winnerPopup" className="popup">
                 <h2 id="winnerText"></h2>
