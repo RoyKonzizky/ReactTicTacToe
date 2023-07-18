@@ -8,7 +8,7 @@ function GameCPU() {
     player1.sign = 'X';
     player2.sign = 'O';
 
-    function winCondition(cellValues: string[]): string {
+    function winCondition(cellValues: (string | null)[]): string | null {
         const winConditions: number[][] = [
             [0, 1, 2],
             [3, 4, 5],
@@ -67,11 +67,13 @@ function GameCPU() {
 
             const winSign = winCondition(cellValues);
 
-            const aiChoice: number = minmax(cellValues, player2.sign, player1.sign, 0);
-            if (aiChoice <= 8 && aiChoice >= 0) {
-                cellChosen = document.getElementById(aiChoice.toString()) as HTMLElement;
-                if (cellChosen.textContent === "") {
-                    cellChosen.textContent = player2.sign;
+            const aiChoice: number | null = minmax(cellValues, player2.sign, player1.sign, 0);
+            if (aiChoice != null) {
+                if (aiChoice <= 8 && aiChoice >= 0) {
+                    cellChosen = document.getElementById(aiChoice.toString()) as HTMLElement;
+                    if (cellChosen.textContent === "") {
+                        cellChosen.textContent = player2.sign;
+                    }
                 }
             }
 
@@ -96,7 +98,7 @@ function GameCPU() {
     }
 
 
-    function minmax(board: (string)[], currentMaximizingPlayer: string, currentPlayer: string, depth: number): number {
+    function minmax(board: (string | null)[], currentMaximizingPlayer: string, currentPlayer: string, depth: number): number | null {
         const availableMoves = [];
         for (let i = 0; i < board.length; i++) {
             if (board[i] === "") {
@@ -118,18 +120,20 @@ function GameCPU() {
         }
 
         let bestScore: number;
-        let bestMove: number;
+        let bestMove: number | null = null;
 
         if (currentPlayer === currentMaximizingPlayer) {
             bestScore = -Infinity;
             for (let i = 0; i < availableMoves.length; i++) {
                 const move = availableMoves[i];
                 board[move] = currentPlayer;
-                const score = minmax(board, currentMaximizingPlayer, currentMaximizingPlayer === "X" ? "O" : "X", depth + 1);
+                const score = minmax(board, currentMaximizingPlayer, currentMaximizingPlayer === player1.sign ? player2.sign : player1.sign, depth + 1);
                 board[move] = "";
-                if (score > bestScore) {
-                    bestScore = score;
-                    bestMove = move;
+                if (score != null) {
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMove = move;
+                    }
                 }
             }
         } else {
@@ -137,11 +141,13 @@ function GameCPU() {
             for (let i = 0; i < availableMoves.length; i++) {
                 const move = availableMoves[i];
                 board[move] = currentPlayer;
-                const score = minmax(board, currentMaximizingPlayer, currentMaximizingPlayer === "X" ? "O" : "X", depth + 1);
+                const score = minmax(board, currentMaximizingPlayer, currentMaximizingPlayer === player1.sign ? player2.sign : player1.sign, depth + 1);
                 board[move] = "";
-                if (score < bestScore) {
-                    bestScore = score;
-                    bestMove = move;
+                if (score != null) {
+                    if (score < bestScore) {
+                        bestScore = score;
+                        bestMove = move;
+                    }
                 }
             }
         }
@@ -152,7 +158,6 @@ function GameCPU() {
             return bestMove;
         }
     }
-
 
 
     function resetBoard() {
