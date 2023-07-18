@@ -53,10 +53,10 @@ function GameCPU() {
 
     function handleCellClick(cellId: string) {
         const cell = document.getElementById(cellId) as HTMLElement;
-        if (cell.innerText === "") {
+        if (cell.textContent === "") {
             let winnerText;
             const tieText = "it's a tie";
-            cell.innerText = player1.sign;
+            cell.textContent = player1.sign;
             labelUpdate(player1, player2);
             const cells = document.getElementsByClassName("cell") as HTMLCollection;
             const cellValues = Array.from(cells).map((cell) => cell.textContent);
