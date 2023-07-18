@@ -6,6 +6,7 @@ import {useState} from "react";
 function PvpMenu() {
     let badInputText = "";
     const [toValue, setToValue] = useState('');
+
     function submitPlayers() {
         player1.name = (document.getElementById("player1Name") as HTMLInputElement).value;
         player2.name = (document.getElementById("player2Name") as HTMLInputElement).value;
@@ -34,7 +35,7 @@ function PvpMenu() {
         //     return;
         // }
 
-        if (player1.name.length === 0 || player2.name.length === 0 || player1.sign === "" || player2.sign === ""){
+        if (player1.name.length === 0 || player2.name.length === 0 || player1.sign === "" || player2.sign === "") {
             if (player1.sign === "" || player2.sign === "") {
                 badInputText = "image not found, enter a different path";
                 badInputLabel.textContent = badInputText;
@@ -45,10 +46,18 @@ function PvpMenu() {
                 badInputLabel.textContent = badInputText;
                 setToValue('');
             }
-        }else {
+        } else {
             setToValue('/gamepvp');
         }
 
+    }
+
+    function showLabel() {
+        const badInputLabel = document.getElementById("badInputLabel") as HTMLElement;
+        if (toValue === "" && badInputLabel.textContent === "") {
+            badInputText = "input not entered";
+            badInputLabel.textContent = badInputText;
+        }
     }
 
     // function imageExists(imagePath):boolean{
@@ -77,7 +86,7 @@ function PvpMenu() {
             </div>
 
             <div>
-                <Link className="link" to={toValue}>
+                <Link className="link" to={toValue} onClick={showLabel}>
                     Submit Player Sign and Name
                 </Link>
             </div>
