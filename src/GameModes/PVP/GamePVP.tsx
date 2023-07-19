@@ -1,8 +1,9 @@
 import {Grid} from "@mui/material";
 import {Link} from "react-router-dom";
-import "./GamePVP.css";
+//import "./GamePVP.css";
 import {Player, player1, player2} from "../../PlayableCharacters/Player.ts";
 import ReactConfetti from "react-confetti";
+import {GridContainer, Cell, CellImage, GridWrapper, ImgLbl, Label, Overlay, Popup, PopupButton, PopupHeader} from "./Styles.tsx";
 
 function GamePVP() {
     let currentSign = player1.sign;
@@ -107,25 +108,27 @@ function GamePVP() {
 
         return (
             <div className="grid-container">
-                <Grid className={"grid"} container spacing={1}>
-                    {cellIds.map((cellId) => (
-                        <Grid
-                            key={cellId}
-                            id={cellId}
-                            className={"cell"}
-                            onClick={() => handleCellClick(cellId)}
-                            item
-                            xs={3}
-                        >
-                            <img
-                                id={`image-${cellId}`}
-                                className={"cell-image"}
-                                src=""
-                                alt=""
-                            />
+                <GridContainer>
+                    <GridWrapper>
+                        <Grid className={"grid"} container spacing={1}>
+                            {cellIds.map((cellId) => (
+                                <Cell
+                                    key={cellId}
+                                    id={cellId}
+                                    className={"cell"}
+                                    onClick={() => handleCellClick(cellId)}
+                                >
+                                    <CellImage
+                                        id={`image-${cellId}`}
+                                        className={"cell-image"}
+                                        src=""
+                                        alt=""
+                                    />
+                                </Cell>
+                            ))}
                         </Grid>
-                    ))}
-                </Grid>
+                    </GridWrapper>
+                </GridContainer>
             </div>
         );
     }
@@ -171,45 +174,34 @@ function GamePVP() {
             <div className="grid-container">{createGrid()}</div>
 
             <div>
-                <label className={"label"} id={"currentPlayer"}>
-                    current player:
-                </label>
+                <Label id={"currentPlayer"}>current player: {currentName}</Label>
             </div>
 
             <div>
-                <label className={"label"} id={"currentSign"}>
-                    current sign: <img id="imgLbl" src="" alt=""/>
-                </label>
+                <Label id={"currentSign"}>
+                    current sign: <ImgLbl id="imgLbl" src={currentSign} alt="" />
+                </Label>
             </div>
             <div>
-                <label className={"label"} id={"scorePlayer1"}>
-                    player 1's score:
-                </label>
+                <Label id={"scorePlayer1"}>{player1.name}'s score: {player1.score}</Label>
             </div>
             <div>
-                <label className={"label"} id={"scorePlayer2"}>
-                    player 2's score:
-                </label>
+                <Label id={"scorePlayer2"}>{player2.name}'s score: {player2.score}</Label>
             </div>
 
-            <div id="overlay" className="overlay"></div>
+            <Overlay id="overlay">
+                <ReactConfetti id="conf" />
+            </Overlay>
 
-            <div>
-                <ReactConfetti id="conf">
-                </ReactConfetti>
-            </div>
-
-            <div id="winnerPopup" className="popup">
-                <h2 id="winnerText"></h2>
+            <Popup id="winnerPopup">
+                <PopupHeader id="winnerText" />
                 <Link to="/">
-                    <button type="button" id={"retMenuButton"}>
-                        back to menu
-                    </button>
+                    <PopupButton id={"retMenuButton"}>back to menu</PopupButton>
                 </Link>
-                <button id={"boardReseter"} onClick={resetBoard}>
+                <PopupButton id={"boardReseter"} onClick={resetBoard}>
                     reset grid
-                </button>
-            </div>
+                </PopupButton>
+            </Popup>
         </div>
     );
 }
