@@ -4,7 +4,7 @@ export const GridContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; /* Center the content horizontally */
   margin-top: 20px;
 `;
 
@@ -13,6 +13,9 @@ export const GridWrapper = styled.div`
   height: 300px;
   border: 2px solid #333;
   border-radius: 5px;
+  display: flex; /* Added to center the GridContainer vertically */
+  justify-content: center; /* Added to center the GridContainer vertically */
+  align-items: center; /* Added to center the GridContainer vertically */
 `;
 
 export const Cell = styled.div`
@@ -68,6 +71,7 @@ export const Popup = styled.div`
 export const PopupHeader = styled.h2`
   font-size: 24px;
   margin-bottom: 20px;
+  text-align: center; //to center the text in the header
 `;
 
 export const PopupButton = styled.button`

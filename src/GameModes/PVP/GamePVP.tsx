@@ -46,7 +46,7 @@ function GamePVP() {
         const currentNameLabel = document.getElementById("currentPlayer") as HTMLElement;
         const imgLbl = document.getElementById("imgLbl") as HTMLImageElement;
 
-        if (cell.innerText === "") {
+        if (cell.textContent === "") {
             let winnerText;
             const tieText = "it's a tie";
 
@@ -135,9 +135,9 @@ function GamePVP() {
 
     function labelUpdate(player1: Player, player2: Player) {
         const score1 = document.getElementById("scorePlayer1") as HTMLElement;
-        score1.innerText = player1.name + "'s score: " + player1.score;
+        score1.textContent = player1.name + "'s score: " + player1.score;
         const score2 = document.getElementById("scorePlayer2") as HTMLElement;
-        score2.innerText = player2.name + "'s score: " + player2.score;
+        score2.textContent = player2.name + "'s score: " + player2.score;
     }
 
     function showWinnerPopup(winnerText: string): void {
@@ -145,7 +145,7 @@ function GamePVP() {
         const overlay = document.getElementById("overlay") as HTMLElement;
         const winnerTextElement = document.getElementById("winnerText") as HTMLElement;
         const confetti = document.getElementById("conf") as HTMLElement;
-        winnerTextElement.innerText = winnerText;
+        winnerTextElement.textContent = winnerText;
         winnerPopup.style.display = "block";
         overlay.style.display = "block";
         confetti.style.opacity = '1';
