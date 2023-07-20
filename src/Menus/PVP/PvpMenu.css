@@ -12,6 +12,20 @@
     border-radius: 4px;
     font-weight: bold;
 }
+
 .link:hover {
     color: black;
+}
+
+.inputDiv {
+    justify-content: space-around; /*placed the label on opposite sides*/
+    width: 100%;
+}
+
+.signsDiv {
+    width: 50%;
+}
+
+.namesDiv {
+    width: 50%;
 }

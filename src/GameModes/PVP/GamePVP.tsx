@@ -1,9 +1,23 @@
 import {Grid} from "@mui/material";
 import {Link} from "react-router-dom";
 //import "./GamePVP.css";
-import {Player, player1, player2} from "../../PlayableCharacters/Player.ts";
+import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import ReactConfetti from "react-confetti";
-import {GridContainer, Cell, CellImage, GridWrapper, ImgLbl, Label, Overlay, Popup, PopupButton, PopupHeader} from "./Styles.tsx";
+import {
+    Cell,
+    CellImage,
+    GridContainer,
+    GridWrapper,
+    ImgLbl,
+    Label,
+    Overlay,
+    Player1Img,
+    Player2Img,
+    PlayerInfoDiv,
+    Popup,
+    PopupButton,
+    PopupHeader
+} from "./Styles.tsx";
 
 function GamePVP() {
     let currentSign = player1.sign;
@@ -67,7 +81,6 @@ function GamePVP() {
                 imgLbl.style.opacity = '1';
                 imgLbl.alt = currentSign;
             }
-            labelUpdate(player1, player2);
 
             const winSign = winCondition();
 
@@ -133,13 +146,6 @@ function GamePVP() {
         );
     }
 
-    function labelUpdate(player1: Player, player2: Player) {
-        const score1 = document.getElementById("scorePlayer1") as HTMLElement;
-        score1.textContent = player1.name + "'s score: " + player1.score;
-        const score2 = document.getElementById("scorePlayer2") as HTMLElement;
-        score2.textContent = player2.name + "'s score: " + player2.score;
-    }
-
     function showWinnerPopup(winnerText: string): void {
         const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
         const overlay = document.getElementById("overlay") as HTMLElement;
@@ -167,10 +173,24 @@ function GamePVP() {
         overlay.style.display = "none";
         const confetti = document.getElementById("conf") as HTMLElement;
         confetti.style.opacity = '0';
+        const player1Label = document.getElementById("player1Label") as HTMLElement;
+        const player2Label = document.getElementById("player2Label") as HTMLElement;
+        player1Label.innerHTML = <Player1Img src={player1.sign} alt="X"/> + player1.name + ": " + " - " + player1.score;
+        player2Label.innerHTML = <Player2Img src={player2.sign} alt="O"/> + player2.name + ": " + " - " + player2.score;
     }
 
     return (
         <div>
+
+            <PlayerInfoDiv>
+                <Label id="player1Label">
+                    <Player1Img id="player1Img" src={player1.sign} alt="X"/>: {player1.name} - {`${player1.score}`}
+                </Label>
+                <Label id="player2Label">
+                    <Player2Img id="player2Img" src={player2.sign} alt="O"/>: {player2.name} - {`${player2.score}`}
+                </Label>
+            </PlayerInfoDiv>
+
             <div className="grid-container">{createGrid()}</div>
 
             <div>
@@ -179,22 +199,16 @@ function GamePVP() {
 
             <div>
                 <Label id={"currentSign"}>
-                    current sign: <ImgLbl id="imgLbl" src={currentSign} alt="" />
+                    current sign: <ImgLbl id="imgLbl" src={currentSign} alt=""/>
                 </Label>
-            </div>
-            <div>
-                <Label id={"scorePlayer1"}>{player1.name}'s score: {player1.score}</Label>
-            </div>
-            <div>
-                <Label id={"scorePlayer2"}>{player2.name}'s score: {player2.score}</Label>
             </div>
 
             <Overlay id="overlay">
-                <ReactConfetti id="conf" />
+                <ReactConfetti id="conf"/>
             </Overlay>
 
             <Popup id="winnerPopup">
-                <PopupHeader id="winnerText" />
+                <PopupHeader id="winnerText"/>
                 <Link to="/">
                     <PopupButton id={"retMenuButton"}>back to menu</PopupButton>
                 </Link>
@@ -209,9 +223,7 @@ function GamePVP() {
 export default GamePVP;
 
 
-//TODO fix winCon
-//TODO find out why it doesnt work after reset
 //work with figma
 //fixed the image issue with opacity style attribute but need to find a better way, ask roy about it
 // instead document import the component with function components
-//read about styled components
+//TODO fix the score labels

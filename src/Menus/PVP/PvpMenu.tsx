@@ -69,20 +69,17 @@ function PvpMenu() {
 
     return (
         <>
-            <div>
-                <input id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
-            </div>
 
-            <div>
-                <input id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
-            </div>
+            <div className="inputDiv">
+                <div className="namesDiv">
+                    <input id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
+                    <input id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
+                </div>
 
-            <div>
-                <input id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
-            </div>
-
-            <div>
-                <input id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
+                <div className="signsDiv">
+                    <input id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
+                    <input id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
+                </div>
             </div>
 
             <div>
@@ -102,5 +99,5 @@ export default PvpMenu;
 player1;
 player2;
 
-//TODO fix the link button, find a way to change it's 'to' attribute
 //ask roy why it doesnt work if i refer to it with id
+//TODO fix the pos of the labels and divs to make them not touch and center the link between them

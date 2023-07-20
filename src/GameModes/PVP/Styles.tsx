@@ -33,15 +33,21 @@ export const Cell = styled.div`
 `;
 
 export const CellImage = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 100%;
+  height: 100%;
   opacity: 0;
+
+  /*&:hover {
+    opacity: 0.5;
+  }*/
 `;
 
 export const Label = styled.label`
   margin-top: 10px;
   font-size: 16px;
   font-weight: bold;
+  color: #1a1a1a;
+  display: flex;
 `;
 
 export const Overlay = styled.div`
@@ -98,3 +104,18 @@ export const ImgLbl = styled.img`
   height: 20px;
   margin-left: 5px;
 `;
+
+export const Player1Img = styled.img`
+  width: 20px;
+  height: 20px;
+`;
+
+export const Player2Img = styled.img`
+  width: 20px;
+  height: 20px;
+`;
+
+export const PlayerInfoDiv = styled.div`
+  display: flex;
+  justify-content: space-between; //placed the label on opposite sides
+`
