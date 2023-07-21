@@ -39,11 +39,13 @@ function PvpMenu() {
             if (player1.sign === "" || player2.sign === "") {
                 badInputText = "image not found, enter a different path";
                 badInputLabel.textContent = badInputText;
+                badInputLabel.style.opacity = '1.0';
                 setToValue('');
             }
             if (player1.name.length === 0 || player2.name.length === 0) {
                 badInputText = "players names not entered";
                 badInputLabel.textContent = badInputText;
+                badInputLabel.style.opacity = '1.0';
                 setToValue('');
             }
         } else {
@@ -68,30 +70,31 @@ function PvpMenu() {
     // }
 
     return (
-        <>
+        <div>
 
             <div className="inputDiv">
                 <div className="namesDiv">
                     <input id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
-                    <input id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
+                    <input id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
                 </div>
 
                 <div className="signsDiv">
-                    <input id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
+                    <input id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
                     <input id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
                 </div>
             </div>
 
-            <div>
+            <div className="linkDiv">
                 <Link className="link" to={toValue} onClick={showLabel}>
                     Submit Player Sign and Name
                 </Link>
             </div>
 
-            <div>
+            <div className="labelDiv">
                 <label id={"badInputLabel"}></label>
             </div>
-        </>
+
+        </div>
     );
 }
 

@@ -18,10 +18,13 @@ import {
     PopupButton,
     PopupHeader
 } from "./Styles.tsx";
+import {useState} from "react";
 
 function GamePVP() {
-    let currentSign = player1.sign;
-    let currentName = player1.name;
+    const [currentSign, setCurrentSign] = useState(player1.sign);
+    const [currentName, setCurrentName] = useState(player1.name);
+    const [p1score, setScoreP1] = useState(0);
+    const [p2score, setScoreP2] = useState(0);
     let countTurn = 0;
 
     function winCondition(): string {
@@ -61,9 +64,6 @@ function GamePVP() {
         const imgLbl = document.getElementById("imgLbl") as HTMLImageElement;
 
         if (cell.textContent === "") {
-            let winnerText;
-            const tieText = "it's a tie";
-
             const imageForSign = document.getElementById(`image-${cellId}`) as HTMLImageElement;
 
             if (imageForSign) {
@@ -72,8 +72,8 @@ function GamePVP() {
                 imageForSign.alt = currentSign;
             }
 
-            currentSign = currentSign === player1.sign ? player2.sign : player1.sign;
-            currentName = currentName === player1.name ? player2.name : player1.name;
+            setCurrentName(currentName === player1.name ? player2.name : player1.name);
+            setCurrentSign(currentSign === player1.sign ? player2.sign : player1.sign);
 
             currentNameLabel.textContent = "current player: " + currentName;
             if (imgLbl) {
@@ -88,28 +88,25 @@ function GamePVP() {
 
             if (winSign) {
                 if (winSign === player1.sign) {
-                    player1.score += 1;
+                    setScoreP1((prevScore) => prevScore + 1);
                     countTurn = 0;
-                    winnerText = player1.name + " is the winner";
-                    currentName = player2.name;
-                    currentSign = player2.sign;
-                    showWinnerPopup(winnerText);
-                }
-
-                if (winSign === player2.sign) {
-                    player2.score += 1;
+                    setCurrentName(player2.name);
+                    setCurrentSign(player2.sign);
+                    showWinnerPopup(player1.name + " is the winner");
+                } else if (winSign === player2.sign) {
+                    setScoreP2((prevScore) => prevScore + 1);
                     countTurn = 0;
-                    winnerText = player2.name + " is the winner";
-                    currentName = player1.name;
-                    currentSign = player1.sign;
-                    showWinnerPopup(winnerText);
+                    setCurrentName(player1.name);
+                    setCurrentSign(player1.sign);
+                    showWinnerPopup(player2.name + " is the winner");
                 }
             }
 
-            if (countTurn === 9) {
+            else if (countTurn === 9) {
                 countTurn = 0;
-                showWinnerPopup(tieText);
-                currentName = currentName === player1.name ? player2.name : player1.name;
+                showWinnerPopup("it's a tie");
+                setCurrentName(currentName === player1.name ? player2.name : player1.name);
+                setCurrentSign(currentSign === player1.sign ? player2.sign : player1.sign);
             }
         }
 
@@ -169,25 +166,27 @@ function GamePVP() {
         }
         const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
         winnerPopup.style.display = "none";
+
         const overlay = document.getElementById("overlay") as HTMLElement;
         overlay.style.display = "none";
+
         const confetti = document.getElementById("conf") as HTMLElement;
         confetti.style.opacity = '0';
-        const player1Label = document.getElementById("player1Label") as HTMLElement;
-        const player2Label = document.getElementById("player2Label") as HTMLElement;
-        player1Label.innerHTML = <Player1Img src={player1.sign} alt="X"/> + player1.name + ": " + " - " + player1.score;
-        player2Label.innerHTML = <Player2Img src={player2.sign} alt="O"/> + player2.name + ": " + " - " + player2.score;
+
+        const player1Img = document.getElementById("player1Img") as HTMLImageElement;
+        player1Img.src = player1.sign;
+        const player2Img = document.getElementById("player2Img") as HTMLImageElement;
+        player2Img.src = player2.sign;
     }
 
     return (
         <div>
-
             <PlayerInfoDiv>
                 <Label id="player1Label">
-                    <Player1Img id="player1Img" src={player1.sign} alt="X"/>: {player1.name} - {`${player1.score}`}
+                    <Player1Img id="player1Img" src={player1.sign} alt="X"/>: {player1.name} - {p1score}
                 </Label>
                 <Label id="player2Label">
-                    <Player2Img id="player2Img" src={player2.sign} alt="O"/>: {player2.name} - {`${player2.score}`}
+                    <Player2Img id="player2Img" src={player2.sign} alt="O"/>: {player2.name} - {p2score}
                 </Label>
             </PlayerInfoDiv>
 
@@ -226,4 +225,4 @@ export default GamePVP;
 //work with figma
 //fixed the image issue with opacity style attribute but need to find a better way, ask roy about it
 // instead document import the component with function components
-//TODO fix the score labels
+//TODO fix the grid location

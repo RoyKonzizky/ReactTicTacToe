@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const GridContainer = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center; /* Center the content horizontally */
   margin-top: 20px;
@@ -36,10 +35,6 @@ export const CellImage = styled.img`
   width: 100%;
   height: 100%;
   opacity: 0;
-
-  /*&:hover {
-    opacity: 0.5;
-  }*/
 `;
 
 export const Label = styled.label`
