@@ -1,13 +1,19 @@
-#badInputLabel {
+.errorLabel{
+    visibility: hidden;
+    min-height: 1em;
+    position: relative;
+    display: inline-block;
     color: red;
-    opacity: 0;
+}
+
+.visible {
+    visibility: visible;
 }
 
 .labelDiv{
     justify-content: center;
     display: inline-block;
 }
-/*TODO find a way to center this label*/
 
 .linkDiv{
     display: flex;
@@ -27,6 +33,13 @@
 
 .link:hover {
     color: black;
+}
+
+.divLinkLabel {
+    display: flex;/* Use flexbox to create a flexible container */
+    flex-direction: column;/* Set the main axis direction to vertical, so items are stacked vertically */
+    align-items: center;/* Align items (link and label) horizontally at the center of the container */
+    text-align: center;/* Center the text content of the flex items (label) horizontally */
 }
 
 .inputDiv {

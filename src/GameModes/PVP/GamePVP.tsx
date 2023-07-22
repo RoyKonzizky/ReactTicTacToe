@@ -1,6 +1,5 @@
 import {Grid} from "@mui/material";
 import {Link} from "react-router-dom";
-//import "./GamePVP.css";
 import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import ReactConfetti from "react-confetti";
 import {
@@ -26,7 +25,6 @@ function GamePVP() {
     const [p1score, setScoreP1] = useState(0);
     const [p2score, setScoreP2] = useState(0);
     let countTurn = 0;
-
     function winCondition(): string {
         const cellValues: string[] = [];
         const cells: HTMLCollectionOf<Element> = document.getElementsByClassName("cell-image");
@@ -120,7 +118,7 @@ function GamePVP() {
             <div className="grid-container">
                 <GridContainer>
                     <GridWrapper>
-                        <Grid className={"grid"} container spacing={1}>
+                        <Grid sx={{width: "82%", marginLeft:"0",marginTop:"0"}} container spacing={2}>
                             {cellIds.map((cellId) => (
                                 <Cell
                                     key={cellId}
@@ -156,7 +154,7 @@ function GamePVP() {
 
     function resetBoard() {
         const cells = document.getElementsByClassName("cell");
-        for (let i = 0; i < cells.length; i++) {
+        for (let i = 0; i < cells.length; i++) { //change to for each
             const cell = cells[i] as HTMLElement;
             cell.style.pointerEvents = 'auto';
             const img = document.getElementById(`image-${i}`) as HTMLImageElement;

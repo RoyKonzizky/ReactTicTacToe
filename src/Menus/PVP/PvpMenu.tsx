@@ -4,9 +4,9 @@ import {Link} from "react-router-dom";
 import {useState} from "react";
 
 function PvpMenu() {
-    let badInputText = "";
+   // let badInputText = "";
     const [toValue, setToValue] = useState('');
-
+    const [error,setError] = useState('');
     function submitPlayers() {
         player1.name = (document.getElementById("player1Name") as HTMLInputElement).value;
         player2.name = (document.getElementById("player2Name") as HTMLInputElement).value;
@@ -27,8 +27,6 @@ function PvpMenu() {
     }
 
     function checkInput() {
-        const badInputLabel = document.getElementById("badInputLabel") as HTMLElement;
-
         // if (imageExists(player1.sign) || imageExists(player2.sign)) {
         //     badInputText = "image not found, enter a different path";
         //     badInputLabel.textContent = badInputText;
@@ -37,15 +35,11 @@ function PvpMenu() {
 
         if (player1.name.length === 0 || player2.name.length === 0 || player1.sign === "" || player2.sign === "") {
             if (player1.sign === "" || player2.sign === "") {
-                badInputText = "image not found, enter a different path";
-                badInputLabel.textContent = badInputText;
-                badInputLabel.style.opacity = '1.0';
+                setError("image not found, enter a different path");
                 setToValue('');
             }
             if (player1.name.length === 0 || player2.name.length === 0) {
-                badInputText = "players names not entered";
-                badInputLabel.textContent = badInputText;
-                badInputLabel.style.opacity = '1.0';
+                setError("players names not entered");
                 setToValue('');
             }
         } else {
@@ -55,10 +49,9 @@ function PvpMenu() {
     }
 
     function showLabel() {
-        const badInputLabel = document.getElementById("badInputLabel") as HTMLElement;
-        if (toValue === "" && badInputLabel.textContent === "") {
-            badInputText = "input not entered";
-            badInputLabel.textContent = badInputText;
+        if (toValue === "" &&!error) {
+            setError( "input not entered");
+
         }
     }
 
@@ -84,14 +77,18 @@ function PvpMenu() {
                 </div>
             </div>
 
-            <div className="linkDiv">
-                <Link className="link" to={toValue} onClick={showLabel}>
-                    Submit Player Sign and Name
-                </Link>
-            </div>
+            <div className="divLinkLabel">
+                <div className="linkDiv">
+                    <Link className="link" to={toValue} onClick={showLabel}>
+                        Submit Player Sign and Name
+                    </Link>
+                </div>
 
-            <div className="labelDiv">
-                <label id={"badInputLabel"}></label>
+                <div className={"labelDiv"}>
+                    <label className={error?"errorLabel visible":"errorLabel"}>
+                        {error}
+                    </label>
+                </div>
             </div>
 
         </div>
