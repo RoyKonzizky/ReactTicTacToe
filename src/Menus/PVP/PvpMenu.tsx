@@ -4,9 +4,10 @@ import {Link} from "react-router-dom";
 import {useState} from "react";
 
 function PvpMenu() {
-   // let badInputText = "";
+
     const [toValue, setToValue] = useState('');
-    const [error,setError] = useState('');
+    const [error, setError] = useState('');
+
     function submitPlayers() {
         player1.name = (document.getElementById("player1Name") as HTMLInputElement).value;
         player2.name = (document.getElementById("player2Name") as HTMLInputElement).value;
@@ -27,21 +28,29 @@ function PvpMenu() {
     }
 
     function checkInput() {
-        // if (imageExists(player1.sign) || imageExists(player2.sign)) {
-        //     badInputText = "image not found, enter a different path";
-        //     badInputLabel.textContent = badInputText;
-        //     return;
-        // }
+        checkIfImageExists(player1.sign, (existsP1) => {
+            if (existsP1) {
+                setToValue('/gamepvp');
+                setError('');
+            } else {
+                setError("Image not found. Player1, enter a different path");
+                setToValue('');
+            }
+        });
 
-        if (player1.name.length === 0 || player2.name.length === 0 || player1.sign === "" || player2.sign === "") {
-            if (player1.sign === "" || player2.sign === "") {
-                setError("image not found, enter a different path");
+        checkIfImageExists(player2.sign, (existsP2) => {
+            if (existsP2) {
+                setToValue('/gamepvp');
+                setError('');
+            } else {
+                setError("Image not found. Player2, enter a different path");
                 setToValue('');
             }
-            if (player1.name.length === 0 || player2.name.length === 0) {
-                setError("players names not entered");
-                setToValue('');
-            }
+        });
+
+        if (player1.name.length === 0 || player2.name.length === 0) {
+            setError("players names not entered");
+            setToValue('');
         } else {
             setToValue('/gamepvp');
         }
@@ -49,18 +58,27 @@ function PvpMenu() {
     }
 
     function showLabel() {
-        if (toValue === "" &&!error) {
-            setError( "input not entered");
-
+        if (toValue === "" && !error) {
+            setError("input not entered");
         }
     }
 
-    // function imageExists(imagePath):boolean{
-    //     if(){
-    //         return true;
-    //     }
-    //     return false
-    // }
+    const checkIfImageExists = (url: string, callback: (exists: boolean) => void) => {
+        const img = new Image();
+        img.src = url;
+
+        if (img.complete) {
+            callback(true);
+        } else {
+            img.onload = () => {
+                callback(true);
+            };
+
+            img.onerror = () => {
+                callback(false);
+            };
+        }
+    };
 
     return (
         <div>
@@ -85,7 +103,7 @@ function PvpMenu() {
                 </div>
 
                 <div className={"labelDiv"}>
-                    <label className={error?"errorLabel visible":"errorLabel"}>
+                    <label className={error ? "errorLabel visible" : "errorLabel"}>
                         {error}
                     </label>
                 </div>
@@ -98,6 +116,3 @@ function PvpMenu() {
 export default PvpMenu;
 player1;
 player2;
-
-//ask roy why it doesnt work if i refer to it with id
-//TODO fix the pos of the labels and divs to make them not touch and center the link between them

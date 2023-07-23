@@ -1,28 +1,24 @@
 import "./App.css";
-import { Link } from "react-router-dom";
-import rockleevsgaara from "../assets/rocklee_vs_gaara.jpg";
-import humansvsrobots from "../assets/humans-vs-robots.jpg";
+import {Link} from "react-router-dom";
+import smallPC from "../assets/smallPC.jpg";
+import fightImg from "../assets/fightImg.webp";
 
 function App() {
-  return (
-    <div className={"main"}>
-      <div className={"main"}>
-        <button className={"buttons"}>
-          <Link className={"links"} to="/pvpmenu">
-            <img className={"images"} src={rockleevsgaara} alt="PvP" />
-          </Link>
-        </button>
-      </div>
+    return (
+        <div className={"main"}>
+            <div className={"main"}>
+                <Link className={"links"} to="/pvpmenu">
+                    <img className={"images"} src={fightImg} alt="PvP"/>
+                </Link>
+            </div>
 
-      <div className={"main"}>
-        <button className={"buttons"}>
-          <Link className={"links"} to="/cpumenu">
-            <img className={"images"} src={humansvsrobots} alt="PvPC" />
-          </Link>
-        </button>
-      </div>
-    </div>
-  );
+            <div className={"main"}>
+                <Link className={"links"} to="/cpumenu">
+                    <img className={"images"} src={smallPC} alt="PvPC"/>
+                </Link>
+            </div>
+        </div>
+    );
 }
 
 export default App;

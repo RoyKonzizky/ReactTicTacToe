@@ -5,6 +5,8 @@ import ReactConfetti from "react-confetti";
 import {
     Cell,
     CellImage,
+    CurrLabelName,
+    CurrLabelSign,
     GridContainer,
     GridWrapper,
     ImgLbl,
@@ -25,6 +27,7 @@ function GamePVP() {
     const [p1score, setScoreP1] = useState(0);
     const [p2score, setScoreP2] = useState(0);
     let countTurn = 0;
+
     function winCondition(): string {
         const cellValues: string[] = [];
         const cells: HTMLCollectionOf<Element> = document.getElementsByClassName("cell-image");
@@ -98,9 +101,7 @@ function GamePVP() {
                     setCurrentSign(player1.sign);
                     showWinnerPopup(player2.name + " is the winner");
                 }
-            }
-
-            else if (countTurn === 9) {
+            } else if (countTurn === 9) {
                 countTurn = 0;
                 showWinnerPopup("it's a tie");
                 setCurrentName(currentName === player1.name ? player2.name : player1.name);
@@ -118,7 +119,7 @@ function GamePVP() {
             <div className="grid-container">
                 <GridContainer>
                     <GridWrapper>
-                        <Grid sx={{width: "82%", marginLeft:"0",marginTop:"0"}} container spacing={2}>
+                        <Grid sx={{width: "82%", marginLeft: "0", marginTop: "0"}} container spacing={2}>
                             {cellIds.map((cellId) => (
                                 <Cell
                                     key={cellId}
@@ -190,15 +191,14 @@ function GamePVP() {
 
             <div className="grid-container">{createGrid()}</div>
 
-            <div>
+            <CurrLabelName>
                 <Label id={"currentPlayer"}>current player: {currentName}</Label>
-            </div>
-
-            <div>
+            </CurrLabelName>
+            <CurrLabelSign>
                 <Label id={"currentSign"}>
                     current sign: <ImgLbl id="imgLbl" src={currentSign} alt=""/>
                 </Label>
-            </div>
+            </CurrLabelSign>
 
             <Overlay id="overlay">
                 <ReactConfetti id="conf"/>

@@ -114,3 +114,13 @@ export const PlayerInfoDiv = styled.div`
   display: flex;
   justify-content: space-between; //placed the label on opposite sides
 `
+
+export const CurrLabelName = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
+export const CurrLabelSign = styled.div`
+  display: flex;
+  justify-content: center;
+`
