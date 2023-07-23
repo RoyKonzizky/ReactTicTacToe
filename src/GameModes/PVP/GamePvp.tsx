@@ -221,6 +221,3 @@ export default GamePvp;
 
 
 //work with figma
-//fixed the image issue with opacity style attribute but need to find a better way, ask roy about it
-// instead document import the component with function components
-//TODO fix the grid location

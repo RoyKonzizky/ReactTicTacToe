@@ -1,19 +1,19 @@
-import "./App.css";
 import {Link} from "react-router-dom";
-import smallPC from "../assets/smallPC.jpg";
+import {Image, Main} from "./App.Styles.ts";
+import smallPC from "../assets/smallPC.avif";
 import fightImg from "../assets/fightImg.webp";
 
 function App() {
     return (
-        <div className={"main"}>
+        <Main>
             <Link className={"links"} to="/pvpmenu">
-                <img className={"images"} src={fightImg} alt="PvP"/>
+                <Image className={"images"} src={fightImg} alt="PvP"/>
             </Link>
 
             <Link className={"links"} to="/cpumenu">
-                <img className={"images"} src={smallPC} alt="PvPC"/>
+                <Image className={"images"} src={smallPC} alt="PvPC"/>
             </Link>
-        </div>
+        </Main>
     );
 }
 
