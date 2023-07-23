@@ -1,13 +1,23 @@
 import {player1, player2} from "../../PlayableCharacters/Player.ts";
-import {Link} from "react-router-dom";
 import {useState} from "react";
-import {DivLinkLabel, ErrorLabel, InputDiv, LabelDiv, LinkDiv, NamesDiv, SignsDiv} from "./PvpMenu.Styled.ts";
-import "./PvpMenu.css"
+import {
+    DivLinkLabel,
+    ErrorLabel,
+    InputDiv,
+    LabelDiv,
+    LinkDiv,
+    Player1Div,
+    Player2Div,
+    CustomLink,
+    Container
+} from "./PvpMenu.Styled.ts";
 
 function PvpMenu() {
 
     const [toValue, setToValue] = useState('');
     const [error, setError] = useState('');
+    const [p1Check, setP1Check] = useState(false);
+    const [p2Check, setP2Check] = useState(false);
 
     function submitPlayers() {
         player1.name = (document.getElementById("player1Name") as HTMLInputElement).value;
@@ -21,9 +31,11 @@ function PvpMenu() {
 
         if (player1.sign === "") {
             player1.sign = "X.svg.png";
+            setP1Check(true);
         }
         if (player2.sign === "") {
             player2.sign = "o.png";
+            setP2Check(true);
         }
         checkInput();
     }
@@ -31,31 +43,33 @@ function PvpMenu() {
     function checkInput() {
         checkIfImageExists(player1.sign, (existsP1) => {
             if (existsP1) {
-                setToValue('/gamepvp');
-                setError('');
+                setP1Check(true);
             } else {
-                setError("Image not found. Player1, enter a different path");
+                setP1Check(false);
                 setToValue('');
+                setError("player1, change image path");
             }
         });
 
         checkIfImageExists(player2.sign, (existsP2) => {
             if (existsP2) {
-                setToValue('/gamepvp');
-                setError('');
+                setP2Check(true);
             } else {
-                setError("Image not found. Player2, enter a different path");
+                setP2Check(false);
                 setToValue('');
+                setError("player2, change image path");
             }
         });
 
         if (player1.name.length === 0 || player2.name.length === 0) {
             setError("players names not entered");
             setToValue('');
-        } else {
-            setToValue('/gamepvp');
         }
 
+        if (player1.name.length > 0 && player2.name.length > 0 && p1Check && p2Check){
+            setToValue('/gamepvp');
+            setError('');
+        }
     }
 
     function showLabel() {
@@ -83,27 +97,29 @@ function PvpMenu() {
 
     return (
         <div>
+            <Container>
+                <InputDiv>
+                    <Player1Div className="namesDiv">
+                        <input id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
+                        <input id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
+                    </Player1Div>
 
-            <InputDiv className="inputDiv">
-                <NamesDiv className="namesDiv">
-                    <input id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
-                    <input id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
-                </NamesDiv>
+                    <Player2Div>
+                        <input id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
+                        <input id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
+                    </Player2Div>
+                </InputDiv>
+            </Container>
 
-                <SignsDiv className="signsDiv">
-                    <input id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
-                    <input id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
-                </SignsDiv>
-            </InputDiv>
 
-            <DivLinkLabel className="divLinkLabel">
+            <DivLinkLabel>
                 <LinkDiv className="linkDiv">
-                    <Link className="link" to={toValue} onClick={showLabel}>
+                    <CustomLink className="link" to={toValue} onClick={showLabel}>
                         Submit Player Sign and Name
-                    </Link>
+                    </CustomLink>
                 </LinkDiv>
 
-                <LabelDiv className={"labelDiv"}>
+                <LabelDiv>
                     <ErrorLabel className={error ? "errorLabel visible" : "errorLabel"}>
                         {error}
                     </ErrorLabel>
@@ -117,3 +133,5 @@ function PvpMenu() {
 export default PvpMenu;
 player1;
 player2;
+
+//TODO fix the bug with the default signs not coming back unless changing the name

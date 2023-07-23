@@ -1,7 +1,7 @@
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 export const ErrorLabel = styled.label`
-  visibility: hidden;
   min-height: 1em;
   position: relative;
   display: inline-block;
@@ -31,15 +31,43 @@ export const InputDiv = styled.div`
   margin: 10px;
 `
 
-export const SignsDiv = styled.div`
+export const Player1Div = styled.div`
   display: grid;
   width: 50%;
   margin: 10px;
+  max-width: 400px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `
 
-export const NamesDiv = styled.div`
+export const Player2Div = styled.div`
   display: grid;
   width: 50%;
   margin: 10px;
+  max-width: 400px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `
 
+export const CustomLink = styled(Link)`
+  pointer-events: auto;
+  color: black;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4285f4;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+
+  &:hover {
+    color: black;
+  }
+`
+export const Container = styled.div`
+  max-width: 400px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+`
