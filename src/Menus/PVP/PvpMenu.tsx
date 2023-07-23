@@ -1,7 +1,8 @@
-import "./PvpMenu.css";
 import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import {DivLinkLabel, ErrorLabel, InputDiv, LabelDiv, LinkDiv, NamesDiv, SignsDiv} from "./PvpMenu.Styled.ts";
+import "./PvpMenu.css"
 
 function PvpMenu() {
 
@@ -83,31 +84,31 @@ function PvpMenu() {
     return (
         <div>
 
-            <div className="inputDiv">
-                <div className="namesDiv">
+            <InputDiv className="inputDiv">
+                <NamesDiv className="namesDiv">
                     <input id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
                     <input id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
-                </div>
+                </NamesDiv>
 
-                <div className="signsDiv">
+                <SignsDiv className="signsDiv">
                     <input id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
                     <input id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
-                </div>
-            </div>
+                </SignsDiv>
+            </InputDiv>
 
-            <div className="divLinkLabel">
-                <div className="linkDiv">
+            <DivLinkLabel className="divLinkLabel">
+                <LinkDiv className="linkDiv">
                     <Link className="link" to={toValue} onClick={showLabel}>
                         Submit Player Sign and Name
                     </Link>
-                </div>
+                </LinkDiv>
 
-                <div className={"labelDiv"}>
-                    <label className={error ? "errorLabel visible" : "errorLabel"}>
+                <LabelDiv className={"labelDiv"}>
+                    <ErrorLabel className={error ? "errorLabel visible" : "errorLabel"}>
                         {error}
-                    </label>
-                </div>
-            </div>
+                    </ErrorLabel>
+                </LabelDiv>
+            </DivLinkLabel>
 
         </div>
     );

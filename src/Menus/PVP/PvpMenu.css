@@ -1,25 +1,3 @@
-.errorLabel{
-    visibility: hidden;
-    min-height: 1em;
-    position: relative;
-    display: inline-block;
-    color: red;
-}
-
-.visible {
-    visibility: visible;
-}
-
-.labelDiv{
-    justify-content: center;
-    display: inline-block;
-}
-
-.linkDiv{
-    display: flex;
-    justify-content: center;
-}
-
 .link {
     pointer-events: auto;
     color: black;
@@ -33,29 +11,4 @@
 
 .link:hover {
     color: black;
-}
-
-.divLinkLabel {
-    display: flex;/* Use flexbox to create a flexible container */
-    flex-direction: column;/* Set the main axis direction to vertical, so items are stacked vertically */
-    align-items: center;/* Align items (link and label) horizontally at the center of the container */
-    text-align: center;/* Center the text content of the flex items (label) horizontally */
-}
-
-.inputDiv {
-    display: flex; /*with this the line below doesnt work*/
-    justify-content: space-evenly; /*placed the label on opposite sides*/
-    margin: 10px;
-}
-
-.signsDiv {
-    display: grid;
-    width: 50%;
-    margin: 10px;
-}
-
-.namesDiv {
-    display: grid;
-    width: 50%;
-    margin: 10px;
 }
