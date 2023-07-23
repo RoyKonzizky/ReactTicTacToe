@@ -18,10 +18,10 @@ import {
     Popup,
     PopupButton,
     PopupHeader
-} from "./Styles.tsx";
+} from "./GamePvp.Styles.ts";
 import {useState} from "react";
 
-function GamePVP() {
+function GamePvp() {
     const [currentSign, setCurrentSign] = useState(player1.sign);
     const [currentName, setCurrentName] = useState(player1.name);
     const [p1score, setScoreP1] = useState(0);
@@ -217,7 +217,7 @@ function GamePVP() {
     );
 }
 
-export default GamePVP;
+export default GamePvp;
 
 
 //work with figma

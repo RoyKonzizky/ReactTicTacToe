@@ -6,17 +6,13 @@ import fightImg from "../assets/fightImg.webp";
 function App() {
     return (
         <div className={"main"}>
-            <div className={"main"}>
-                <Link className={"links"} to="/pvpmenu">
-                    <img className={"images"} src={fightImg} alt="PvP"/>
-                </Link>
-            </div>
+            <Link className={"links"} to="/pvpmenu">
+                <img className={"images"} src={fightImg} alt="PvP"/>
+            </Link>
 
-            <div className={"main"}>
-                <Link className={"links"} to="/cpumenu">
-                    <img className={"images"} src={smallPC} alt="PvPC"/>
-                </Link>
-            </div>
+            <Link className={"links"} to="/cpumenu">
+                <img className={"images"} src={smallPC} alt="PvPC"/>
+            </Link>
         </div>
     );
 }

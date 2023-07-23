@@ -5,34 +5,34 @@ import PvpMenu from './Menus/PVP/PvpMenu.tsx'
 import './index.css'
 import App from "./App/App.tsx";
 import CpuMenu from "./Menus/CPU/CpuMenu.tsx";
-import GamePVP from "./GameModes/PVP/GamePVP.tsx";
+import GamePvp from "./GameModes/PVP/GamePvp.tsx";
 import GameCPU from "./GameModes/CPU/GameCPU.tsx";
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <App />,
+        element: <App/>,
     },
     {
         path: '/PvpMenu',
-        element: <PvpMenu />,
+        element: <PvpMenu/>,
     },
     {
         path: '/CpuMenu',
-        element: <CpuMenu />,
+        element: <CpuMenu/>,
     },
     {
-        path: '/GamePVP',
-        element: <GamePVP />,
+        path: '/GamePvp',
+        element: <GamePvp/>,
     },
     {
         path: '/GameCPU',
-        element: <GameCPU />,
+        element: <GameCPU/>,
     },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <StrictMode>
-        <RouterProvider router={router} />
+        <RouterProvider router={router}/>
     </StrictMode>
 );
