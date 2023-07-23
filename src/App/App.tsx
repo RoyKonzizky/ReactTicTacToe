@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {Image, Main} from "./App.Styles.ts";
-import smallPC from "../assets/smallPC.avif";
+import smallPC from "../assets/smallPC.jpg";
 import fightImg from "../assets/fightImg.webp";
 
 function App() {
