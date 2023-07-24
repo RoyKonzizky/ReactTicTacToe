@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import {GameModes, Image, Main, ScoreDiv} from "./App.Styles.ts";
 import smallPC from "../assets/smallPC.jpg";
-import fightImg from "../assets/fightImg.webp";
+import fightImg from "../assets/FightImg.webp";
 import podiumImg from "../assets/podiumImg.png";
 
 function App() {

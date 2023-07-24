@@ -11,6 +11,7 @@ export const ErrorLabel = styled.label`
 export const LabelDiv = styled.div`
   justify-content: center;
   display: inline-block;
+  background-color: white;
 `
 
 export const LinkDiv = styled.div`
