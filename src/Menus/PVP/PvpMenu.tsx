@@ -1,15 +1,15 @@
 import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import {useState} from "react";
 import {
+    Container,
+    CustomLink,
     DivLinkLabel,
     ErrorLabel,
     InputDiv,
     LabelDiv,
     LinkDiv,
     Player1Div,
-    Player2Div,
-    CustomLink,
-    Container
+    Player2Div
 } from "./PvpMenu.Styled.ts";
 
 function PvpMenu() {
@@ -66,10 +66,13 @@ function PvpMenu() {
             setToValue('');
         }
 
-        if (player1.name.length > 0 && player2.name.length > 0 && p1Check && p2Check){
+        if (player1.name.length > 0 && player2.name.length > 0 && p1Check && p2Check) {
             setToValue('/gamepvp');
             setError('');
         }
+        // console.log(player1.sign);
+        // console.log(p1Check);
+        // //Problem: when empty hook returns false
     }
 
     function showLabel() {
@@ -100,13 +103,21 @@ function PvpMenu() {
             <Container>
                 <InputDiv>
                     <Player1Div className="namesDiv">
-                        <input id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
-                        <input id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
+                        <input id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}
+                            // onClick={submitPlayers}
+                        />
+                        <input id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}
+                            // onClick={submitPlayers}
+                        />
                     </Player1Div>
 
                     <Player2Div>
-                        <input id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
-                        <input id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
+                        <input id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}
+                            // onClick={submitPlayers}
+                        />
+                        <input id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}
+                            // onClick={submitPlayers}
+                        />
                     </Player2Div>
                 </InputDiv>
             </Container>

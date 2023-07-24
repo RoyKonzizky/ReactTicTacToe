@@ -1,10 +1,20 @@
 import "./LeaderBoard.css"
 import "./LeaderBoard.Styled.ts"
-import {player1, player2} from "../PlayableCharacters/Player.ts";
+
+// import {useEffect, useState} from "react";
 
 function LeaderBoard() {
+    // const [playersData, setPlayersData] = useState(null);
+
+    // useEffect(() => {
+    //     // Fetch the players data from the JSON file
+    //     fetch("./playersData.json")
+    //         .then((response) => response.json())
+    //         .then((data) => setPlayersData(data))
+    //         .catch((error) => console.error("Error fetching players data:", error));
+    // }, []);
+
     function createTable() {
-        const listOfPlayers = [[player1.name, player1.score], [player2.name, player2.score]];
         return (
             <table>
                 <thead>
@@ -13,15 +23,12 @@ function LeaderBoard() {
                     <th className="contents">Player Score</th>
                 </tr>
                 </thead>
-
-                {listOfPlayers.map((player) => (
-                    <tbody key={player[0]}>
-                    <tr>
-                        <th>{player[0]}</th>
-                        <th>{player[1]}</th>
-                    </tr>
-                    </tbody>
-                ))}
+                {/*{Object.entries(playersData).map(([playerId, player]) => (*/}
+                {/*    <tr key={playerId}>*/}
+                {/*        <td>{player.name}</td>*/}
+                {/*        <td>{player.score}</td>*/}
+                {/*    </tr>*/}
+                {/*))}*/}
             </table>
         );
     }

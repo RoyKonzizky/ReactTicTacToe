@@ -26,7 +26,7 @@ function GamePvp() {
     const [currentName, setCurrentName] = useState(player1.name);
     const [p1score, setScoreP1] = useState(0);
     const [p2score, setScoreP2] = useState(0);
-    let countTurn = 0;
+    const [count, setCount] = useState(0);
 
     function winCondition(): string {
         const cellValues: string[] = [];
@@ -85,26 +85,27 @@ function GamePvp() {
 
             const winSign = winCondition();
 
-            countTurn++;
+            setCount(count + 1);
+            console.log(count);
 
             if (winSign) {
                 if (winSign === player1.sign) {
                     setScoreP1((prevScore) => prevScore + 1);
                     player1.score = p1score;
-                    countTurn = 0;
+                    setCount(0);
                     setCurrentName(player2.name);
                     setCurrentSign(player2.sign);
                     showWinnerPopup(player1.name + " is the winner");
                 } else if (winSign === player2.sign) {
                     setScoreP2((prevScore) => prevScore + 1);
                     player2.score = p2score;
-                    countTurn = 0;
+                    setCount(0);
                     setCurrentName(player1.name);
                     setCurrentSign(player1.sign);
                     showWinnerPopup(player2.name + " is the winner");
                 }
-            } else if (countTurn === 9) {
-                countTurn = 0;
+            } else if (count === 8) {
+                setCount(0);
                 showWinnerPopup("it's a tie");
                 setCurrentName(currentName === player1.name ? player2.name : player1.name);
                 setCurrentSign(currentSign === player1.sign ? player2.sign : player1.sign);
