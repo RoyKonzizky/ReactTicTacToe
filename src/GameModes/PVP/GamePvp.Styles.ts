@@ -4,7 +4,7 @@ export const GridContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center; /* Center the content horizontally */
-  margin-top: 20px;
+  margin-top: 2vh;
 `;
 
 export const GridWrapper = styled.div`
@@ -38,7 +38,7 @@ export const CellImage = styled.img`
 `;
 
 export const Label = styled.label`
-  margin-top: 10px;
+  margin-top: 1vh;
   font-size: 16px;
   font-weight: bold;
   color: #1a1a1a;
@@ -63,7 +63,7 @@ export const Popup = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  padding: 20px;
+  padding: 2vh;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   z-index: 1000;
@@ -71,13 +71,13 @@ export const Popup = styled.div`
 
 export const PopupHeader = styled.h2`
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 2vh;
   text-align: center; //to center the text in the header
 `;
 
 export const PopupButton = styled.button`
-  padding: 10px 20px;
-  margin-top: 10px;
+  padding: 1vh 2vh;
+  margin-top: 1vh;
   font-size: 16px;
   cursor: pointer;
   border: none;
@@ -86,7 +86,7 @@ export const PopupButton = styled.button`
 
   &:first-child {
     background-color: #4caf50;
-    margin-right: 10px;
+    margin-right: 1vh;
   }
 
   &:last-child {
@@ -95,19 +95,19 @@ export const PopupButton = styled.button`
 `;
 
 export const ImgLbl = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 2vh;
+  height: 2vh;
   margin-left: 5px;
 `;
 
 export const Player1Img = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 2vh;
+  height: 2vh;
 `;
 
 export const Player2Img = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 2vh;
+  height: 2vh;
 `;
 
 export const PlayerInfoDiv = styled.div`

@@ -26,36 +26,36 @@ export const DivLinkLabel = styled.div`
 `
 
 export const InputDiv = styled.div`
-  display: flex; /*with this the line below doesnt work*/
+  display: flex; /*without this the line below doesnt work*/
   justify-content: space-evenly; /*placed the label on opposite sides*/
-  margin: 10px;
+  margin: 1vh;
 `
 
 export const Player1Div = styled.div`
   display: grid;
   width: 50%;
-  margin: 10px;
-  max-width: 400px;
+  margin: 1vh;
+  max-width: 40vw;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
 `
 
 export const Player2Div = styled.div`
   display: grid;
   width: 50%;
-  margin: 10px;
-  max-width: 400px;
+  margin: 1vh;
+  max-width: 40vw;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
 `
 
 export const CustomLink = styled(Link)`
   pointer-events: auto;
   color: black;
   display: inline-block;
-  padding: 10px 20px;
+  padding: 1vh 2vw;
   background-color: #4285f4;
   text-decoration: none;
   border-radius: 4px;
@@ -66,8 +66,12 @@ export const CustomLink = styled(Link)`
   }
 `
 export const Container = styled.div`
-  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  max-width: 55vw;
+  max-height: 10vh;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
+  margin-bottom: 1vh;
 `

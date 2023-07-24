@@ -1,0 +1,22 @@
+table {
+    border: 2px solid forestgreen;
+    width: 80vw;
+    height: 20vh;
+}
+
+th {
+    border: 1px solid black;
+    color: black;
+}
+
+td {
+    text-align: center;
+}
+
+.HeadDiv {
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

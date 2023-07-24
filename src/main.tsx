@@ -6,7 +6,8 @@ import './index.css'
 import App from "./App/App.tsx";
 import CpuMenu from "./Menus/CPU/CpuMenu.tsx";
 import GamePvp from "./GameModes/PVP/GamePvp.tsx";
-import GameCPU from "./GameModes/CPU/GameCPU.tsx";
+import GameCpu from "./GameModes/CPU/GameCpu.tsx";
+import LeaderBoard from "./LeaderBoard/LeaderBoard.tsx";
 
 const router = createBrowserRouter([
     {
@@ -26,8 +27,12 @@ const router = createBrowserRouter([
         element: <GamePvp/>,
     },
     {
-        path: '/GameCPU',
-        element: <GameCPU/>,
+        path: '/GameCpu',
+        element: <GameCpu/>,
+    },
+    {
+        path: '/LeaderBoard',
+        element: <LeaderBoard/>,
     },
 ]);
 

@@ -1,9 +1,9 @@
 import {Grid} from "@mui/material";
 import {Link} from "react-router-dom";
-import "./GameCPU.css";
+import "./GameCpu.css";
 import {Player, player1, player2} from "../../PlayableCharacters/Player.ts";
 
-function GameCPU() {
+function GameCpu() {
     let countTurn = 0;
 
     function winCondition(): string {
@@ -211,7 +211,7 @@ function GameCPU() {
     );
 }
 
-export default GameCPU;
+export default GameCpu;
 
 //work with figma
 //TODO figure out how to add the AI
