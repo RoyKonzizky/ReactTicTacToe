@@ -90,12 +90,14 @@ function GamePvp() {
             if (winSign) {
                 if (winSign === player1.sign) {
                     setScoreP1((prevScore) => prevScore + 1);
+                    player1.score = p1score;
                     countTurn = 0;
                     setCurrentName(player2.name);
                     setCurrentSign(player2.sign);
                     showWinnerPopup(player1.name + " is the winner");
                 } else if (winSign === player2.sign) {
                     setScoreP2((prevScore) => prevScore + 1);
+                    player2.score = p2score;
                     countTurn = 0;
                     setCurrentName(player1.name);
                     setCurrentSign(player1.sign);
@@ -194,10 +196,9 @@ function GamePvp() {
             <CurrLabelName>
                 <Label id={"currentPlayer"}>current player: {currentName}</Label>
             </CurrLabelName>
+
             <CurrLabelSign>
-                <Label id={"currentSign"}>
-                    current sign: <ImgLbl id="imgLbl" src={currentSign} alt=""/>
-                </Label>
+                <Label id={"currentSign"}>current sign: <ImgLbl id="imgLbl" src={currentSign} alt=""/></Label>
             </CurrLabelSign>
 
             <Overlay id="overlay">
@@ -218,6 +219,8 @@ function GamePvp() {
 }
 
 export default GamePvp;
+player1;
+player2;
 
 
 //work with figma

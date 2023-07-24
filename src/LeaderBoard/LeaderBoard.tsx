@@ -1,9 +1,11 @@
 import "./LeaderBoard.css"
 import "./LeaderBoard.Styled.ts"
+import {player1, player2} from "../PlayableCharacters/Player.ts";
 
 function LeaderBoard() {
-    return (
-        <div className={"headDiv"}>
+    function createTable() {
+        const listOfPlayers = [[player1.name, player1.score], [player2.name, player2.score]];
+        return (
             <table>
                 <thead>
                 <tr>
@@ -12,21 +14,21 @@ function LeaderBoard() {
                 </tr>
                 </thead>
 
-                <tbody>
-                <tr>
-                    <th>adss</th>
-                    <th>23</th>
-                </tr>
-                </tbody>
-
-                <tbody>
-                <tr>
-                    <th>ghffg</th>
-                    <th>56</th>
-                </tr>
-                </tbody>
-
+                {listOfPlayers.map((player) => (
+                    <tbody key={player[0]}>
+                    <tr>
+                        <th>{player[0]}</th>
+                        <th>{player[1]}</th>
+                    </tr>
+                    </tbody>
+                ))}
             </table>
+        );
+    }
+
+    return (
+        <div>
+            <div className={"headDiv"}>{createTable()}</div>
         </div>
     );
 }
