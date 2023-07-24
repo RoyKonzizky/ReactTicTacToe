@@ -86,7 +86,6 @@ function GamePvp() {
             const winSign = winCondition();
 
             setCount(count + 1);
-            console.log(count);
 
             if (winSign) {
                 if (winSign === player1.sign) {
