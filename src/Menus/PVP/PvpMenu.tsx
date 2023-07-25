@@ -71,10 +71,6 @@ function PvpMenu() {
             setError("player2, add name");
             setToValue('');
         }
-        if (player1.name === "" && player2.name.length === 0) {
-            setError("both players, add names");
-            setToValue('');
-        }
 
         if (player1.name.length > 0 && player2.name.length > 0 && p1Check && p2Check) {
             setToValue('/gamepvp');
