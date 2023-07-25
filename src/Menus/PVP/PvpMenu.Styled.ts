@@ -11,7 +11,6 @@ export const ErrorLabel = styled.label`
 export const LabelDiv = styled.div`
   justify-content: center;
   display: inline-block;
-  background-color: white;
 `
 
 export const LinkDiv = styled.div`
@@ -50,6 +49,12 @@ export const Player2Div = styled.div`
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
+`
+
+export const CustomInput = styled.input`
+  background-color: white;
+  border-color: white;
+  border-radius: 4px;
 `
 
 export const CustomLink = styled(Link)`

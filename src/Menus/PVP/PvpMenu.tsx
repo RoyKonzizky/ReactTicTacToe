@@ -2,6 +2,7 @@ import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import {useState} from "react";
 import {
     Container,
+    CustomInput,
     CustomLink,
     DivLinkLabel,
     ErrorLabel,
@@ -103,17 +104,13 @@ function PvpMenu() {
             <Container>
                 <InputDiv>
                     <Player1Div className="namesDiv">
-                        <input id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}
-                        />
-                        <input id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}
-                        />
+                        <CustomInput id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
+                        <CustomInput id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
                     </Player1Div>
 
                     <Player2Div>
-                        <input id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}
-                        />
-                        <input id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}
-                        />
+                        <CustomInput id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
+                        <CustomInput id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
                     </Player2Div>
                 </InputDiv>
             </Container>
