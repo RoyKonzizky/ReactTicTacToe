@@ -10,7 +10,8 @@ import {
     LabelDiv,
     LinkDiv,
     Player1Div,
-    Player2Div
+    Player2Div,
+    PlayerLabel
 } from "./PvpMenu.Styled.ts";
 
 function PvpMenu() {
@@ -32,12 +33,10 @@ function PvpMenu() {
 
         if (player1.sign === "") {
             player1.sign = "X.svg.png";
-            setError("player1, change name");
             setP1Check(true);
         }
         if (player2.sign === "") {
             player2.sign = "o.png";
-            setError("player2, change name");
             setP2Check(true);
         }
         checkInput();
@@ -64,8 +63,16 @@ function PvpMenu() {
             }
         });
 
-        if (player1.name.length === 0 || player2.name.length === 0) {
-            setError("players names not entered");
+        if (player1.name.length === 0) {
+            setError("player1, add name");
+            setToValue('');
+        }
+        if (player2.name.length === 0) {
+            setError("player2, add name");
+            setToValue('');
+        }
+        if (player1.name === "" && player2.name.length === 0) {
+            setError("both players, add names");
             setToValue('');
         }
 
@@ -106,11 +113,13 @@ function PvpMenu() {
             <Container>
                 <InputDiv>
                     <Player1Div className="namesDiv">
+                        <PlayerLabel>Player1</PlayerLabel>
                         <CustomInput id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
                         <CustomInput id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
                     </Player1Div>
 
                     <Player2Div>
+                        <PlayerLabel>Player2</PlayerLabel>
                         <CustomInput id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
                         <CustomInput id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
                     </Player2Div>

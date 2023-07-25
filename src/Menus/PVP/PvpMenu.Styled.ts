@@ -77,9 +77,16 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   max-width: 55vw;
-  max-height: 10vh;
+  max-height: 20vh;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
   margin-bottom: 1vh;
+`
+
+export const PlayerLabel = styled.div`
+  display: flex;
+  justify-content: center;
+  color: black;
+  margin: 5px;
 `
