@@ -112,7 +112,12 @@ export const Player2Img = styled.img`
 
 export const PlayerInfoDiv = styled.div`
   display: flex;
-  justify-content: space-between; //placed the label on opposite sides
+  justify-content: space-evenly; //placed the label on opposite sides
+  max-width: 55vw;
+  max-height: 10vh;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
 `
 
 export const CurrLabelName = styled.div`

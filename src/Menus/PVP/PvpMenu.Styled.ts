@@ -28,7 +28,7 @@ export const DivLinkLabel = styled.div`
 export const InputDiv = styled.div`
   display: flex; /*without this the line below doesnt work*/
   justify-content: space-evenly; /*placed the label on opposite sides*/
-  margin: 1vh;
+  margin: 2vh;
 `
 
 export const Player1Div = styled.div`
@@ -53,8 +53,10 @@ export const Player2Div = styled.div`
 
 export const CustomInput = styled.input`
   background-color: white;
-  border-color: white;
+  border-color: #1a1a1a;
   border-radius: 4px;
+  margin-bottom: 5px;
+  color: black;
 `
 
 export const CustomLink = styled(Link)`

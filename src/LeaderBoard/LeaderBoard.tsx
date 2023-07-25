@@ -1,33 +1,33 @@
-import "./LeaderBoard.css";
 import "./LeaderBoard.Styled.ts";
 import playersData from "./playersData.json";
+import {CustomTable, CustomTd, CustomTh, HeadDiv} from "./LeaderBoard.Styled.ts";
 
 function LeaderBoard() {
 
     function createTable() {
         return (
-            <table>
+            <CustomTable>
                 <thead>
                 <tr>
-                    <th className="contents">Player Name</th>
-                    <th className="contents">Player Score</th>
+                    <CustomTh className="contents">Player Name</CustomTh>
+                    <CustomTh className="contents">Player Score</CustomTh>
                 </tr>
                 </thead>
                 <tbody>
                 {playersData.map((player, index) => (
                     <tr key={index}>
-                        <td>{player.name}</td>
-                        <td>{player.score}</td>
+                        <CustomTd>{player.name}</CustomTd>
+                        <CustomTd>{player.score}</CustomTd>
                     </tr>
                 ))}
                 </tbody>
-            </table>
+            </CustomTable>
         );
     }
 
     return (
         <div>
-            <div className={"headDiv"}>{createTable()}</div>
+            <HeadDiv>{createTable()}</HeadDiv>
         </div>
     );
 }
