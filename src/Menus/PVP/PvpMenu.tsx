@@ -122,7 +122,7 @@ function PvpMenu() {
             <DivLinkLabel>
                 <LinkDiv className="linkDiv">
                     <CustomLink className="link" to={toValue} onClick={showLabel}>
-                        Submit Players Signs and Names
+                        Submit
                     </CustomLink>
                 </LinkDiv>
 

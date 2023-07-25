@@ -16,6 +16,8 @@ export const LabelDiv = styled.div`
 export const LinkDiv = styled.div`
   justify-content: center;
   display: inline-block;
+  color:white;
+  margin-top: var(--margin-unit);
 `
 
 export const DivLinkLabel = styled.div`
@@ -29,33 +31,47 @@ export const PlayerDiv = styled.div`
   display: grid;
   width: 50%;
   margin: 1vh;
-  max-width: 40vw;
+  max-width: calc(50% - 5px - 1vh - 3vh);
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
+  padding: 3vh;
 `
 
 export const CustomInput = styled.input`
-  background-color: white;
-  border-color: #1a1a1a;
+  background-color: #f3f3f3;
+  padding: 8px;
   border-radius: 4px;
-  margin-bottom: 5px;
+  width: calc(100% - 8px - 8px);
   color: black;
-  max-width: 100%;
+  border: none;
+  outline: none;
+  box-shadow: 0 0 3px 1px black;
+  margin: 8px 8px;
+  transition: all ease .1s;
+
+  &:focus {
+    background-color: #fff;
+    border-color: black;
+    box-shadow:none;
+  }
+
 `
 
 export const CustomLink = styled(Link)`
   pointer-events: auto;
-  color: black;
+  color: white;
   display: inline-block;
   padding: 1vh 2vw;
   background-color: #4285f4;
   text-decoration: none;
   border-radius: 4px;
   font-weight: bold;
+  transition: all ease .2s;
 
   &:hover {
-    color: black;
+    color: white;
+    box-shadow: 0px 0px 33px -6px #434343;
   }
 `
 export const Container = styled.div`
@@ -67,6 +83,7 @@ export const Container = styled.div`
   border-radius: 5px;
   box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
   margin-bottom: 1vh;
+  padding: 5vh;
 `
 
 export const PlayerLabel = styled.div`
