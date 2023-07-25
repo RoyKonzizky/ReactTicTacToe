@@ -20,8 +20,9 @@ import {
     PopupHeader
 } from "./GamePvp.Styles.ts";
 
-// import playersData from "../../LeaderBoard/playersData.json";
-
+//import playersData from "../../LeaderBoard/playersData.json";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const playersData = [];
 function GamePvp() {
     const [currentSign, setCurrentSign] = useState(player1.sign);
     const [currentName, setCurrentName] = useState(player1.name);
@@ -32,9 +33,9 @@ function GamePvp() {
     function winCondition(): string {
         const cellValues: string[] = [];
         const cells: HTMLCollectionOf<Element> = document.getElementsByClassName("cell-image");
-        for (let i = 0; i < cells.length; i++) {
-            cellValues.push((cells[i] as HTMLImageElement).alt);
-        }
+        Array.from(cells).forEach((cell) => {
+            cellValues.push((cell as HTMLImageElement).alt);
+        });
 
         const winConditions: number[][] = [
             [0, 1, 2],
@@ -111,7 +112,6 @@ function GamePvp() {
                 setCurrentSign(currentSign === player1.sign ? player2.sign : player1.sign);
             }
         }
-
         cell.style.pointerEvents = 'none';
     }
 
@@ -158,26 +158,24 @@ function GamePvp() {
 
     function resetBoard() {
         const cells = document.getElementsByClassName("cell");
-        for (let i = 0; i < cells.length; i++) { //change to for each
-            const cell = cells[i] as HTMLElement;
-            cell.style.pointerEvents = 'auto';
-            const img = document.getElementById(`image-${i}`) as HTMLImageElement;
+        const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
+        const overlay = document.getElementById("overlay") as HTMLElement;
+        const confetti = document.getElementById("conf") as HTMLElement;
+        const player1Img = document.getElementById("player1Img") as HTMLImageElement;
+        const player2Img = document.getElementById("player2Img") as HTMLImageElement;
+        Array.from(cells).forEach((cell) => {
+            const cellElement = cell as HTMLElement;
+            cellElement.style.pointerEvents = "auto";
+            const img = document.getElementById(`image-${cellElement.id}`) as HTMLImageElement;
             img.src = "";
             img.alt = "";
-            img.style.opacity = '0';
-        }
-        const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
+            img.style.opacity = "0";
+        });
+
         winnerPopup.style.display = "none";
-
-        const overlay = document.getElementById("overlay") as HTMLElement;
         overlay.style.display = "none";
-
-        const confetti = document.getElementById("conf") as HTMLElement;
         confetti.style.opacity = '0';
-
-        const player1Img = document.getElementById("player1Img") as HTMLImageElement;
         player1Img.src = player1.sign;
-        const player2Img = document.getElementById("player2Img") as HTMLImageElement;
         player2Img.src = player2.sign;
     }
 

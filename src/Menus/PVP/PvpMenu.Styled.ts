@@ -41,6 +41,7 @@ export const CustomInput = styled.input`
   border-radius: 4px;
   margin-bottom: 5px;
   color: black;
+  max-width: 100%;
 `
 
 export const CustomLink = styled(Link)`
