@@ -1,7 +1,8 @@
 import {Grid} from "@mui/material";
+import {useState} from "react";
 import {Link} from "react-router-dom";
-import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import ReactConfetti from "react-confetti";
+import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import {
     Cell,
     CellImage,
@@ -12,14 +13,14 @@ import {
     ImgLbl,
     Label,
     Overlay,
-    Player1Img,
-    Player2Img,
+    PlayerImg,
     PlayerInfoDiv,
     Popup,
     PopupButton,
     PopupHeader
 } from "./GamePvp.Styles.ts";
-import {useState} from "react";
+
+// import playersData from "../../LeaderBoard/playersData.json";
 
 function GamePvp() {
     const [currentSign, setCurrentSign] = useState(player1.sign);
@@ -180,14 +181,21 @@ function GamePvp() {
         player2Img.src = player2.sign;
     }
 
+    function addToLeaderBoard() {
+        const stringPlayer1 = JSON.stringify(player1);
+        const stringPlayer2 = JSON.stringify(player2);
+        playersData = JSON.parse(stringPlayer1);
+        playersData = JSON.parse(stringPlayer2);
+    }
+
     return (
         <div>
             <PlayerInfoDiv>
                 <Label id="player1Label">
-                    <Player1Img id="player1Img" src={player1.sign} alt="X"/>: {player1.name} - {p1score}
+                    <PlayerImg id="player1Img" src={player1.sign} alt="X"/>: {player1.name} - {p1score}
                 </Label>
                 <Label id="player2Label">
-                    <Player2Img id="player2Img" src={player2.sign} alt="O"/>: {player2.name} - {p2score}
+                    <PlayerImg id="player2Img" src={player2.sign} alt="O"/>: {player2.name} - {p2score}
                 </Label>
             </PlayerInfoDiv>
 
@@ -208,7 +216,7 @@ function GamePvp() {
             <Popup id="winnerPopup">
                 <PopupHeader id="winnerText"/>
                 <Link to="/">
-                    <PopupButton id={"retMenuButton"}>back to menu</PopupButton>
+                    <PopupButton id={"retMenuButton"} onClick={addToLeaderBoard}>back to menu</PopupButton>
                 </Link>
                 <PopupButton id={"boardReseter"} onClick={resetBoard}>
                     reset grid

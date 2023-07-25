@@ -25,23 +25,7 @@ export const DivLinkLabel = styled.div`
   text-align: center; /* Center the text content of the flex items (label) horizontally */
 `
 
-export const InputDiv = styled.div`
-  display: flex; /*without this the line below doesnt work*/
-  justify-content: space-evenly; /*placed the label on opposite sides*/
-  margin: 2vh;
-`
-
-export const Player1Div = styled.div`
-  display: grid;
-  width: 50%;
-  margin: 1vh;
-  max-width: 40vw;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
-`
-
-export const Player2Div = styled.div`
+export const PlayerDiv = styled.div`
   display: grid;
   width: 50%;
   margin: 1vh;

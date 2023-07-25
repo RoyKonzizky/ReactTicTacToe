@@ -6,11 +6,9 @@ import {
     CustomLink,
     DivLinkLabel,
     ErrorLabel,
-    InputDiv,
     LabelDiv,
     LinkDiv,
-    Player1Div,
-    Player2Div,
+    PlayerDiv,
     PlayerLabel
 } from "./PvpMenu.Styled.ts";
 
@@ -107,26 +105,24 @@ function PvpMenu() {
     return (
         <div>
             <Container>
-                <InputDiv>
-                    <Player1Div className="namesDiv">
-                        <PlayerLabel>Player1</PlayerLabel>
-                        <CustomInput id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
-                        <CustomInput id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
-                    </Player1Div>
+                <PlayerDiv>
+                    <PlayerLabel>Player 1:</PlayerLabel>
+                    <CustomInput id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
+                    <CustomInput id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
+                </PlayerDiv>
 
-                    <Player2Div>
-                        <PlayerLabel>Player2</PlayerLabel>
-                        <CustomInput id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
-                        <CustomInput id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
-                    </Player2Div>
-                </InputDiv>
+                <PlayerDiv>
+                    <PlayerLabel>Player 2:</PlayerLabel>
+                    <CustomInput id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
+                    <CustomInput id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
+                </PlayerDiv>
             </Container>
 
 
             <DivLinkLabel>
                 <LinkDiv className="linkDiv">
                     <CustomLink className="link" to={toValue} onClick={showLabel}>
-                        Submit Player Sign and Name
+                        Submit Players Signs and Names
                     </CustomLink>
                 </LinkDiv>
 

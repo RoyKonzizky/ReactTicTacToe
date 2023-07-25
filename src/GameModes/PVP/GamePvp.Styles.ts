@@ -100,12 +100,7 @@ export const ImgLbl = styled.img`
   margin-left: 5px;
 `;
 
-export const Player1Img = styled.img`
-  width: 2vh;
-  height: 2vh;
-`;
-
-export const Player2Img = styled.img`
+export const PlayerImg = styled.img`
   width: 2vh;
   height: 2vh;
 `;
