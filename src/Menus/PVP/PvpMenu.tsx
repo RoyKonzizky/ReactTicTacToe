@@ -32,10 +32,12 @@ function PvpMenu() {
 
         if (player1.sign === "") {
             player1.sign = "X.svg.png";
+            setError("player1, change name");
             setP1Check(true);
         }
         if (player2.sign === "") {
             player2.sign = "o.png";
+            setError("player2, change name");
             setP2Check(true);
         }
         checkInput();
