@@ -17,6 +17,8 @@ function LeaderBoard() {
         };
         playersData.push(player);
     }
+    
+    playersData.sort((a, b) => b.score - a.score);
 
     function createBoard() {
         if (playersData.length > 0) {
