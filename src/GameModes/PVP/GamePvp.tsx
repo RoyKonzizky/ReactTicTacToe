@@ -179,8 +179,8 @@ function GamePvp() {
         player1Img.src = player1.sign;
         player2Img.src = player2.sign;
 
-        localStorage.setItem(player1.name, p1score);
-        localStorage.setItem(player2.name, p2score);
+        localStorage.setItem(player1.name, String(p1score));
+        localStorage.setItem(player2.name, String(p2score));
     }
 
 

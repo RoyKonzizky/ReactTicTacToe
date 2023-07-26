@@ -38,7 +38,7 @@ export const CellImage = styled.img`
 `;
 
 export const Label = styled.label`
-  margin-top: 1vh;
+  margin-top: 10px;
   font-size: 16px;
   font-weight: bold;
   color: #1a1a1a;
@@ -63,7 +63,7 @@ export const Popup = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  padding: 2vh;
+  padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   z-index: 1000;
@@ -71,13 +71,13 @@ export const Popup = styled.div`
 
 export const PopupHeader = styled.h2`
   font-size: 24px;
-  margin-bottom: 2vh;
+  margin-bottom: 20px;
   text-align: center; //to center the text in the header
 `;
 
 export const PopupButton = styled.button`
-  padding: 1vh 2vh;
-  margin-top: 1vh;
+  padding: 10px 20px;
+  margin-top: 10px;
   font-size: 16px;
   cursor: pointer;
   border: none;
@@ -86,7 +86,7 @@ export const PopupButton = styled.button`
 
   &:first-child {
     background-color: #4caf50;
-    margin-right: 1vh;
+    margin-right: 10px;
   }
 
   &:last-child {
@@ -95,14 +95,14 @@ export const PopupButton = styled.button`
 `;
 
 export const ImgLbl = styled.img`
-  width: 2vh;
-  height: 2vh;
+  width: 20px;
+  height: 20px;
   margin-left: 5px;
 `;
 
 export const PlayerImg = styled.img`
-  width: 2vh;
-  height: 2vh;
+  width: 20px;
+  height: 20px;
 `;
 
 export const PlayerInfoDiv = styled.div`
@@ -112,7 +112,7 @@ export const PlayerInfoDiv = styled.div`
   max-height: 10vh;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `
 
 export const CurrentLabelDiv = styled.div`
@@ -121,8 +121,7 @@ export const CurrentLabelDiv = styled.div`
   max-height: 15vh;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
-
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `
 
 export const CurrLabelName = styled.div`
@@ -133,5 +132,4 @@ export const CurrLabelName = styled.div`
 export const CurrLabelSign = styled.div`
   display: flex;
   justify-content: center;
-  position: relative;
 `
