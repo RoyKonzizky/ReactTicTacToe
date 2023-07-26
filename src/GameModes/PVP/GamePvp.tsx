@@ -6,6 +6,7 @@ import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import {
     Cell,
     CellImage,
+    CurrentLabelDiv,
     CurrLabelName,
     CurrLabelSign,
     GridContainer,
@@ -60,6 +61,7 @@ function GamePvp() {
     }
 
     function handleCellClick(cellId: string) {
+        const confetti = document.getElementById("conf") as HTMLElement;
         const cell = document.getElementById(cellId) as HTMLElement;
         const currentNameLabel = document.getElementById("currentPlayer") as HTMLElement;
         const imgLbl = document.getElementById("imgLbl") as HTMLImageElement;
@@ -95,6 +97,7 @@ function GamePvp() {
                     setCurrentName(player2.name);
                     setCurrentSign(player2.sign);
                     showWinnerPopup(player1.name + " is the winner");
+                    confetti.style.opacity = '1';
                 } else if (winSign === player2.sign) {
                     setScoreP2((prevScore) => prevScore + 1);
                     player2.score = p2score;
@@ -102,12 +105,14 @@ function GamePvp() {
                     setCurrentName(player1.name);
                     setCurrentSign(player1.sign);
                     showWinnerPopup(player2.name + " is the winner");
+                    confetti.style.opacity = '1';
                 }
             } else if (count === 8) {
                 setCount(0);
                 showWinnerPopup("it's a tie");
                 setCurrentName(currentName === player1.name ? player2.name : player1.name);
                 setCurrentSign(currentSign === player1.sign ? player2.sign : player1.sign);
+                confetti.style.opacity = '0';
             }
         }
         cell.style.pointerEvents = 'none';
@@ -147,11 +152,9 @@ function GamePvp() {
         const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
         const overlay = document.getElementById("overlay") as HTMLElement;
         const winnerTextElement = document.getElementById("winnerText") as HTMLElement;
-        const confetti = document.getElementById("conf") as HTMLElement;
         winnerTextElement.textContent = winnerText;
         winnerPopup.style.display = "block";
         overlay.style.display = "block";
-        confetti.style.opacity = '1';
     }
 
     function resetBoard() {
@@ -194,13 +197,14 @@ function GamePvp() {
 
             <div className="grid-container">{createGrid()}</div>
 
-            <CurrLabelName>
-                <Label id={"currentPlayer"}>current player: {currentName}</Label>
-            </CurrLabelName>
-
-            <CurrLabelSign>
-                <Label id={"currentSign"}>current sign: <ImgLbl id="imgLbl" src={currentSign} alt=""/></Label>
-            </CurrLabelSign>
+            <CurrentLabelDiv>
+                <CurrLabelName>
+                    <Label id={"currentPlayer"}>current player: {currentName}</Label>
+                </CurrLabelName>
+                <CurrLabelSign>
+                    <Label id={"currentSign"}>current sign: <ImgLbl id="imgLbl" src={currentSign} alt=""/></Label>
+                </CurrLabelSign>
+            </CurrentLabelDiv>
 
             <Overlay id="overlay">
                 <ReactConfetti id="conf"/>

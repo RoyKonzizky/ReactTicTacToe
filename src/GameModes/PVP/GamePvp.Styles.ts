@@ -115,6 +115,16 @@ export const PlayerInfoDiv = styled.div`
   box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
 `
 
+export const CurrentLabelDiv = styled.div`
+  display: grid;
+  max-width: 55vw;
+  max-height: 15vh;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);
+
+`
+
 export const CurrLabelName = styled.div`
   display: flex;
   justify-content: center;
@@ -123,4 +133,5 @@ export const CurrLabelName = styled.div`
 export const CurrLabelSign = styled.div`
   display: flex;
   justify-content: center;
+  position: relative;
 `
