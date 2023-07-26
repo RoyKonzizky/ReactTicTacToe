@@ -1,26 +1,25 @@
-import "./LeaderBoard.Styled.ts";
+import React from "react";
 import {CustomTable, CustomTd, CustomTh, HeadDiv} from "./LeaderBoard.Styled.ts";
 import {Player} from "../PlayableCharacters/Player.ts";
 
 function LeaderBoard() {
-    // eslint-disable-next-line prefer-const
-    let values = [],
-        // eslint-disable-next-line prefer-const
-        keys = Object.keys(localStorage),
-        i = keys.length;
-    while (i--) {
-        values.push(localStorage.getItem(keys[i]));
-    }
+    // Retrieve keys and values from localStorage
+    const keys = Object.keys(localStorage);
+    const values = keys.map((key) => localStorage.getItem(key));
 
     const playersData: Player[] = [];
 
-    for (i = 0; i < values.length; i++) {
-        const player: Player = ["", "", 0];
-        playersData[i] = [(player.name = localStorage.key(i)), values[i]];
+    // Create Player objects from localStorage data and add them to playersData array
+    for (let i = 0; i < keys.length; i++) {
+        const player: Player = {
+            name: keys[i],
+            score: Number(values[i]), // Assuming the score is stored as a number in localStorage
+        };
+        playersData.push(player);
     }
 
     function createBoard() {
-        if (playersData) {
+        if (playersData.length > 0) {
             return (
                 playersData.map((player: Player, index) => (
                     <tr key={index}>
@@ -29,9 +28,10 @@ function LeaderBoard() {
                     </tr>
                 ))
             );
+        } else {
+            return null; // If no player data available, return null or display a message
         }
     }
-
 
     return (
         <div>
