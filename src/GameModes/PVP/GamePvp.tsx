@@ -20,9 +20,7 @@ import {
     PopupHeader
 } from "./GamePvp.Styles.ts";
 
-//import playersData from "../../LeaderBoard/playersData.json";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const playersData = [];
+
 function GamePvp() {
     const [currentSign, setCurrentSign] = useState(player1.sign);
     const [currentName, setCurrentName] = useState(player1.name);
@@ -180,10 +178,7 @@ function GamePvp() {
     }
 
     function addToLeaderBoard() {
-        const stringPlayer1 = JSON.stringify(player1);
-        const stringPlayer2 = JSON.stringify(player2);
-        playersData = JSON.parse(stringPlayer1);
-        playersData = JSON.parse(stringPlayer2);
+        return;
     }
 
     return (
@@ -230,3 +225,5 @@ player2;
 
 
 //work with figma
+// remove conf if tie
+// improve gird appearance
