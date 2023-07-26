@@ -1,33 +1,53 @@
 import "./LeaderBoard.Styled.ts";
-import playersData from "./playersData.json";
 import {CustomTable, CustomTd, CustomTh, HeadDiv} from "./LeaderBoard.Styled.ts";
+import {Player} from "../PlayableCharacters/Player.ts";
 
 function LeaderBoard() {
+    // eslint-disable-next-line prefer-const
+    let values = [],
+        // eslint-disable-next-line prefer-const
+        keys = Object.keys(localStorage),
+        i = keys.length;
+    while (i--) {
+        values.push(localStorage.getItem(keys[i]));
+    }
 
-    function createTable() {
-        return (
-            <CustomTable>
-                <thead>
-                <tr>
-                    <CustomTh className="contents">Player Name</CustomTh>
-                    <CustomTh className="contents">Player Score</CustomTh>
-                </tr>
-                </thead>
-                <tbody>
-                {playersData.map((player, index) => (
+    const playersData: Player[] = [];
+
+    for (i = 0; i < values.length; i++) {
+        const player: Player = ["", "", 0];
+        playersData[i] = [(player.name = localStorage.key(i)), values[i]];
+    }
+
+    function createBoard() {
+        if (playersData) {
+            return (
+                playersData.map((player: Player, index) => (
                     <tr key={index}>
                         <CustomTd>{player.name}</CustomTd>
                         <CustomTd>{player.score}</CustomTd>
                     </tr>
-                ))}
-                </tbody>
-            </CustomTable>
-        );
+                ))
+            );
+        }
     }
+
 
     return (
         <div>
-            <HeadDiv>{createTable()}</HeadDiv>
+            <HeadDiv>
+                <CustomTable>
+                    <thead>
+                    <tr>
+                        <CustomTh>Player Name</CustomTh>
+                        <CustomTh>Player Score</CustomTh>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {createBoard()}
+                    </tbody>
+                </CustomTable>
+            </HeadDiv>
         </div>
     );
 }
