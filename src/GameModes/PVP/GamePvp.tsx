@@ -178,11 +178,12 @@ function GamePvp() {
         confetti.style.opacity = '0';
         player1Img.src = player1.sign;
         player2Img.src = player2.sign;
+    }
 
+    function addToLeaderboard() {
         localStorage.setItem(player1.name, String(p1score));
         localStorage.setItem(player2.name, String(p2score));
     }
-
 
     return (
         <div>
@@ -213,9 +214,9 @@ function GamePvp() {
             <Popup id="winnerPopup">
                 <PopupHeader id="winnerText"/>
                 <Link to="/">
-                    <PopupButton id={"retMenuButton"}>back to menu</PopupButton>
+                    <PopupButton id="retMenuButton" onClick={addToLeaderboard}>back to menu</PopupButton>
                 </Link>
-                <PopupButton id={"boardReseter"} onClick={resetBoard}>
+                <PopupButton id="boardReseter" onClick={resetBoard}>
                     reset grid
                 </PopupButton>
             </Popup>
