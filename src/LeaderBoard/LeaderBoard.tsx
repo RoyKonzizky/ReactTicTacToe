@@ -1,6 +1,7 @@
 import React from "react";
 import {CustomTable, CustomTd, CustomTh, HeadDiv} from "./LeaderBoard.Styled.ts";
 import {Player} from "../PlayableCharacters/Player.ts";
+import {PopupButton} from "../GameModes/PVP/GamePvp.Styles.ts";
 
 function LeaderBoard() {
     const keys = Object.keys(localStorage);
@@ -47,6 +48,10 @@ function LeaderBoard() {
                     {createBoard()}
                     </tbody>
                 </CustomTable>
+
+                <PopupButton id="back to main" onClick={resetBoard}>
+                    reset grid
+                </PopupButton>
             </HeadDiv>
         </div>
     );

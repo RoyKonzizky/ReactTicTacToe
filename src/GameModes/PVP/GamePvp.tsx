@@ -213,6 +213,9 @@ function GamePvp() {
 
             <Popup id="winnerPopup">
                 <PopupHeader id="winnerText"/>
+                <Link to="/leaderboard">
+                    <PopupButton id="leadboardButton" onClick={addToLeaderboard}>leaderboard</PopupButton>
+                </Link>
                 <Link to="/">
                     <PopupButton id="retMenuButton" onClick={addToLeaderboard}>back to menu</PopupButton>
                 </Link>
@@ -230,6 +233,5 @@ player2;
 
 
 //work with figma
-//bridge the pages
 //upload images
 //maybe with react dropzone

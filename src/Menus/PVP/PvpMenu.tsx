@@ -131,6 +131,12 @@ function PvpMenu() {
                         {error}
                     </ErrorLabel>
                 </LabelDiv>
+
+                <LinkDiv className="linkDiv">
+                    <CustomLink className="link" to={"/"}>
+                        Mode Selection
+                    </CustomLink>
+                </LinkDiv>
             </DivLinkLabel>
 
         </div>
