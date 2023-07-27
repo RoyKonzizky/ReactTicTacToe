@@ -230,5 +230,6 @@ player2;
 
 
 //work with figma
-// remove conf if tie
-// improve gird appearance
+//bridge the pages
+//upload images
+//maybe with react dropzone

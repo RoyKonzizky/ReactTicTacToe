@@ -3,21 +3,19 @@ import {CustomTable, CustomTd, CustomTh, HeadDiv} from "./LeaderBoard.Styled.ts"
 import {Player} from "../PlayableCharacters/Player.ts";
 
 function LeaderBoard() {
-    // Retrieve keys and values from localStorage
     const keys = Object.keys(localStorage);
     const values = keys.map((key) => localStorage.getItem(key));
 
     const playersData: Player[] = [];
 
-    // Create Player objects from localStorage data and add them to playersData array
     for (let i = 0; i < keys.length; i++) {
         const player: Player = {
             name: keys[i],
-            score: Number(values[i]), // Assuming the score is stored as a number in localStorage
+            score: Number(values[i]),
         };
         playersData.push(player);
     }
-    
+
     playersData.sort((a, b) => b.score - a.score);
 
     function createBoard() {
@@ -31,7 +29,7 @@ function LeaderBoard() {
                 ))
             );
         } else {
-            return null; // If no player data available, return null or display a message
+            return null;
         }
     }
 
@@ -55,3 +53,4 @@ function LeaderBoard() {
 }
 
 export default LeaderBoard;
+//add back button
