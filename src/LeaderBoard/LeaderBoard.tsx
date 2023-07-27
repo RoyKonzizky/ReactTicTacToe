@@ -48,10 +48,6 @@ function LeaderBoard() {
                     {createBoard()}
                     </tbody>
                 </CustomTable>
-
-                <PopupButton id="back to main" onClick={resetBoard}>
-                    reset grid
-                </PopupButton>
             </HeadDiv>
         </div>
     );
