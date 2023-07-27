@@ -30,7 +30,7 @@ function PvpMenu() {
         player2.score = 0;
 
         if (player1.sign === "") {
-            player1.sign = "X.svg.png";
+            player1.sign = "x.png";
             setP1Check(true);
         }
         if (player2.sign === "") {

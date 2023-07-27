@@ -1,4 +1,3 @@
-import {Grid} from "@mui/material";
 import {useState} from "react";
 import {Link} from "react-router-dom";
 import ReactConfetti from "react-confetti";
@@ -9,6 +8,7 @@ import {
     CurrentLabelDiv,
     CurrLabelName,
     CurrLabelSign,
+    CustomGrid,
     GridContainer,
     GridWrapper,
     ImgLbl,
@@ -18,7 +18,7 @@ import {
     PlayerInfoDiv,
     Popup,
     PopupButton,
-    PopupHeader
+    PopupHeader,
 } from "./GamePvp.Styles.ts";
 
 
@@ -118,36 +118,6 @@ function GamePvp() {
         cell.style.pointerEvents = 'none';
     }
 
-    function createGrid() {
-        const cellIds: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
-
-        return (
-            <div className="grid-container">
-                <GridContainer>
-                    <GridWrapper>
-                        <Grid sx={{width: "82%", marginLeft: "0", marginTop: "0"}} container spacing={2}>
-                            {cellIds.map((cellId) => (
-                                <Cell
-                                    key={cellId}
-                                    id={cellId}
-                                    className={"cell"}
-                                    onClick={() => handleCellClick(cellId)}
-                                >
-                                    <CellImage
-                                        id={`image-${cellId}`}
-                                        className={"cell-image"}
-                                        src=""
-                                        alt=""
-                                    />
-                                </Cell>
-                            ))}
-                        </Grid>
-                    </GridWrapper>
-                </GridContainer>
-            </div>
-        );
-    }
-
     function showWinnerPopup(winnerText: string): void {
         const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
         const overlay = document.getElementById("overlay") as HTMLElement;
@@ -183,6 +153,36 @@ function GamePvp() {
     function addToLeaderboard() {
         localStorage.setItem(player1.name, String(p1score));
         localStorage.setItem(player2.name, String(p2score));
+    }
+
+    function createGrid() {
+        const cellIds: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
+
+        return (
+            <div className="grid-container">
+                <GridContainer>
+                    <GridWrapper>
+                        <CustomGrid container spacing={2}>
+                            {cellIds.map((cellId) => (
+                                <Cell
+                                    key={cellId}
+                                    id={cellId}
+                                    className={"cell"}
+                                    onClick={() => handleCellClick(cellId)}
+                                >
+                                    <CellImage
+                                        id={`image-${cellId}`}
+                                        className={"cell-image"}
+                                        src=""
+                                        alt=""
+                                    />
+                                </Cell>
+                            ))}
+                        </CustomGrid>
+                    </GridWrapper>
+                </GridContainer>
+            </div>
+        );
     }
 
     return (

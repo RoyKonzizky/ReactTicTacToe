@@ -16,7 +16,7 @@ export const LabelDiv = styled.div`
 export const LinkDiv = styled.div`
   justify-content: center;
   display: inline-block;
-  color:white;
+  color: white;
   margin-top: var(--margin-unit);
 `
 
@@ -53,7 +53,7 @@ export const CustomInput = styled.input`
   &:focus {
     background-color: #fff;
     border-color: black;
-    box-shadow:none;
+    box-shadow: none;
   }
 
 `
@@ -71,14 +71,14 @@ export const CustomLink = styled(Link)`
 
   &:hover {
     color: white;
-    box-shadow: 0px 0px 33px -6px #434343;
+    box-shadow: 0 0 33px -6px #434343;
   }
 `
 export const Container = styled.div`
   display: flex;
   justify-content: center;
-  max-width: 55vw;
-  max-height: 20vh;
+  //max-width: 55vw;
+  //max-height: 20vh;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 1vh rgba(0, 0, 0, 0.1);

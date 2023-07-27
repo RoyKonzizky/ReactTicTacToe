@@ -1,10 +1,15 @@
 import styled from "styled-components";
+import {Grid} from "@mui/material";
 
-export const GridContainer = styled.div`
+export const CustomGrid = styled(Grid)`
   display: flex;
   justify-content: center;
-  align-items: center; /* Center the content horizontally */
+  margin: -16px;
+`
+
+export const GridContainer = styled.div`
   margin-top: 2vh;
+  margin-bottom: -2vh;
 `;
 
 export const GridWrapper = styled.div`
@@ -18,9 +23,6 @@ export const GridWrapper = styled.div`
 `;
 
 export const Cell = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
