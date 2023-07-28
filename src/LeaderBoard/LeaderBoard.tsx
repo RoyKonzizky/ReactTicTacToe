@@ -1,7 +1,5 @@
-import React from "react";
-import {CustomTable, CustomTd, CustomTh, HeadDiv} from "./LeaderBoard.Styled.ts";
+import {CustomLink, CustomTable, CustomTd, CustomTh, DivLink, TableDiv,} from "./LeaderBoard.Styled.ts";
 import {Player} from "../PlayableCharacters/Player.ts";
-import {PopupButton} from "../GameModes/PVP/GamePvp.Styles.ts";
 
 function LeaderBoard() {
     const keys = Object.keys(localStorage);
@@ -10,11 +8,11 @@ function LeaderBoard() {
     const playersData: Player[] = [];
 
     for (let i = 0; i < keys.length; i++) {
-        const player: Player = {
+        const player: { score: number; name: string } = {
             name: keys[i],
             score: Number(values[i]),
         };
-        playersData.push(player);
+        playersData.push(player as Player);
     }
 
     playersData.sort((a, b) => b.score - a.score);
@@ -36,7 +34,7 @@ function LeaderBoard() {
 
     return (
         <div>
-            <HeadDiv>
+            <TableDiv>
                 <CustomTable>
                     <thead>
                     <tr>
@@ -48,10 +46,15 @@ function LeaderBoard() {
                     {createBoard()}
                     </tbody>
                 </CustomTable>
-            </HeadDiv>
+            </TableDiv>
+
+            <DivLink>
+                <CustomLink to="/">
+                    Back to Main Menu
+                </CustomLink>
+            </DivLink>
         </div>
     );
 }
 
 export default LeaderBoard;
-//add back button
