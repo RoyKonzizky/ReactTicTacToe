@@ -1,69 +1,155 @@
-import "./CpuMenu.css";
-import {Link} from "react-router-dom";
 import {player1, player2} from "../../PlayableCharacters/Player.ts";
+import {useEffect, useState} from "react";
+import {
+    Container,
+    CustomInput,
+    CustomLink,
+    DivLinkLabel,
+    ErrorLabel,
+    ImgSlot,
+    LabelDiv,
+    LinkDiv,
+    PlayerDiv,
+    PlayerLabel
+} from "./CpuMenu.Styles.ts";
+import Dropzone from "react-dropzone";
 
 function CpuMenu() {
-    let badInputText = "";
+    const [toValue, setToValue] = useState('');
+    const [error, setError] = useState('');
+    const [p1Check, setP1Check] = useState(false);
+    const [player1Name, setPlayer1Name] = useState('');
+    const [player2Name] = useState('Skynet');
+    const [player1Sign, setPlayer1Sign] = useState("x.png");
+    const [player2Sign] = useState("o.png");
+
+    useEffect(() => {
+        submitPlayers();
+    }, [player1Name, player2Name, player1Sign, player2Sign]);
+
+    const handlePlayer1NameChange = (event) => {
+        setPlayer1Name(event.target.value);
+    };
+
+    const onDropPlayer1Sign = (acceptedFiles) => {
+        const file = acceptedFiles[0];
+        const imageUrl = URL.createObjectURL(file);
+        setPlayer1Sign(imageUrl);
+    };
 
     function submitPlayers() {
-        player1.name = (
-            document.getElementById("player1Name") as HTMLInputElement
-        ).value;
-        player1.sign = (
-            document.getElementById("player1Sign") as HTMLInputElement
-        ).value;
-        player1.score = 0;
-        if (player1.sign === "") {
-            player1.sign = "X";
-        }
+        player1.name = player1Name;
+        player2.name = player2Name;
 
-        player2.name = "skynet";
-        player2.sign = "O";
+        player1.sign = player1Sign;
+        player2.sign = player2Sign;
+
+        player1.score = 0;
         player2.score = 0;
 
+        if (player1.sign === "") {
+            setPlayer1Sign("x.png");
+            setP1Check(true);
+        }
         checkInput();
     }
 
     function checkInput() {
-        const badInputLabel = document.getElementById(
-            "badInputLabel",
-        ) as HTMLElement;
-        const link = document.getElementById("link") as HTMLElement;
-        if (player1.sign.length > 1) {
-            badInputText = "signs can only be a single character";
-            badInputLabel.textContent = badInputText;
-            return;
-        }
+        checkIfImageExists(player1.sign, (existsP1) => {
+            if (existsP1) {
+                setP1Check(true);
+            } else {
+                setP1Check(false);
+                setToValue('');
+                setError("player1, change image path");
+            }
+        });
+
         if (player1.name.length === 0) {
-            badInputText = "players names not entered";
-            badInputLabel.textContent = badInputText;
-            return;
-        } else {
-            link.style.pointerEvents = "auto";
+            setError("player1, add name");
+            setToValue('');
+        }
+
+        if (player1.name.length > 0 && player2.name.length > 0 && p1Check) {
+            setToValue('/gamecpu');
+            setError('');
         }
     }
 
+    function showLabel() {
+        if (toValue === "" && !error) {
+            setError("input not entered");
+        }
+    }
+
+    const checkIfImageExists = (url, callback) => {
+        const img = new Image();
+        img.src = url;
+
+        if (img.complete) {
+            callback(true);
+        } else {
+            img.onload = () => {
+                callback(true);
+            };
+
+            img.onerror = () => {
+                callback(false);
+            };
+        }
+    };
+
     return (
-        <>
-            <br></br>
-            <input id="player1Name" placeholder={"player 1's name"}/>
-            <br></br>
-            <input id="player1Sign" placeholder={"player 1's sign"}/>
-            <br></br>
-            <button className="buttonLink" type="button" onClick={submitPlayers}>
-                <Link id={"link"} to="/gamecpu">
-                    Submit Player Sign and Name
-                </Link>
-            </button>
-            <div>
-                <label id={"badInputLabel"}></label>
-            </div>
-        </>
+        <div>
+            <Container>
+                <PlayerDiv>
+                    <PlayerLabel>Player 1:</PlayerLabel>
+                    <CustomInput
+                        id="player1Name"
+                        placeholder={"player 1's name"}
+                        onChange={handlePlayer1NameChange}
+                        value={player1Name}
+                    />
+
+                    {/* Player 1 Dropzone */}
+                    <div>
+                        <h4>Player 1's Sign:</h4>
+                        <div>
+                            <Dropzone onDrop={onDropPlayer1Sign}>
+                                {({ getRootProps, getInputProps }) => (
+                                    <div {...getRootProps()} className="dropzone">
+                                        <input {...getInputProps()} />
+                                        {player1Sign && <ImgSlot src={player1Sign} alt="Player 1's Sign" />}
+                                        {!player1Sign && <p>Drop an image here or click to select one.</p>}
+                                    </div>
+                                )}
+                            </Dropzone>
+                        </div>
+                    </div>
+                </PlayerDiv>
+            </Container>
+
+            <DivLinkLabel>
+                <LinkDiv className="linkDiv">
+                    <CustomLink to={toValue} onClick={showLabel}>
+                        Submit
+                    </CustomLink>
+                </LinkDiv>
+
+                <LabelDiv>
+                    <ErrorLabel className={error ? "errorLabel visible" : "errorLabel"}>
+                        {error}
+                    </ErrorLabel>
+                </LabelDiv>
+
+                <LinkDiv className="linkDiv">
+                    <CustomLink to={"/"}>
+                        Mode Selection
+                    </CustomLink>
+                </LinkDiv>
+            </DivLinkLabel>
+        </div>
     );
 }
 
 export default CpuMenu;
-player1;
-player2;
-
-//TODO figure out why the label doesnt appear when needed
