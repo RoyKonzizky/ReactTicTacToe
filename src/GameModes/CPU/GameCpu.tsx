@@ -1,19 +1,14 @@
 import {Grid} from "@mui/material";
 import {Link} from "react-router-dom";
-import "./GameCpu.css";
+import "./GameCPU.css";
 import {Player, player1, player2} from "../../PlayableCharacters/Player.ts";
 
-function GameCpu() {
+function GameCPU() {
     let countTurn = 0;
+    player1.sign = 'X';
+    player2.sign = 'O';
 
-    function winCondition(): string {
-        const cellValues: string[] = [];
-        const cells = document.getElementsByClassName("cell") as HTMLCollection;
-
-        for (let i = 0; i < cells.length; i++) {
-            cellValues.push((cells[i] as HTMLDivElement).innerText);
-        }
-
+    function winCondition(cellValues: (string | null)[]): string | null {
         const winConditions: number[][] = [
             [0, 1, 2],
             [3, 4, 5],
@@ -28,7 +23,7 @@ function GameCpu() {
         for (const condition of winConditions) {
             const [a, b, c]: number[] = condition;
             if (
-                cellValues[a] !== "" &&
+                cellValues[a] &&
                 cellValues[a] === cellValues[b] &&
                 cellValues[a] === cellValues[c]
             ) {
@@ -58,26 +53,43 @@ function GameCpu() {
 
     function handleCellClick(cellId: string) {
         const cell = document.getElementById(cellId) as HTMLElement;
-        if (cell.innerText === "") {
+        if (cell.textContent === "") {
             let winnerText;
             const tieText = "it's a tie";
-            cell.innerText = player1.sign;
+            cell.textContent = player1.sign;
             labelUpdate(player1, player2);
-            const winSign = winCondition();
-            countTurn++;
-
             const cells = document.getElementsByClassName("cell") as HTMLCollection;
             const cellValues = Array.from(cells).map((cell) => cell.textContent);
-            let cellChosen: HTMLElement;
 
-            const aiChoice: number = minmax(cellValues, player1.sign, player2.sign);
-            if (aiChoice <= 8 && aiChoice >= 0) {
-                cellChosen = document.getElementById(aiChoice.toString()) as HTMLElement;
-                cellChosen.textContent = player2.sign;
-                if (winSign === player2.sign) {
-                    showWinnerPopup("THE MACHINES RISE");
+            countTurn++;
+
+            let maxScoreCell = -1;
+            let bestScore = -Infinity;
+            for(let i = 0; i < cellValues.length; i++){
+                if(cellValues[i] === ""){
+                    console.log(cellValues[i]);
+                    cellValues[i] = player2.sign;
+                    console.log(cellValues[i]);
+                    const score = minmax(cellValues, false, 0);
+                    cellValues[i] = "";
+                    if(bestScore < score){
+                        maxScoreCell = i;
+                        bestScore = score;
+                    }
                 }
             }
+
+
+            const cellChosen = document.getElementById(maxScoreCell.toString()) as HTMLElement;
+
+            if(cellChosen){
+                if (cellChosen.textContent === "") {
+                    cellChosen.textContent = player2.sign;
+                }
+            }
+
+            const cellValuesForWinCon = Array.from(cells).map((cell) => cell.textContent);
+            const winSign = winCondition(cellValuesForWinCon);
 
             if (winSign) {
                 if (winSign === player1.sign) {
@@ -85,21 +97,22 @@ function GameCpu() {
                     countTurn = 0;
                     winnerText = player1.name + " is the winner";
                     showWinnerPopup(winnerText);
-                }
-                if (winSign === player2.sign) {
+                } else if (winSign === player2.sign) {
                     player2.score += 1;
                     countTurn = 0;
                     winnerText = player2.name + " is the winner";
                     showWinnerPopup(winnerText);
-                } else if (countTurn === 9) {
-                    countTurn = 0;
-                    showWinnerPopup(tieText);
                 }
+            }
+            if (countTurn === 5) {
+                countTurn = 0;
+                showWinnerPopup(tieText);
             }
         }
     }
 
-    function minmax(board: (string | null)[], maximizingPlayer: string, currentPlayer: string) {
+
+    function minmax(board: (string | null)[], isMaximizing: boolean, depth: number): number {
         const availableMoves = [];
         for (let i = 0; i < board.length; i++) {
             if (board[i] === "") {
@@ -107,44 +120,40 @@ function GameCpu() {
             }
         }
 
-        if (winCondition() === player1.sign) {
-            return -1;
-        } else if (winCondition() === player2.sign) {
-            return 1;
+        const winCon = winCondition(board);
+
+        if (winCon === player1.sign) {
+            return -10;
+        } else if (winCon === player2.sign) {
+            return 10;
         } else if (availableMoves.length === 0) {
             return 0;
         }
 
-        let bestMove: number;
-        let bestScore: number;
+        let bestScore:number;
 
-        if (currentPlayer === player2.sign) {
+        if (isMaximizing) {
             bestScore = -Infinity;
             for (let i = 0; i < availableMoves.length; i++) {
                 const move = availableMoves[i];
-                board[move] = currentPlayer;
-                const score = minmax(board, maximizingPlayer, player1.sign);
+                board[move] = player2.sign;
+                const score = minmax(board, !isMaximizing, depth + 1);
                 board[move] = "";
-                if (score > bestScore) {
-                    bestScore = score;
-                    bestMove = move;
-                }
+                bestScore = Math.max(bestScore, score);
             }
         } else {
             bestScore = Infinity;
             for (let i = 0; i < availableMoves.length; i++) {
                 const move = availableMoves[i];
-                board[move] = currentPlayer;
-                const score = minmax(board, maximizingPlayer, player2.sign);
+                board[move] = player1.sign;
+                const score = minmax(board, !isMaximizing, depth + 1);
                 board[move] = "";
-                if (score < bestScore) {
-                    bestScore = score;
-                    bestMove = move;
-                }
+                bestScore = Math.min(bestScore, score);
             }
         }
-        return bestMove;
+        return bestScore;
     }
+
 
     function resetBoard() {
         const cells = document.getElementsByClassName("cell");
@@ -211,8 +220,4 @@ function GameCpu() {
     );
 }
 
-export default GameCpu;
-
-//work with figma
-//TODO figure out how to add the AI
-//add onchange to input fields with funcs that if they return true the link activates
+export default GameCPU;
