@@ -79,9 +79,13 @@ function GameCPU() {
                 }
             }
 
+
             const cellChosen = document.getElementById(maxScoreCell.toString()) as HTMLElement;
-            if (cellChosen.textContent === "") {
-                cellChosen.textContent = player2.sign;
+
+            if(cellChosen){
+                if (cellChosen.textContent === "") {
+                    cellChosen.textContent = player2.sign;
+                }
             }
 
             const cellValuesForWinCon = Array.from(cells).map((cell) => cell.textContent);
