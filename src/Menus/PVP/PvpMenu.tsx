@@ -1,5 +1,5 @@
 import {player1, player2} from "../../PlayableCharacters/Player.ts";
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import {
     Container,
     CustomInput,
@@ -13,11 +13,22 @@ import {
 } from "./PvpMenu.Styled.ts";
 
 function PvpMenu() {
-
     const [toValue, setToValue] = useState('');
     const [error, setError] = useState('');
     const [p1Check, setP1Check] = useState(false);
     const [p2Check, setP2Check] = useState(false);
+    const [p1ImageFile, setP1ImageFile] = useState(null);
+    const [p2ImageFile, setP2ImageFile] = useState(null);
+
+    const handlePlayer1ImageChange = useCallback((e: { target: { files: never[]; }; }) => {
+        const file = e.target.files[0];
+        setP1ImageFile(file);
+    }, []);
+
+    const handlePlayer2ImageChange = useCallback((e: { target: { files: never[]; }; }) => {
+        const file = e.target.files[0];
+        setP2ImageFile(file);
+    }, []);
 
     function submitPlayers() {
         player1.name = (document.getElementById("player1Name") as HTMLInputElement).value;
@@ -29,14 +40,30 @@ function PvpMenu() {
         player1.score = 0;
         player2.score = 0;
 
-        if (player1.sign === "") {
-            player1.sign = "x.png";
+        if (p1ImageFile) {
+            player1.sign = URL.createObjectURL(p1ImageFile);
             setP1Check(true);
+        } else {
+            player1.sign = "x.png";
         }
-        if (player2.sign === "") {
-            player2.sign = "o.png";
+
+        if (p2ImageFile) {
+            player2.sign = URL.createObjectURL(p2ImageFile);
             setP2Check(true);
+        } else {
+            player2.sign = "o.png";
         }
+        //
+        // if (player1.sign === "") {
+        //     player1.sign = "x.png";
+        //     setP1Check(true);
+        // }
+        //
+        // if (player2.sign === "") {
+        //     player2.sign = "o.png";
+        //     setP2Check(true);
+        // }
+
         checkInput();
     }
 
@@ -65,6 +92,7 @@ function PvpMenu() {
             setError("player1, add name");
             setToValue('');
         }
+
         if (player2.name.length === 0) {
             setError("player2, add name");
             setToValue('');
@@ -74,9 +102,6 @@ function PvpMenu() {
             setToValue('/gamepvp');
             setError('');
         }
-        // console.log(player1.sign);
-        // console.log(p1Check);
-        // //Problem: when empty hook returns false
     }
 
     function showLabel() {
@@ -108,16 +133,25 @@ function PvpMenu() {
                 <PlayerDiv>
                     <PlayerLabel>Player 1:</PlayerLabel>
                     <CustomInput id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
-                    <CustomInput id="player1Sign" placeholder={"player 1's sign"} onChange={submitPlayers}/>
+                    <CustomInput id="player1Sign" type="file" onClick={handlePlayer1ImageChange} />
+                    <img
+                        src={p1Check ? player1.sign : "default_player1.png"}
+                        alt="Player 1 Sign"
+                        style={{ width: "100px", height: "100px" }}
+                    />
                 </PlayerDiv>
 
                 <PlayerDiv>
                     <PlayerLabel>Player 2:</PlayerLabel>
                     <CustomInput id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
-                    <CustomInput id="player2Sign" placeholder={"player 2's sign"} onChange={submitPlayers}/>
+                    <CustomInput id="player2Sign" type="file" onClick={handlePlayer2ImageChange} />
+                    <img
+                        src={p2Check ? player2.sign : "default_player2.png"}
+                        alt="Player 2 Sign"
+                        style={{ width: "100px", height: "100px" }}
+                    />
                 </PlayerDiv>
             </Container>
-
 
             <DivLinkLabel>
                 <LinkDiv className="linkDiv">
@@ -138,13 +172,8 @@ function PvpMenu() {
                     </CustomLink>
                 </LinkDiv>
             </DivLinkLabel>
-
         </div>
     );
 }
 
 export default PvpMenu;
-player1;
-player2;
-
-//TODO fix the bug with the default signs not coming back unless changing the name
