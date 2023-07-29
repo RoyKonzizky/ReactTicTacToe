@@ -60,18 +60,28 @@ function GameCPU() {
             labelUpdate(player1, player2);
             const cells = document.getElementsByClassName("cell") as HTMLCollection;
             const cellValues = Array.from(cells).map((cell) => cell.textContent);
-            let cellChosen: HTMLElement;
 
             countTurn++;
 
-            const aiChoice: number | null = minmax(cellValues, player2.sign, player1.sign, 0);
-            if (aiChoice != null) {
-                if (aiChoice <= 8 && aiChoice >= 0) {
-                    cellChosen = document.getElementById(aiChoice.toString()) as HTMLElement;
-                    if (cellChosen.textContent === "") {
-                        cellChosen.textContent = player2.sign;
+            let maxScoreCell = -1;
+            let bestScore = -Infinity;
+            for(let i = 0; i < cellValues.length; i++){
+                if(cellValues[i] === ""){
+                    console.log(cellValues[i]);
+                    cellValues[i] = player2.sign;
+                    console.log(cellValues[i]);
+                    const score = minmax(cellValues, false, 0);
+                    cellValues[i] = "";
+                    if(bestScore < score){
+                        maxScoreCell = i;
+                        bestScore = score;
                     }
                 }
+            }
+
+            const cellChosen = document.getElementById(maxScoreCell.toString()) as HTMLElement;
+            if (cellChosen.textContent === "") {
+                cellChosen.textContent = player2.sign;
             }
 
             const cellValuesForWinCon = Array.from(cells).map((cell) => cell.textContent);
@@ -98,7 +108,7 @@ function GameCPU() {
     }
 
 
-    function minmax(board: (string | null)[], currentMaximizingPlayer: string, currentPlayer: string, depth: number): number | null {
+    function minmax(board: (string | null)[], isMaximizing: boolean, depth: number): number {
         const availableMoves = [];
         for (let i = 0; i < board.length; i++) {
             if (board[i] === "") {
@@ -106,50 +116,38 @@ function GameCPU() {
             }
         }
 
-        if (winCondition(board)) {
-            return -10 + depth;
+        const winCon = winCondition(board);
+
+        if (winCon === player1.sign) {
+            return -10;
+        } else if (winCon === player2.sign) {
+            return 10;
         } else if (availableMoves.length === 0) {
             return 0;
         }
 
-        let bestScore: number;
-        let bestMove: number | null = null;
+        let bestScore:number;
 
-        if (currentPlayer === currentMaximizingPlayer) {
+        if (isMaximizing) {
             bestScore = -Infinity;
             for (let i = 0; i < availableMoves.length; i++) {
                 const move = availableMoves[i];
-                board[move] = currentPlayer;
-                const score = minmax(board, currentMaximizingPlayer, currentMaximizingPlayer === player1.sign ? player2.sign : player1.sign, depth + 1);
+                board[move] = player2.sign;
+                const score = minmax(board, !isMaximizing, depth + 1);
                 board[move] = "";
-                if (score != null) {
-                    if (score > bestScore) {
-                        bestScore = score;
-                        bestMove = move;
-                    }
-                }
+                bestScore = Math.max(bestScore, score);
             }
         } else {
             bestScore = Infinity;
             for (let i = 0; i < availableMoves.length; i++) {
                 const move = availableMoves[i];
-                board[move] = currentPlayer;
-                const score = minmax(board, currentMaximizingPlayer, currentMaximizingPlayer === player1.sign ? player2.sign : player1.sign, depth + 1);
+                board[move] = player1.sign;
+                const score = minmax(board, !isMaximizing, depth + 1);
                 board[move] = "";
-                if (score != null) {
-                    if (score < bestScore) {
-                        bestScore = score;
-                        bestMove = move;
-                    }
-                }
+                bestScore = Math.min(bestScore, score);
             }
         }
-
-        if (currentPlayer === currentMaximizingPlayer) {
-            return bestScore;
-        } else {
-            return bestMove;
-        }
+        return bestScore;
     }
 
 
@@ -219,8 +217,3 @@ function GameCPU() {
 }
 
 export default GameCPU;
-
-//work with figma
-//TODO add onchange to input fields with funcs that if they return true the link activate
-//TODO fix the win call, fix the bug that steals place
-//TODO iron-out bugs and clean up.
