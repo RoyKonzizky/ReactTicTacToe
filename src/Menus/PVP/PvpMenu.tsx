@@ -1,5 +1,5 @@
 import {player1, player2} from "../../PlayableCharacters/Player.ts";
-import {useCallback, useState} from "react";
+import {useEffect, useState} from "react";
 import {
     Container,
     CustomInput,
@@ -11,59 +11,60 @@ import {
     PlayerDiv,
     PlayerLabel
 } from "./PvpMenu.Styled.ts";
+import Dropzone from "react-dropzone";
 
 function PvpMenu() {
     const [toValue, setToValue] = useState('');
     const [error, setError] = useState('');
     const [p1Check, setP1Check] = useState(false);
     const [p2Check, setP2Check] = useState(false);
-    const [p1ImageFile, setP1ImageFile] = useState(null);
-    const [p2ImageFile, setP2ImageFile] = useState(null);
+    const [player1Name, setPlayer1Name] = useState('');
+    const [player2Name, setPlayer2Name] = useState('');
+    const [player1Sign, setPlayer1Sign] = useState("x.png");
+    const [player2Sign, setPlayer2Sign] = useState("o.png");
 
-    const handlePlayer1ImageChange = useCallback((e: { target: { files: never[]; }; }) => {
-        const file = e.target.files[0];
-        setP1ImageFile(file);
-    }, []);
+    useEffect(() => {
+        submitPlayers();
+    }, [player1Name, player2Name, player1Sign, player2Sign]);
 
-    const handlePlayer2ImageChange = useCallback((e: { target: { files: never[]; }; }) => {
-        const file = e.target.files[0];
-        setP2ImageFile(file);
-    }, []);
+    const handlePlayer1NameChange = (event) => {
+        setPlayer1Name(event.target.value);
+    };
+
+    const handlePlayer2NameChange = (event) => {
+        setPlayer2Name(event.target.value);
+    };
+
+    const onDropPlayer1Sign = (acceptedFiles) => {
+        const file = acceptedFiles[0];
+        const imageUrl = URL.createObjectURL(file);
+        setPlayer1Sign(imageUrl);
+    };
+
+    const onDropPlayer2Sign = (acceptedFiles) => {
+        const file = acceptedFiles[0];
+        const imageUrl = URL.createObjectURL(file);
+        setPlayer2Sign(imageUrl);
+    };
 
     function submitPlayers() {
-        player1.name = (document.getElementById("player1Name") as HTMLInputElement).value;
-        player2.name = (document.getElementById("player2Name") as HTMLInputElement).value;
+        player1.name = player1Name;
+        player2.name = player2Name;
 
-        player1.sign = (document.getElementById("player1Sign") as HTMLInputElement).value;
-        player2.sign = (document.getElementById("player2Sign") as HTMLInputElement).value;
+        player1.sign = player1Sign;
+        player2.sign = player2Sign;
 
         player1.score = 0;
         player2.score = 0;
 
-        if (p1ImageFile) {
-            player1.sign = URL.createObjectURL(p1ImageFile);
+        if (player1.sign === "") {
+            setPlayer1Sign("x.png");
             setP1Check(true);
-        } else {
-            player1.sign = "x.png";
         }
-
-        if (p2ImageFile) {
-            player2.sign = URL.createObjectURL(p2ImageFile);
+        if (player2.sign === "") {
+            setPlayer2Sign("o.png");
             setP2Check(true);
-        } else {
-            player2.sign = "o.png";
         }
-        //
-        // if (player1.sign === "") {
-        //     player1.sign = "x.png";
-        //     setP1Check(true);
-        // }
-        //
-        // if (player2.sign === "") {
-        //     player2.sign = "o.png";
-        //     setP2Check(true);
-        // }
-
         checkInput();
     }
 
@@ -92,7 +93,6 @@ function PvpMenu() {
             setError("player1, add name");
             setToValue('');
         }
-
         if (player2.name.length === 0) {
             setError("player2, add name");
             setToValue('');
@@ -110,7 +110,7 @@ function PvpMenu() {
         }
     }
 
-    const checkIfImageExists = (url: string, callback: (exists: boolean) => void) => {
+    const checkIfImageExists = (url, callback) => {
         const img = new Image();
         img.src = url;
 
@@ -132,30 +132,60 @@ function PvpMenu() {
             <Container>
                 <PlayerDiv>
                     <PlayerLabel>Player 1:</PlayerLabel>
-                    <CustomInput id="player1Name" placeholder={"player 1's name"} onChange={submitPlayers}/>
-                    <CustomInput id="player1Sign" type="file" onClick={handlePlayer1ImageChange} />
-                    <img
-                        src={p1Check ? player1.sign : "default_player1.png"}
-                        alt="Player 1 Sign"
-                        style={{ width: "100px", height: "100px" }}
+                    <CustomInput
+                        id="player1Name"
+                        placeholder={"player 1's name"}
+                        onChange={handlePlayer1NameChange}
+                        value={player1Name}
                     />
+
+                    {/* Player 1 Dropzone */}
+                    <div>
+                        <h4>Player 1's Sign:</h4>
+                        <div>
+                            <Dropzone onDrop={onDropPlayer1Sign}>
+                                {({ getRootProps, getInputProps }) => (
+                                    <div {...getRootProps()} className="dropzone">
+                                        <input {...getInputProps()} />
+                                        {player1Sign && <img src={player1Sign} alt="Player 1's Sign" />}
+                                        {!player1Sign && <p>Drop an image here or click to select one.</p>}
+                                    </div>
+                                )}
+                            </Dropzone>
+                        </div>
+                    </div>
                 </PlayerDiv>
 
                 <PlayerDiv>
                     <PlayerLabel>Player 2:</PlayerLabel>
-                    <CustomInput id="player2Name" placeholder={"player 2's name"} onChange={submitPlayers}/>
-                    <CustomInput id="player2Sign" type="file" onClick={handlePlayer2ImageChange} />
-                    <img
-                        src={p2Check ? player2.sign : "default_player2.png"}
-                        alt="Player 2 Sign"
-                        style={{ width: "100px", height: "100px" }}
+                    <CustomInput
+                        id="player2Name"
+                        placeholder={"player 2's name"}
+                        onChange={handlePlayer2NameChange}
+                        value={player2Name}
                     />
+
+                    {/* Player 2 Dropzone */}
+                    <div>
+                        <h4>Player 2's Sign:</h4>
+                        <div>
+                            <Dropzone onDrop={onDropPlayer2Sign}>
+                                {({ getRootProps, getInputProps }) => (
+                                    <div {...getRootProps()} className="dropzone">
+                                        <input {...getInputProps()} />
+                                        {player2Sign && <img src={player2Sign} alt="Player 2's Sign" />}
+                                        {!player2Sign && <p>Drop an image here or click to select one.</p>}
+                                    </div>
+                                )}
+                            </Dropzone>
+                        </div>
+                    </div>
                 </PlayerDiv>
             </Container>
 
             <DivLinkLabel>
                 <LinkDiv className="linkDiv">
-                    <CustomLink className="link" to={toValue} onClick={showLabel}>
+                    <CustomLink to={toValue} onClick={showLabel}>
                         Submit
                     </CustomLink>
                 </LinkDiv>
@@ -167,7 +197,7 @@ function PvpMenu() {
                 </LabelDiv>
 
                 <LinkDiv className="linkDiv">
-                    <CustomLink className="link" to={"/"}>
+                    <CustomLink to={"/"}>
                         Mode Selection
                     </CustomLink>
                 </LinkDiv>
