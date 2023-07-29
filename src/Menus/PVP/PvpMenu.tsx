@@ -6,6 +6,7 @@ import {
     CustomLink,
     DivLinkLabel,
     ErrorLabel,
+    ImgSlot,
     LabelDiv,
     LinkDiv,
     PlayerDiv,
@@ -147,7 +148,7 @@ function PvpMenu() {
                                 {({ getRootProps, getInputProps }) => (
                                     <div {...getRootProps()} className="dropzone">
                                         <input {...getInputProps()} />
-                                        {player1Sign && <img src={player1Sign} alt="Player 1's Sign" />}
+                                        {player1Sign && <ImgSlot src={player1Sign} alt="Player 1's Sign" />}
                                         {!player1Sign && <p>Drop an image here or click to select one.</p>}
                                     </div>
                                 )}
@@ -173,7 +174,7 @@ function PvpMenu() {
                                 {({ getRootProps, getInputProps }) => (
                                     <div {...getRootProps()} className="dropzone">
                                         <input {...getInputProps()} />
-                                        {player2Sign && <img src={player2Sign} alt="Player 2's Sign" />}
+                                        {player2Sign && <ImgSlot src={player2Sign} alt="Player 2's Sign" />}
                                         {!player2Sign && <p>Drop an image here or click to select one.</p>}
                                     </div>
                                 )}

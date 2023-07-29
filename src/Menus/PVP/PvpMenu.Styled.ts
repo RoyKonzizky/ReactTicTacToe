@@ -92,3 +92,8 @@ export const PlayerLabel = styled.div`
   color: black;
   margin: 5px;
 `
+
+export const ImgSlot = styled.img`
+    width: 50px;
+    height: 50px;
+`
