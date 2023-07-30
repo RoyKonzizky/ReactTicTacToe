@@ -2,6 +2,7 @@ import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import {useEffect, useState} from "react";
 import {
     Container,
+    CustomHeader,
     CustomInput,
     CustomLink,
     DivLinkLabel,
@@ -27,11 +28,11 @@ function CpuMenu() {
         submitPlayers();
     }, [player1Name, player2Name, player1Sign, player2Sign]);
 
-    const handlePlayer1NameChange = (event) => {
+    const handlePlayer1NameChange = (event: any) => {
         setPlayer1Name(event.target.value);
     };
 
-    const onDropPlayer1Sign = (acceptedFiles) => {
+    const onDropPlayer1Sign = (acceptedFiles: any) => {
         const file = acceptedFiles[0];
         const imageUrl = URL.createObjectURL(file);
         setPlayer1Sign(imageUrl);
@@ -48,14 +49,14 @@ function CpuMenu() {
         player2.score = 0;
 
         if (player1.sign === "") {
-            setPlayer1Sign("x.png");
+            setPlayer1Sign("./sdesd");
             setP1Check(true);
         }
         checkInput();
     }
 
     function checkInput() {
-        checkIfImageExists(player1.sign, (existsP1) => {
+        checkIfImageExists(player1.sign, (existsP1: any) => {
             if (existsP1) {
                 setP1Check(true);
             } else {
@@ -86,7 +87,7 @@ function CpuMenu() {
         }
     }
 
-    const checkIfImageExists = (url, callback) => {
+    const checkIfImageExists = (url: string, callback: any) => {
         const img = new Image();
         img.src = url;
 
@@ -115,15 +116,14 @@ function CpuMenu() {
                         value={player1Name}
                     />
 
-                    {/* Player 1 Dropzone */}
                     <div>
-                        <h4>Player 1's Sign:</h4>
+                        <CustomHeader>Player 1's Sign:</CustomHeader>
                         <div>
                             <Dropzone onDrop={onDropPlayer1Sign}>
-                                {({ getRootProps, getInputProps }) => (
+                                {({getRootProps, getInputProps}) => (
                                     <div {...getRootProps()} className="dropzone">
                                         <input {...getInputProps()} />
-                                        {player1Sign && <ImgSlot src={player1Sign} alt="Player 1's Sign" />}
+                                        {player1Sign && <ImgSlot src={player1Sign} alt="Player 1's Sign"/>}
                                         {!player1Sign && <p>Drop an image here or click to select one.</p>}
                                     </div>
                                 )}
@@ -157,3 +157,4 @@ function CpuMenu() {
 }
 
 export default CpuMenu;
+player1;

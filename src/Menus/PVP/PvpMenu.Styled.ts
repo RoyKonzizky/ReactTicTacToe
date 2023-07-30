@@ -94,6 +94,10 @@ export const PlayerLabel = styled.div`
 `
 
 export const ImgSlot = styled.img`
-    width: 50px;
-    height: 50px;
+  width: 50px;
+  height: 50px;
+`
+
+export const CustomHeader = styled.h1`
+  color: #1a1a1a;
 `

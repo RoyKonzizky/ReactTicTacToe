@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {Grid} from "@mui/material";
+import ReactConfetti from "react-confetti";
 
 export const CustomGrid = styled(Grid)`
   display: flex;
@@ -9,7 +10,7 @@ export const CustomGrid = styled(Grid)`
 
 export const GridContainer = styled.div`
   margin-top: 2vh;
-  margin-bottom: -2vh;
+  margin-bottom: 2vh;
 `;
 
 export const GridWrapper = styled.div`
@@ -27,6 +28,14 @@ export const Cell = styled.div`
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   transition: background-color 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: bold;
+  height: 80px;
+  width: 80px;
+  color: #1a1a1a;
 
   &:hover {
     background-color: #e0e0e0;
@@ -75,6 +84,7 @@ export const PopupHeader = styled.h2`
   font-size: 24px;
   margin-bottom: 20px;
   text-align: center; //to center the text in the header
+  color: black;
 `;
 
 export const PopupButton = styled.button`
@@ -134,4 +144,8 @@ export const CurrLabelName = styled.div`
 export const CurrLabelSign = styled.div`
   display: flex;
   justify-content: center;
+`
+
+export const Confetti = styled(ReactConfetti)`
+  width: 100%;
 `

@@ -2,6 +2,7 @@ import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import {useEffect, useState} from "react";
 import {
     Container,
+    CustomHeader,
     CustomInput,
     CustomLink,
     DivLinkLabel,
@@ -139,16 +140,14 @@ function PvpMenu() {
                         onChange={handlePlayer1NameChange}
                         value={player1Name}
                     />
-
-                    {/* Player 1 Dropzone */}
                     <div>
-                        <h4>Player 1's Sign:</h4>
+                        <CustomHeader>Player 1's Sign:</CustomHeader>
                         <div>
                             <Dropzone onDrop={onDropPlayer1Sign}>
-                                {({ getRootProps, getInputProps }) => (
+                                {({getRootProps, getInputProps}) => (
                                     <div {...getRootProps()} className="dropzone">
                                         <input {...getInputProps()} />
-                                        {player1Sign && <ImgSlot src={player1Sign} alt="Player 1's Sign" />}
+                                        {player1Sign && <ImgSlot src={player1Sign} alt="Player 1's Sign"/>}
                                         {!player1Sign && <p>Drop an image here or click to select one.</p>}
                                     </div>
                                 )}
@@ -165,16 +164,14 @@ function PvpMenu() {
                         onChange={handlePlayer2NameChange}
                         value={player2Name}
                     />
-
-                    {/* Player 2 Dropzone */}
                     <div>
-                        <h4>Player 2's Sign:</h4>
+                        <CustomHeader>Player 2's Sign:</CustomHeader>
                         <div>
                             <Dropzone onDrop={onDropPlayer2Sign}>
-                                {({ getRootProps, getInputProps }) => (
+                                {({getRootProps, getInputProps}) => (
                                     <div {...getRootProps()} className="dropzone">
                                         <input {...getInputProps()} />
-                                        {player2Sign && <ImgSlot src={player2Sign} alt="Player 2's Sign" />}
+                                        {player2Sign && <ImgSlot src={player2Sign} alt="Player 2's Sign"/>}
                                         {!player2Sign && <p>Drop an image here or click to select one.</p>}
                                     </div>
                                 )}
