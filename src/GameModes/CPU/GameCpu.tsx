@@ -1,12 +1,26 @@
-import {Grid} from "@mui/material";
 import {Link} from "react-router-dom";
 import "./GameCPU.css";
 import {Player, player1, player2} from "../../PlayableCharacters/Player.ts";
+import {
+    Cell,
+    CellImage, CurrentLabelDiv, CurrLabelName, CurrLabelSign,
+    CustomGrid,
+    GridContainer,
+    GridWrapper, ImgLbl,
+    Label, Overlay,
+    PlayerImg,
+    PlayerInfoDiv, Popup, PopupButton, PopupHeader
+} from "../PVP/GamePvp.Styled.ts";
+import ReactConfetti from "react-confetti";
+import {useState} from "react";
 
 function GameCPU() {
+    const [currentSign, setCurrentSign] = useState(player1.sign);
+    const [currentName, setCurrentName] = useState(player1.name);
+    const [p1score, setScoreP1] = useState(0);
+    const [p2score, setScoreP2] = useState(0);
+    const [count, setCount] = useState(0);
     let countTurn = 0;
-    player1.sign = 'X';
-    player2.sign = 'O';
 
     function winCondition(cellValues: (string | null)[]): string | null {
         const winConditions: number[][] = [
@@ -171,51 +185,69 @@ function GameCPU() {
 
         return (
             <div className="grid-container">
-                <Grid className={"grid"} container spacing={1}>
-                    {cellIds.map((cellId) => (
-                        <Grid
-                            key={cellId}
-                            id={cellId}
-                            className={"cell"}
-                            onClick={() => handleCellClick(cellId)}
-                            item
-                            xs={3}
-                        ></Grid>
-                    ))}
-                </Grid>
+                <GridContainer>
+                    <GridWrapper>
+                        <CustomGrid container spacing={2}>
+                            {cellIds.map((cellId) => (
+                                <Cell
+                                    key={cellId}
+                                    id={cellId}
+                                    className={"cell"}
+                                    onClick={() => handleCellClick(cellId)}
+                                >
+                                    <CellImage
+                                        id={`image-${cellId}`}
+                                        className={"cell-image"}
+                                        src=""
+                                        alt=""
+                                    />
+                                </Cell>
+                            ))}
+                        </CustomGrid>
+                    </GridWrapper>
+                </GridContainer>
             </div>
         );
     }
 
     return (
         <div>
+            <PlayerInfoDiv>
+                <Label id="player1Label">
+                    <PlayerImg id="player1Img" src={player1.sign} alt="X"/>: {player1.name} - {p1score}
+                </Label>
+                <Label id="player2Label">
+                    <PlayerImg id="player2Img" src={player2.sign} alt="O"/>: {player2.name} - {p2score}
+                </Label>
+            </PlayerInfoDiv>
+
             <div className="grid-container">{createGrid()}</div>
 
-            <div>
-                <label className={"label"} id={"scorePlayer1"}>
-                    player 1's score:{""}
-                </label>
-            </div>
+            <CurrentLabelDiv>
+                <CurrLabelName>
+                    <Label id={"currentPlayer"}>current player: {currentName}</Label>
+                </CurrLabelName>
+                <CurrLabelSign>
+                    <Label id={"currentSign"}>current sign: <ImgLbl id="imgLbl" src={currentSign} alt=""/></Label>
+                </CurrLabelSign>
+            </CurrentLabelDiv>
 
-            <div>
-                <label className={"label"} id={"scorePlayer2"}>
-                    player 2's score:{""}
-                </label>
-            </div>
+            <Overlay id="overlay">
+                <ReactConfetti id="conf"/>
+            </Overlay>
 
-            <div id="overlay" className="overlay"></div>
-
-            <div id="winnerPopup" className="popup">
-                <h2 id="winnerText"></h2>
-                <Link to="/">
-                    <button type="button" id={"retMenuButton"}>
-                        back to menu
-                    </button>
+            <Popup id="winnerPopup">
+                <PopupHeader id="winnerText"/>
+                <Link to="/leaderboard">
+                    <PopupButton id="leadboardButton" onClick={addToLeaderboard}>leaderboard</PopupButton>
                 </Link>
-                <button id={"boardReseter"} onClick={resetBoard}>
+                <Link to="/">
+                    <PopupButton id="retMenuButton" onClick={addToLeaderboard}>back to menu</PopupButton>
+                </Link>
+                <PopupButton id="boardReseter" onClick={resetBoard}>
                     reset grid
-                </button>
-            </div>
+                </PopupButton>
+            </Popup>
         </div>
     );
 }

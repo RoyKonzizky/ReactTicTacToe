@@ -11,7 +11,7 @@ import {
     LinkDiv,
     PlayerDiv,
     PlayerLabel
-} from "./CpuMenu.Styles.ts";
+} from "./CpuMenu.Styled.ts";
 import Dropzone from "react-dropzone";
 
 function CpuMenu() {
@@ -69,8 +69,12 @@ function CpuMenu() {
             setError("player1, add name");
             setToValue('');
         }
+        if (player2.name.length === 0) {
+            setError("player2, add name");
+            setToValue('');
+        }
 
-        if (player1.name.length > 0 && player2.name.length > 0 && p1Check) {
+        if (player1.name.length > 0 && p1Check) {
             setToValue('/gamecpu');
             setError('');
         }
