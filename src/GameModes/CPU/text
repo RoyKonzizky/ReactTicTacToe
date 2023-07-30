@@ -1,8 +1,10 @@
 import {Link} from "react-router-dom";
+import "./GameCpu.Styled.ts";
 import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import {
     Cell,
     CellImage,
+    Confetti,
     CustomGrid,
     GridContainer,
     GridWrapper,
@@ -14,7 +16,6 @@ import {
     PopupButton,
     PopupHeader
 } from "./GameCpu.Styled.ts";
-import ReactConfetti from "react-confetti";
 import {useState} from "react";
 
 function GameCPU() {
@@ -47,23 +48,22 @@ function GameCPU() {
         return "";
     }
 
-    function showWinnerPopup(winnerText: string): void {
-        const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
-        const overlay = document.getElementById("overlay") as HTMLElement;
-        const winnerTextElement = document.getElementById(
-            "winnerText",
-        ) as HTMLElement;
-        winnerTextElement.innerText = winnerText;
-        winnerPopup.style.display = "block";
-        overlay.style.display = "block";
-    }
-
     function handleCellClick(cellId: string) {
         const cell = document.getElementById(cellId) as HTMLElement;
+        let winnerText;
+        const tieText = "it's a tie";
+
         if (cell.textContent === "") {
-            let winnerText;
-            const tieText = "it's a tie";
-            cell.textContent = player1.sign;
+            const imageForSign = document.getElementById(`image-${cellId}`) as HTMLImageElement;
+            //TODO the problem is the use of text content, need to fix the winCon func and the rest of the code to use the alt/src instead
+
+            console.log(imageForSign);
+            if (imageForSign) {
+                imageForSign.src = player1.sign;
+                imageForSign.alt = 'X';
+                imageForSign.style.opacity = '1';
+            }
+
             const cells = document.getElementsByClassName("cell") as HTMLCollection;
             const cellValues = Array.from(cells).map((cell) => cell.textContent);
 
@@ -73,9 +73,7 @@ function GameCPU() {
             let bestScore = -Infinity;
             for (let i = 0; i < cellValues.length; i++) {
                 if (cellValues[i] === "") {
-                    console.log(cellValues[i]);
                     cellValues[i] = player2.sign;
-                    console.log(cellValues[i]);
                     const score = minmax(cellValues, false, 0);
                     cellValues[i] = "";
                     if (bestScore < score) {
@@ -87,10 +85,14 @@ function GameCPU() {
 
 
             const cellChosen = document.getElementById(maxScoreCell.toString()) as HTMLElement;
-
+            const imageBotChosen = document.getElementById(`image-${maxScoreCell.toString()}`) as HTMLImageElement;
             if (cellChosen) {
                 if (cellChosen.textContent === "") {
-                    cellChosen.textContent = player2.sign;
+                    if (imageBotChosen) {
+                        imageBotChosen.src = player2.sign;
+                        imageBotChosen.alt = 'O';
+                        imageBotChosen.style.opacity = "1";
+                    }
                 }
             }
 
@@ -117,6 +119,7 @@ function GameCPU() {
                 showWinnerPopup(tieText);
             }
         }
+        cell.style.pointerEvents = 'none';
     }
 
 
@@ -163,15 +166,38 @@ function GameCPU() {
     }
 
 
+    function showWinnerPopup(winnerText: string): void {
+        const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
+        const overlay = document.getElementById("overlay") as HTMLElement;
+        const winnerTextElement = document.getElementById(
+            "winnerText",
+        ) as HTMLElement;
+        winnerTextElement.innerText = winnerText;
+        winnerPopup.style.display = "block";
+        overlay.style.display = "block";
+    }
+
     function resetBoard() {
         const cells = document.getElementsByClassName("cell");
-        for (let i = 0; i < cells.length; i++) {
-            cells[i].textContent = "";
-        }
         const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
-        winnerPopup.style.display = "none";
         const overlay = document.getElementById("overlay") as HTMLElement;
+        const confetti = document.getElementById("conf") as HTMLElement;
+        const player1Img = document.getElementById("player1Img") as HTMLImageElement;
+        const player2Img = document.getElementById("player2Img") as HTMLImageElement;
+        Array.from(cells).forEach((cell) => {
+            const cellElement = cell as HTMLElement;
+            cellElement.style.pointerEvents = "auto";
+            const img = document.getElementById(`image-${cellElement.id}`) as HTMLImageElement;
+            img.src = "";
+            img.alt = "";
+            img.style.opacity = "0";
+        });
+
+        winnerPopup.style.display = "none";
         overlay.style.display = "none";
+        confetti.style.opacity = '0';
+        player1Img.src = player1.sign;
+        player2Img.src = player2.sign;
     }
 
     function createGrid() {
@@ -213,10 +239,11 @@ function GameCPU() {
                 </Label>
             </PlayerInfoDiv>
 
+
             <GridContainer>{createGrid()}</GridContainer>
 
             <Overlay id="overlay">
-                <ReactConfetti id="conf"/>
+                <Confetti id="conf"/>
             </Overlay>
 
             <Popup id="winnerPopup">
@@ -233,3 +260,5 @@ function GameCPU() {
 }
 
 export default GameCPU;
+
+//TODO image not showing
