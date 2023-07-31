@@ -49,7 +49,7 @@ function CpuMenu() {
         player2.score = 0;
 
         if (player1.sign === "") {
-            setPlayer1Sign("./sdesd");
+            setPlayer1Sign("x.png");
             setP1Check(true);
         }
         checkInput();

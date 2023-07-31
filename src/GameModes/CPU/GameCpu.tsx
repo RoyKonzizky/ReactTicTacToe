@@ -1,8 +1,10 @@
+import {useState} from "react";
 import {Link} from "react-router-dom";
 import {player1, player2} from "../../PlayableCharacters/Player.ts";
 import {
     Cell,
     CellImage,
+    Confetti,
     CustomGrid,
     GridContainer,
     GridWrapper,
@@ -12,17 +14,24 @@ import {
     PlayerInfoDiv,
     Popup,
     PopupButton,
-    PopupHeader
+    PopupHeader,
 } from "./GameCpu.Styled.ts";
-import ReactConfetti from "react-confetti";
-import {useState} from "react";
 
-function GameCPU() {
+
+function GamePvp() {
+    const [currentSign, setCurrentSign] = useState(player1.sign);
+    const [currentName, setCurrentName] = useState(player1.name);
     const [p1score, setScoreP1] = useState(0);
     const [p2score, setScoreP2] = useState(0);
     const [count, setCount] = useState(0);
 
-    function winCondition(cellValues: (string | null)[]): string | null {
+    function winCondition(): string {
+        const cellValues: string[] = [];
+        const cells: HTMLCollectionOf<Element> = document.getElementsByClassName("cell-image");
+        Array.from(cells).forEach((cell) => {
+            cellValues.push((cell as HTMLImageElement).alt);
+        });
+
         const winConditions: number[][] = [
             [0, 1, 2],
             [3, 4, 5],
@@ -37,7 +46,7 @@ function GameCPU() {
         for (const condition of winConditions) {
             const [a, b, c]: number[] = condition;
             if (
-                cellValues[a] &&
+                cellValues[a] !== "" &&
                 cellValues[a] === cellValues[b] &&
                 cellValues[a] === cellValues[c]
             ) {
@@ -47,131 +56,99 @@ function GameCPU() {
         return "";
     }
 
+    function handleCellClick(cellId: string) {
+        const confetti = document.getElementById("conf") as HTMLElement;
+        const cell = document.getElementById(cellId) as HTMLElement;
+        const currentNameLabel = document.getElementById("currentPlayer") as HTMLElement;
+        const imgLbl = document.getElementById("imgLbl") as HTMLImageElement;
+
+        if (cell.textContent === "") {
+            const imageForSign = document.getElementById(`image-${cellId}`) as HTMLImageElement;
+
+            if (imageForSign) {
+                imageForSign.src = currentSign;
+                imageForSign.style.opacity = '1';
+                imageForSign.alt = currentSign;
+            }
+
+            setCurrentName(currentName === player1.name ? player2.name : player1.name);
+            setCurrentSign(currentSign === player1.sign ? player2.sign : player1.sign);
+
+            currentNameLabel.textContent = "current player: " + currentName;
+            if (imgLbl) {
+                imgLbl.src = currentSign;
+                imgLbl.style.opacity = '1';
+                imgLbl.alt = currentSign;
+            }
+
+            const winSign = winCondition();
+
+            setCount(count + 1);
+
+            if (winSign) {
+                if (winSign === player1.sign) {
+                    setScoreP1((prevScore) => prevScore + 1);
+                    player1.score = p1score;
+                    setCount(0);
+                    setCurrentName(player2.name);
+                    setCurrentSign(player2.sign);
+                    showWinnerPopup(player1.name + " is the winner");
+                    confetti.style.opacity = '1';
+                } else if (winSign === player2.sign) {
+                    setScoreP2((prevScore) => prevScore + 1);
+                    player2.score = p2score;
+                    setCount(0);
+                    setCurrentName(player1.name);
+                    setCurrentSign(player1.sign);
+                    showWinnerPopup(player2.name + " is the winner");
+                    confetti.style.opacity = '1';
+                }
+            } else if (count === 8) {
+                setCount(0);
+                showWinnerPopup("it's a tie");
+                setCurrentName(currentName === player1.name ? player2.name : player1.name);
+                setCurrentSign(currentSign === player1.sign ? player2.sign : player1.sign);
+                confetti.style.opacity = '0';
+            }
+        }
+        cell.style.pointerEvents = 'none';
+    }
+
     function showWinnerPopup(winnerText: string): void {
         const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
         const overlay = document.getElementById("overlay") as HTMLElement;
-        const winnerTextElement = document.getElementById(
-            "winnerText",
-        ) as HTMLElement;
-        winnerTextElement.innerText = winnerText;
+        const winnerTextElement = document.getElementById("winnerText") as HTMLElement;
+        winnerTextElement.textContent = winnerText;
         winnerPopup.style.display = "block";
         overlay.style.display = "block";
     }
 
-    function handleCellClick(cellId: string) {
-        const cell = document.getElementById(cellId) as HTMLElement;
-        if (cell.textContent === "") {
-            let winnerText;
-            const tieText = "it's a tie";
-            cell.textContent = player1.sign;
-            const cells = document.getElementsByClassName("cell") as HTMLCollection;
-            const cellValues = Array.from(cells).map((cell) => cell.textContent);
-
-            setCount(count + 1);
-
-            let maxScoreCell = -1;
-            let bestScore = -Infinity;
-            for (let i = 0; i < cellValues.length; i++) {
-                if (cellValues[i] === "") {
-                    console.log(cellValues[i]);
-                    cellValues[i] = player2.sign;
-                    console.log(cellValues[i]);
-                    const score = minmax(cellValues, false, 0);
-                    cellValues[i] = "";
-                    if (bestScore < score) {
-                        maxScoreCell = i;
-                        bestScore = score;
-                    }
-                }
-            }
-
-
-            const cellChosen = document.getElementById(maxScoreCell.toString()) as HTMLElement;
-
-            if (cellChosen) {
-                if (cellChosen.textContent === "") {
-                    cellChosen.textContent = player2.sign;
-                }
-            }
-
-            const cellValuesForWinCon = Array.from(cells).map((cell) => cell.textContent);
-            const winSign = winCondition(cellValuesForWinCon);
-
-            if (winSign) {
-                if (winSign === player1.sign) {
-                    player1.score += 1;
-                    setScoreP1(player1.score);
-                    setCount(0);
-                    winnerText = player1.name + " is the winner";
-                    showWinnerPopup(winnerText);
-                } else if (winSign === player2.sign) {
-                    player2.score += 1;
-                    setScoreP2(player2.score);
-                    setCount(0);
-                    winnerText = player2.name + " is the winner";
-                    showWinnerPopup(winnerText);
-                }
-            }
-            if (count === 5) {
-                setCount(0);
-                showWinnerPopup(tieText);
-            }
-        }
+    function addToLeaderboard() {
+        localStorage.setItem(player1.name, String(p1score));
+        localStorage.setItem(player2.name, String(p2score));
     }
-
-
-    function minmax(board: (string | null)[], isMaximizing: boolean, depth: number): number {
-        const availableMoves = [];
-        for (let i = 0; i < board.length; i++) {
-            if (board[i] === "") {
-                availableMoves.push(i);
-            }
-        }
-
-        const winCon = winCondition(board);
-
-        if (winCon === player1.sign) {
-            return -10;
-        } else if (winCon === player2.sign) {
-            return 10;
-        } else if (availableMoves.length === 0) {
-            return 0;
-        }
-
-        let bestScore: number;
-
-        if (isMaximizing) {
-            bestScore = -Infinity;
-            for (let i = 0; i < availableMoves.length; i++) {
-                const move = availableMoves[i];
-                board[move] = player2.sign;
-                const score = minmax(board, !isMaximizing, depth + 1);
-                board[move] = "";
-                bestScore = Math.max(bestScore, score);
-            }
-        } else {
-            bestScore = Infinity;
-            for (let i = 0; i < availableMoves.length; i++) {
-                const move = availableMoves[i];
-                board[move] = player1.sign;
-                const score = minmax(board, !isMaximizing, depth + 1);
-                board[move] = "";
-                bestScore = Math.min(bestScore, score);
-            }
-        }
-        return bestScore;
-    }
-
 
     function resetBoard() {
         const cells = document.getElementsByClassName("cell");
-        for (let i = 0; i < cells.length; i++) {
-            cells[i].textContent = "";
-        }
         const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
-        winnerPopup.style.display = "none";
         const overlay = document.getElementById("overlay") as HTMLElement;
+        const confetti = document.getElementById("conf") as HTMLElement;
+        const player1Img = document.getElementById("player1Img") as HTMLImageElement;
+        const player2Img = document.getElementById("player2Img") as HTMLImageElement;
+        Array.from(cells).forEach((cell) => {
+            const cellElement = cell as HTMLElement;
+            cellElement.style.pointerEvents = "auto";
+            const img = document.getElementById(`image-${cellElement.id}`) as HTMLImageElement;
+            img.src = "";
+            img.alt = "";
+            img.style.opacity = "0";
+        });
+
+        winnerPopup.style.display = "none";
         overlay.style.display = "none";
+        confetti.style.opacity = '0';
+        player1Img.src = player1.sign;
+        player2Img.src = player2.sign;
     }
 
     function createGrid() {
@@ -213,16 +190,20 @@ function GameCPU() {
                 </Label>
             </PlayerInfoDiv>
 
+
             <GridContainer>{createGrid()}</GridContainer>
 
             <Overlay id="overlay">
-                <ReactConfetti id="conf"/>
+                <Confetti id="conf"/>
             </Overlay>
 
             <Popup id="winnerPopup">
                 <PopupHeader id="winnerText"/>
+                <Link to="/leaderboard">
+                    <PopupButton id="leadboardButton" onClick={addToLeaderboard}>leaderboard</PopupButton>
+                </Link>
                 <Link to="/">
-                    <PopupButton id="retMenuButton">back to menu</PopupButton>
+                    <PopupButton id="retMenuButton" onClick={addToLeaderboard}>back to menu</PopupButton>
                 </Link>
                 <PopupButton id="boardReseter" onClick={resetBoard}>
                     reset grid
@@ -232,4 +213,4 @@ function GameCPU() {
     );
 }
 
-export default GameCPU;
+export default GamePvp;
