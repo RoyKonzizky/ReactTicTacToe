@@ -17,7 +17,6 @@ function GameCPU() {
     const [p1score, setScoreP1] = useState(0);
     const [p2score, setScoreP2] = useState(0);
     const [countTurn, setCountTurn] = useState(0);
-    player2.sign = "o.png";
 
     function winCondition(cellValues: (string | null)[]): string | null {
         const winConditions: number[][] = [
