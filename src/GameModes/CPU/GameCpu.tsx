@@ -17,6 +17,7 @@ function GameCPU() {
     const [p1score, setScoreP1] = useState(0);
     const [p2score, setScoreP2] = useState(0);
     const [countTurn, setCountTurn] = useState(0);
+    const [board, setBoard] = useState(['','','','','','','','','']);
 
     function winCondition(cellValues: (string | null)[]): string | null {
         const winConditions: number[][] = [
@@ -59,44 +60,15 @@ function GameCPU() {
         if (cell.textContent === "") {
             let winnerText;
             const tieText = "it's a tie";
-            cell.textContent = player1.sign;
-            // const imgCell = document.getElementById(cellId) as HTMLImageElement;
-            // imgCell.src = player1.sign;
-            // imgCell.alt = player1.sign;
+            const updatedBoardForPlayer = board.slice();
+            updatedBoardForPlayer[+cellId] = player1.sign;
+            setBoard(updatedBoardForPlayer);
 
             const cells = document.getElementsByClassName("cell") as HTMLCollection;
             const cellValues = Array.from(cells).map((cell) => cell.textContent);
 
-            setCountTurn(countTurn+1);
-
-            let maxScoreCell = -1;
-            let bestScore = -Infinity;
-            for(let i = 0; i < cellValues.length; i++){
-                if(cellValues[i] === ""){
-                    cellValues[i] = player2.sign;
-                    const score = minmax(cellValues, false, 0);
-                    cellValues[i] = "";
-                    if(bestScore < score){
-                        maxScoreCell = i;
-                        bestScore = score;
-                    }
-                }
-            }
-
-            const cellChosen = document.getElementById(maxScoreCell.toString()) as HTMLElement;
-            // const imgBot = document.getElementById(`image-${maxScoreCell.toString()}`) as HTMLImageElement;
-            if(cellChosen){
-                if (cellChosen.textContent === "") {
-                    cellChosen.textContent = player2.sign;
-                    // imgBot.src = player2.sign;
-                    // imgBot.alt = player2.sign;
-                }
-            }
-
-            const cellValuesForWinCon = Array.from(cells).map((cell) => cell.textContent);
-            const winSign = winCondition(cellValuesForWinCon);
-            console.log(winSign);
-
+            // Check if the human player wins or if it's a tie
+            const winSign = winCondition(cellValues);
             if (winSign) {
                 if (winSign === player1.sign) {
                     player1.score += 1;
@@ -104,21 +76,72 @@ function GameCPU() {
                     setCountTurn(0);
                     winnerText = player1.name + " is the winner";
                     showWinnerPopup(winnerText);
-                }
-                if (winSign === player2.sign) {
+                } else if (winSign === player2.sign) {
                     player2.score += 1;
                     setScoreP2(player2.score);
                     setCountTurn(0);
                     winnerText = player2.name + " is the winner";
                     showWinnerPopup(winnerText);
                 }
-            }
-            if (countTurn === 4) {
-                setCountTurn(0);
-                showWinnerPopup(tieText);
+            } else {
+                // Check if it's a tie
+                if (countTurn === 4) {
+                    setCountTurn(0);
+                    showWinnerPopup(tieText);
+                } else {
+                    // It's the computer player's turn
+                    const updatedBoardForBot = board.slice();
+                    updatedBoardForBot[+cellId] = player1.sign;
+                    setBoard(updatedBoardForBot);
+                    setCountTurn(countTurn + 1);
+
+                    // Calculate the computer player's move using Minimax algorithm
+                    let bestMove = -1;
+                    let bestScore = -Infinity;
+                    for (let i = 0; i < updatedBoardForBot.length; i++) {
+                        if (updatedBoardForBot[i] === "") {
+                            updatedBoardForBot[i] = player2.sign;
+                            const score = minmax(updatedBoardForBot, false, 0);
+                            updatedBoardForBot[i] = "";
+                            if (score > bestScore) {
+                                bestScore = score;
+                                bestMove = i;
+                            }
+                        }
+                    }
+                    if (bestMove !== -1) {
+                        updatedBoardForBot[bestMove] = player2.sign;
+                        setBoard(updatedBoardForBot);
+                    }
+
+                    // Check if the computer player wins or if it's a tie
+                    const cpuWinSign = winCondition(updatedBoardForBot);
+                    if (cpuWinSign) {
+                        if (cpuWinSign === player1.sign) {
+                            player1.score += 1;
+                            setScoreP1(player1.score);
+                            setCountTurn(0);
+                            winnerText = player1.name + " is the winner";
+                            showWinnerPopup(winnerText);
+                        } else if (cpuWinSign === player2.sign) {
+                            player2.score += 1;
+                            setScoreP2(player2.score);
+                            setCountTurn(0);
+                            winnerText = player2.name + " is the winner";
+                            showWinnerPopup(winnerText);
+                        }
+                    } else {
+                        // Check if it's a tie
+                        if (countTurn === 4) {
+                            setCountTurn(0);
+                            showWinnerPopup(tieText);
+                        }
+                    }
+                }
             }
         }
     }
+
 
     function minmax(board: (string | null)[], isMaximizing: boolean, depth: number): number {
         const availableMoves = [];
@@ -164,15 +187,29 @@ function GameCPU() {
 
 
     function resetBoard() {
+        setBoard(['', '', '', '', '', '', '', '', '']);
+        setCountTurn(0);
         const cells = document.getElementsByClassName("cell");
-        for (let i = 0; i < cells.length; i++) {
-            cells[i].textContent = "";
-        }
         const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
-        winnerPopup.style.display = "none";
         const overlay = document.getElementById("overlay") as HTMLElement;
+        const confetti = document.getElementById("conf") as HTMLElement;
+        const player1Img = document.getElementById("player1Img") as HTMLImageElement;
+        const player2Img = document.getElementById("player2Img") as HTMLImageElement;
+        Array.from(cells).forEach((cell) => {
+            const cellElement = cell as HTMLElement;
+            cellElement.style.pointerEvents = "auto";
+            const img = document.getElementById(`image-${cellElement.id}`) as HTMLImageElement;
+            img.src = "";
+            img.alt = "";
+        });
+
+        winnerPopup.style.display = "none";
         overlay.style.display = "none";
+        confetti.style.opacity = '0';
+        player1Img.src = player1.sign;
+        player2Img.src = player2.sign;
     }
+
 
     function createGrid() {
         const cellIds: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
@@ -191,8 +228,8 @@ function GameCPU() {
                                 <CellImage
                                     id={`image-${cellId}`}
                                     className={"cell-image"}
-                                    src=""
-                                    alt=""
+                                    src={board[+cellId] === player1.sign ? player1.sign : board[+cellId] === player2.sign ? player2.sign : ""}
+                                    alt={board[+cellId] === player1.sign ? "X" : board[+cellId] === player2.sign ? "O" : ""}
                                 />
                             </Cell>
                         ))}
@@ -212,7 +249,6 @@ function GameCPU() {
                     <PlayerImg id="player2Img" src={player2.sign} alt="O"/>: {player2.name} - {p2score}
                 </Label>
             </PlayerInfoDiv>
-
 
             <GridContainer>{createGrid()}</GridContainer>
 
@@ -234,3 +270,20 @@ function GameCPU() {
 }
 
 export default GameCPU;
+
+// {board.map((sign) => (
+//     <Cell
+//         key={cellId}
+//         id={cellId}
+//         className={"cell"}
+//         onClick={() => handleCellClick(cellId)}
+//     >
+//         <CellImage
+//             key={`image-${cellId}`}
+//             id={`image-${cellId}`}
+//             className={"cell-image"}
+//             src={sign === 'x' ? path to sisn1: to 2}
+//             alt={}
+//         />
+//     </Cell>
+// ))}

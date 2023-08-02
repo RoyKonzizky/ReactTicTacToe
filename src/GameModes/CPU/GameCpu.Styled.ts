@@ -45,7 +45,7 @@ export const Cell = styled.div`
 export const CellImage = styled.img`
   width: 100%;
   height: 100%;
-  opacity: 0;
+  //opacity: 0;
 `;
 
 export const Label = styled.label`
