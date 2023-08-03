@@ -66,10 +66,7 @@ function GameCPU() {
             let winnerText;
             const tieText = "it's a tie";
             const updatedBoardForPlayer = board.slice();
-            if (board[+cellId] === "") {
-                console.log(board[+cellId]);
-                updatedBoardForPlayer[+cellId] = player1.sign;
-            }
+            updatedBoardForPlayer[+cellId] = player1.sign;
             setBoard(updatedBoardForPlayer);
 
             const cells = document.getElementsByClassName("cell") as HTMLCollection;
@@ -100,21 +97,10 @@ function GameCPU() {
                     setBoard(updatedBoardForBot);
                     setCountTurn(countTurn + 1);
 
-                    let bestMove = -1;
-                    let bestScore = -Infinity;
-                    for (let i = 0; i < updatedBoardForBot.length; i++) {
-                        if (updatedBoardForBot[i] === "") {
-                            updatedBoardForBot[i] = player2.sign;
-                            const score = minmax(updatedBoardForBot, false, 0);
-                            updatedBoardForBot[i] = "";
-                            if (score > bestScore) {
-                                bestScore = score;
-                                bestMove = i;
-                            }
-                        }
-                    }
-                    if (bestMove !== -1) {
-                        updatedBoardForBot[bestMove] = player2.sign;
+                    const bestMoveBot = bestMove(updatedBoardForBot);
+
+                    if (bestMoveBot !== -1) {
+                        updatedBoardForBot[bestMoveBot] = player2.sign;
                         setBoard(updatedBoardForBot);
                     }
 
@@ -144,6 +130,22 @@ function GameCPU() {
         }
     }
 
+    function bestMove(updatedBoardForBot: string[]) {
+        let bestMove = -1;
+        let bestScore = -Infinity;
+        for (let i = 0; i < updatedBoardForBot.length; i++) {
+            if (updatedBoardForBot[i] === "") {
+                updatedBoardForBot[i] = player2.sign;
+                const score = minmax(updatedBoardForBot, false, 0);
+                updatedBoardForBot[i] = "";
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMove = i;
+                }
+            }
+        }
+        return bestMove;
+    }
 
     function minmax(board: (string | null)[], isMaximizing: boolean, depth: number): number {
         const availableMoves = [];
