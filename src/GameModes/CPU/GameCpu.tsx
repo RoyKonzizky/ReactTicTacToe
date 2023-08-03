@@ -62,12 +62,14 @@ function GameCPU() {
     }
 
     function handleCellClick(cellId: string) {
-        const cell = document.getElementById(cellId) as HTMLElement;
-        if (cell.textContent === "") {
+        if (board[+cellId] === "") {
             let winnerText;
             const tieText = "it's a tie";
             const updatedBoardForPlayer = board.slice();
-            updatedBoardForPlayer[+cellId] = player1.sign;
+            if (board[+cellId] === "") {
+                console.log(board[+cellId]);
+                updatedBoardForPlayer[+cellId] = player1.sign;
+            }
             setBoard(updatedBoardForPlayer);
 
             const cells = document.getElementsByClassName("cell") as HTMLCollection;
