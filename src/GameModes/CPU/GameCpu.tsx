@@ -7,9 +7,13 @@ import {
     CustomGrid,
     GridContainer,
     GridWrapper,
-    Label, Overlay,
+    Label,
+    Overlay,
     PlayerImg,
-    PlayerInfoDiv, Popup, PopupButton, PopupHeader
+    PlayerInfoDiv,
+    Popup,
+    PopupButton,
+    PopupHeader
 } from "./GameCpu.Styled.ts";
 import {useState} from "react";
 
@@ -17,7 +21,9 @@ function GameCPU() {
     const [p1score, setScoreP1] = useState(0);
     const [p2score, setScoreP2] = useState(0);
     const [countTurn, setCountTurn] = useState(0);
-    const [board, setBoard] = useState(['','','','','','','','','']);
+    const [board, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
+
+    // const [showImg, setShowImg] = useState('0');
 
     function winCondition(cellValues: (string | null)[]): string | null {
         const winConditions: number[][] = [
@@ -67,7 +73,6 @@ function GameCPU() {
             const cells = document.getElementsByClassName("cell") as HTMLCollection;
             const cellValues = Array.from(cells).map((cell) => cell.textContent);
 
-            // Check if the human player wins or if it's a tie
             const winSign = winCondition(cellValues);
             if (winSign) {
                 if (winSign === player1.sign) {
@@ -84,18 +89,15 @@ function GameCPU() {
                     showWinnerPopup(winnerText);
                 }
             } else {
-                // Check if it's a tie
                 if (countTurn === 4) {
                     setCountTurn(0);
                     showWinnerPopup(tieText);
                 } else {
-                    // It's the computer player's turn
                     const updatedBoardForBot = board.slice();
                     updatedBoardForBot[+cellId] = player1.sign;
                     setBoard(updatedBoardForBot);
                     setCountTurn(countTurn + 1);
 
-                    // Calculate the computer player's move using Minimax algorithm
                     let bestMove = -1;
                     let bestScore = -Infinity;
                     for (let i = 0; i < updatedBoardForBot.length; i++) {
@@ -114,7 +116,6 @@ function GameCPU() {
                         setBoard(updatedBoardForBot);
                     }
 
-                    // Check if the computer player wins or if it's a tie
                     const cpuWinSign = winCondition(updatedBoardForBot);
                     if (cpuWinSign) {
                         if (cpuWinSign === player1.sign) {
@@ -131,7 +132,6 @@ function GameCPU() {
                             showWinnerPopup(winnerText);
                         }
                     } else {
-                        // Check if it's a tie
                         if (countTurn === 4) {
                             setCountTurn(0);
                             showWinnerPopup(tieText);
@@ -161,7 +161,7 @@ function GameCPU() {
             return 0;
         }
 
-        let bestScore:number;
+        let bestScore: number;
 
         if (isMaximizing) {
             bestScore = -Infinity;
@@ -270,20 +270,3 @@ function GameCPU() {
 }
 
 export default GameCPU;
-
-// {board.map((sign) => (
-//     <Cell
-//         key={cellId}
-//         id={cellId}
-//         className={"cell"}
-//         onClick={() => handleCellClick(cellId)}
-//     >
-//         <CellImage
-//             key={`image-${cellId}`}
-//             id={`image-${cellId}`}
-//             className={"cell-image"}
-//             src={sign === 'x' ? path to sisn1: to 2}
-//             alt={}
-//         />
-//     </Cell>
-// ))}
