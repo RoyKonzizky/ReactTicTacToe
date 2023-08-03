@@ -1,5 +1,5 @@
 import {CustomLink, CustomTable, CustomTd, CustomTh, DivLink, TableDiv,} from "./LeaderBoard.Styled.ts";
-import {Player} from "../PlayableCharacters/Player.ts";
+import {Player} from "../Player.ts";
 
 function LeaderBoard() {
     const keys = Object.keys(localStorage);

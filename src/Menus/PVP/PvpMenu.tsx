@@ -1,4 +1,4 @@
-import {player1, player2} from "../../PlayableCharacters/Player.ts";
+import {player1, player2} from "../../Player.ts";
 import {useEffect, useState} from "react";
 import {
     Container,
@@ -29,21 +29,21 @@ function PvpMenu() {
         submitPlayers();
     }, [player1Name, player2Name, player1Sign, player2Sign]);
 
-    const handlePlayer1NameChange = (event) => {
+    const handlePlayer1NameChange = (event: any) => {
         setPlayer1Name(event.target.value);
     };
 
-    const handlePlayer2NameChange = (event) => {
+    const handlePlayer2NameChange = (event: any) => {
         setPlayer2Name(event.target.value);
     };
 
-    const onDropPlayer1Sign = (acceptedFiles) => {
+    const onDropPlayer1Sign = (acceptedFiles: any) => {
         const file = acceptedFiles[0];
         const imageUrl = URL.createObjectURL(file);
         setPlayer1Sign(imageUrl);
     };
 
-    const onDropPlayer2Sign = (acceptedFiles) => {
+    const onDropPlayer2Sign = (acceptedFiles: any) => {
         const file = acceptedFiles[0];
         const imageUrl = URL.createObjectURL(file);
         setPlayer2Sign(imageUrl);
@@ -71,7 +71,7 @@ function PvpMenu() {
     }
 
     function checkInput() {
-        checkIfImageExists(player1.sign, (existsP1) => {
+        checkIfImageExists(player1.sign, (existsP1: any) => {
             if (existsP1) {
                 setP1Check(true);
             } else {
@@ -81,7 +81,7 @@ function PvpMenu() {
             }
         });
 
-        checkIfImageExists(player2.sign, (existsP2) => {
+        checkIfImageExists(player2.sign, (existsP2: any) => {
             if (existsP2) {
                 setP2Check(true);
             } else {
@@ -112,7 +112,7 @@ function PvpMenu() {
         }
     }
 
-    const checkIfImageExists = (url, callback) => {
+    const checkIfImageExists = (url: any, callback: any) => {
         const img = new Image();
         img.src = url;
 

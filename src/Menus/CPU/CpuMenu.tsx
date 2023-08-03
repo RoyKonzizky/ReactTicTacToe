@@ -1,4 +1,4 @@
-import {player1, player2} from "../../PlayableCharacters/Player.ts";
+import {player1, player2} from "../../Player.ts";
 import {useEffect, useState} from "react";
 import {
     Container,

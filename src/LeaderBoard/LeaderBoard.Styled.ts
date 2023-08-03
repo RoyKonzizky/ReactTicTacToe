@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 export const CustomTable = styled.table`
   border: 2px solid forestgreen;
-  width: 10vw;
+  width: 100%;
   height: 20vh;
   margin-bottom: 10px;
 `
@@ -29,7 +29,7 @@ export const TableDiv = styled.div`
 export const CustomLink = styled(Link)`
   pointer-events: auto;
   color: white;
-  padding: 1vh ;
+  padding: 1vh;
   background-color: #4285f4;
   text-decoration: none;
   border-radius: 4px;
