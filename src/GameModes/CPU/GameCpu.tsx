@@ -22,7 +22,10 @@ function GameCPU() {
     const [p2score, setScoreP2] = useState(0);
     const [countTurn, setCountTurn] = useState(0);
     const [board, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
-    const [showImg, setShowImg] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    const [showImgArray, setShowImgArray] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    const [winnerPopUpDisplay, setWinnerPopUpDisplay] = useState('none');
+    const [overlayDisplay, setOverlayDisplay] = useState('none');
+    const [confettiOpacity, setConfettiOpacity] = useState(0);
 
     function winCondition(cellValues: (string | null)[]): string | null {
         const winConditions: number[][] = [
@@ -50,14 +53,11 @@ function GameCPU() {
     }
 
     function showWinnerPopup(winnerText: string): void {
-        const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
-        const overlay = document.getElementById("overlay") as HTMLElement;
+        setWinnerPopUpDisplay('block');
+        setOverlayDisplay('block');
+        setConfettiOpacity(1);
         const winnerTextElement = document.getElementById("winnerText") as HTMLElement;
-        const confetti = document.getElementById("conf") as HTMLElement;
         winnerTextElement.innerText = winnerText;
-        winnerPopup.style.display = "block";
-        overlay.style.display = "block";
-        confetti.style.opacity = '1';
     }
 
     function handleCellClick(cellId: string) {
@@ -68,9 +68,9 @@ function GameCPU() {
             updatedBoardForPlayer[+cellId] = player1.sign;
             setBoard(updatedBoardForPlayer);
 
-            const updatedBoardForImgs = showImg.slice();
+            const updatedBoardForImgs = showImgArray.slice();
             updatedBoardForImgs[+cellId] = 1;
-            setShowImg(updatedBoardForImgs);
+            setShowImgArray(updatedBoardForImgs);
 
 
             const updatedBoardForBot = board.slice();
@@ -86,7 +86,7 @@ function GameCPU() {
 
                 const updatedBoardForImgsForBot = updatedBoardForImgs.slice();
                 updatedBoardForImgsForBot[bestMoveBot] = 1;
-                setShowImg(updatedBoardForImgsForBot);
+                setShowImgArray(updatedBoardForImgsForBot);
             }
 
             const cpuWinSign = winCondition(updatedBoardForBot);
@@ -109,7 +109,6 @@ function GameCPU() {
                 setCountTurn(0);
                 showWinnerPopup(tieText);
             }
-            console.log(showImg);
         }
     }
 
@@ -175,14 +174,12 @@ function GameCPU() {
 
     function resetBoard() {
         setBoard(['', '', '', '', '', '', '', '', '']);
-        setShowImg([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+        setShowImgArray([0, 0, 0, 0, 0, 0, 0, 0, 0]);
         setCountTurn(0);
+        setWinnerPopUpDisplay('none');
+        setOverlayDisplay('none');
+        setConfettiOpacity(0);
         const cells = document.getElementsByClassName("cell");
-        const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
-        const overlay = document.getElementById("overlay") as HTMLElement;
-        const confetti = document.getElementById("conf") as HTMLElement;
-        const player1Img = document.getElementById("player1Img") as HTMLImageElement;
-        const player2Img = document.getElementById("player2Img") as HTMLImageElement;
         Array.from(cells).forEach((cell) => {
             const cellElement = cell as HTMLElement;
             cellElement.style.pointerEvents = "auto";
@@ -190,12 +187,6 @@ function GameCPU() {
             img.src = "";
             img.alt = "";
         });
-
-        winnerPopup.style.display = "none";
-        overlay.style.display = "none";
-        confetti.style.opacity = '0';
-        player1Img.src = player1.sign;
-        player2Img.src = player2.sign;
     }
 
 
@@ -217,8 +208,7 @@ function GameCPU() {
                                     className={"cell-image"}
                                     src={board[+cellId] === player1.sign ? player1.sign : board[+cellId] === player2.sign ? player2.sign : ""}
                                     alt={board[+cellId] === player1.sign ? "X" : board[+cellId] === player2.sign ? "O" : ""}
-                                    style={{opacity: showImg[+cellId]}}
-                                    // style={{opacity: value = showImg[+cellId] === 0 ? 1 : showImg[+cellId] === 0 ? 1 : 1}}
+                                    style={{opacity: showImgArray[+cellId]}}
                                 />
                             </Cell>
                         ))}
@@ -241,11 +231,15 @@ function GameCPU() {
 
             <GridContainer>{createGrid()}</GridContainer>
 
-            <Overlay id="overlay">
-                <Confetti id="conf"/>
+            <Overlay id="overlay"
+                     style={{display: overlayDisplay}}>
+                <Confetti id="conf"
+                          style={{opacity: confettiOpacity}}/>
             </Overlay>
 
-            <Popup id="winnerPopup">
+            <Popup
+                style={{display: winnerPopUpDisplay}}
+            >
                 <PopupHeader id="winnerText"/>
                 <Link to="/">
                     <PopupButton id="retMenuButton">back to menu</PopupButton>
