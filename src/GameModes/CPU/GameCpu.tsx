@@ -22,8 +22,7 @@ function GameCPU() {
     const [p2score, setScoreP2] = useState(0);
     const [countTurn, setCountTurn] = useState(0);
     const [board, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
-
-    // const [showImg, setShowImg] = useState('0');
+    const [showImg, setShowImg] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
     function winCondition(cellValues: (string | null)[]): string | null {
         const winConditions: number[][] = [
@@ -53,12 +52,12 @@ function GameCPU() {
     function showWinnerPopup(winnerText: string): void {
         const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
         const overlay = document.getElementById("overlay") as HTMLElement;
-        const winnerTextElement = document.getElementById(
-            "winnerText",
-        ) as HTMLElement;
+        const winnerTextElement = document.getElementById("winnerText") as HTMLElement;
+        const confetti = document.getElementById("conf") as HTMLElement;
         winnerTextElement.innerText = winnerText;
         winnerPopup.style.display = "block";
         overlay.style.display = "block";
+        confetti.style.opacity = '1';
     }
 
     function handleCellClick(cellId: string) {
@@ -68,7 +67,12 @@ function GameCPU() {
             const updatedBoardForPlayer = board.slice();
             updatedBoardForPlayer[+cellId] = player1.sign;
             setBoard(updatedBoardForPlayer);
-            
+
+            const updatedBoardForImgs = showImg.slice();
+            updatedBoardForImgs[+cellId] = 1;
+            setShowImg(updatedBoardForImgs);
+
+
             const updatedBoardForBot = board.slice();
             updatedBoardForBot[+cellId] = player1.sign;
             setBoard(updatedBoardForBot);
@@ -79,6 +83,10 @@ function GameCPU() {
             if (bestMoveBot !== -1) {
                 updatedBoardForBot[bestMoveBot] = player2.sign;
                 setBoard(updatedBoardForBot);
+
+                const updatedBoardForImgsForBot = updatedBoardForImgs.slice();
+                updatedBoardForImgsForBot[bestMoveBot] = 1;
+                setShowImg(updatedBoardForImgsForBot);
             }
 
             const cpuWinSign = winCondition(updatedBoardForBot);
@@ -96,12 +104,12 @@ function GameCPU() {
                     winnerText = player2.name + " is the winner";
                     showWinnerPopup(winnerText);
                 }
-            } else {
-                if (countTurn === 4) {
-                    setCountTurn(0);
-                    showWinnerPopup(tieText);
-                }
             }
+            if (countTurn === 4) {
+                setCountTurn(0);
+                showWinnerPopup(tieText);
+            }
+            console.log(showImg);
         }
     }
 
@@ -167,6 +175,7 @@ function GameCPU() {
 
     function resetBoard() {
         setBoard(['', '', '', '', '', '', '', '', '']);
+        setShowImg([0, 0, 0, 0, 0, 0, 0, 0, 0]);
         setCountTurn(0);
         const cells = document.getElementsByClassName("cell");
         const winnerPopup = document.getElementById("winnerPopup") as HTMLElement;
@@ -192,7 +201,6 @@ function GameCPU() {
 
     function createGrid() {
         const cellIds: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
-
         return (
             <GridContainer>
                 <GridWrapper>
@@ -209,6 +217,8 @@ function GameCPU() {
                                     className={"cell-image"}
                                     src={board[+cellId] === player1.sign ? player1.sign : board[+cellId] === player2.sign ? player2.sign : ""}
                                     alt={board[+cellId] === player1.sign ? "X" : board[+cellId] === player2.sign ? "O" : ""}
+                                    style={{opacity: showImg[+cellId]}}
+                                    // style={{opacity: value = showImg[+cellId] === 0 ? 1 : showImg[+cellId] === 0 ? 1 : 1}}
                                 />
                             </Cell>
                         ))}
