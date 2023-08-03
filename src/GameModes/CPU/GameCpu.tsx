@@ -68,19 +68,28 @@ function GameCPU() {
             const updatedBoardForPlayer = board.slice();
             updatedBoardForPlayer[+cellId] = player1.sign;
             setBoard(updatedBoardForPlayer);
+            
+            const updatedBoardForBot = board.slice();
+            updatedBoardForBot[+cellId] = player1.sign;
+            setBoard(updatedBoardForBot);
+            setCountTurn(countTurn + 1);
 
-            const cells = document.getElementsByClassName("cell") as HTMLCollection;
-            const cellValues = Array.from(cells).map((cell) => cell.textContent);
+            const bestMoveBot = bestMove(updatedBoardForBot);
 
-            const winSign = winCondition(cellValues);
-            if (winSign) {
-                if (winSign === player1.sign) {
+            if (bestMoveBot !== -1) {
+                updatedBoardForBot[bestMoveBot] = player2.sign;
+                setBoard(updatedBoardForBot);
+            }
+
+            const cpuWinSign = winCondition(updatedBoardForBot);
+            if (cpuWinSign) {
+                if (cpuWinSign === player1.sign) {
                     player1.score += 1;
                     setScoreP1(player1.score);
                     setCountTurn(0);
                     winnerText = player1.name + " is the winner";
                     showWinnerPopup(winnerText);
-                } else if (winSign === player2.sign) {
+                } else if (cpuWinSign === player2.sign) {
                     player2.score += 1;
                     setScoreP2(player2.score);
                     setCountTurn(0);
@@ -91,40 +100,6 @@ function GameCPU() {
                 if (countTurn === 4) {
                     setCountTurn(0);
                     showWinnerPopup(tieText);
-                } else {
-                    const updatedBoardForBot = board.slice();
-                    updatedBoardForBot[+cellId] = player1.sign;
-                    setBoard(updatedBoardForBot);
-                    setCountTurn(countTurn + 1);
-
-                    const bestMoveBot = bestMove(updatedBoardForBot);
-
-                    if (bestMoveBot !== -1) {
-                        updatedBoardForBot[bestMoveBot] = player2.sign;
-                        setBoard(updatedBoardForBot);
-                    }
-
-                    const cpuWinSign = winCondition(updatedBoardForBot);
-                    if (cpuWinSign) {
-                        if (cpuWinSign === player1.sign) {
-                            player1.score += 1;
-                            setScoreP1(player1.score);
-                            setCountTurn(0);
-                            winnerText = player1.name + " is the winner";
-                            showWinnerPopup(winnerText);
-                        } else if (cpuWinSign === player2.sign) {
-                            player2.score += 1;
-                            setScoreP2(player2.score);
-                            setCountTurn(0);
-                            winnerText = player2.name + " is the winner";
-                            showWinnerPopup(winnerText);
-                        }
-                    } else {
-                        if (countTurn === 4) {
-                            setCountTurn(0);
-                            showWinnerPopup(tieText);
-                        }
-                    }
                 }
             }
         }
