@@ -26,6 +26,7 @@ function GameCPU() {
     const [winnerPopUpDisplay, setWinnerPopUpDisplay] = useState('none');
     const [overlayDisplay, setOverlayDisplay] = useState('none');
     const [confettiOpacity, setConfettiOpacity] = useState(0);
+    const [winnerText, setWinnerText] = useState("");
 
     function winCondition(cellValues: (string | null)[]): string | null {
         const winConditions: number[][] = [
@@ -56,8 +57,7 @@ function GameCPU() {
         setWinnerPopUpDisplay('block');
         setOverlayDisplay('block');
         setConfettiOpacity(1);
-        const winnerTextElement = document.getElementById("winnerText") as HTMLElement;
-        winnerTextElement.innerText = winnerText;
+        setWinnerText(winnerText);
     }
 
     function handleCellClick(cellId: string) {
@@ -179,14 +179,6 @@ function GameCPU() {
         setWinnerPopUpDisplay('none');
         setOverlayDisplay('none');
         setConfettiOpacity(0);
-        const cells = document.getElementsByClassName("cell");
-        Array.from(cells).forEach((cell) => {
-            const cellElement = cell as HTMLElement;
-            cellElement.style.pointerEvents = "auto";
-            const img = document.getElementById(`image-${cellElement.id}`) as HTMLImageElement;
-            img.src = "";
-            img.alt = "";
-        });
     }
 
 
@@ -240,7 +232,7 @@ function GameCPU() {
             <Popup
                 style={{display: winnerPopUpDisplay}}
             >
-                <PopupHeader id="winnerText"/>
+                <PopupHeader>{winnerText}</PopupHeader>
                 <Link to="/">
                     <PopupButton id="retMenuButton">back to menu</PopupButton>
                 </Link>
