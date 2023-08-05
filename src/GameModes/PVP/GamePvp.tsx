@@ -197,10 +197,3 @@ function GamePvp() {
 }
 
 export default GamePvp;
-player1;
-player2;
-
-
-//work with figma
-//upload images
-//maybe with react dropzone
