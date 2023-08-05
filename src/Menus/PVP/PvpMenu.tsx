@@ -12,7 +12,7 @@ import {
     LinkDiv,
     PlayerDiv,
     PlayerLabel
-} from "./PvpMenu.Styled.ts";
+} from "../../Styles/PvpMenu.Styled.ts";
 import Dropzone from "react-dropzone";
 
 function PvpMenu() {

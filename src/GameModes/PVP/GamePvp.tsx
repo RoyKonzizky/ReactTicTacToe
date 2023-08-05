@@ -19,7 +19,7 @@ import {
     Popup,
     PopupButton,
     PopupHeader,
-} from "./GamePvp.Styled.ts";
+} from "../../Styles/GamePvp.Styled.ts";
 
 
 function GamePvp() {

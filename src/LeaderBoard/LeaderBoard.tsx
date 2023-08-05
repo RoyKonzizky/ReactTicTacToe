@@ -1,4 +1,4 @@
-import {CustomLink, CustomTable, CustomTd, CustomTh, DivLink, TableDiv,} from "./LeaderBoard.Styled.ts";
+import {CustomLink, CustomTable, CustomTd, CustomTh, DivLink, TableDiv,} from "../Styles/LeaderBoard.Styled.ts";
 import {Player} from "../Player.ts";
 
 function LeaderBoard() {

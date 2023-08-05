@@ -12,7 +12,7 @@ import {
     LinkDiv,
     PlayerDiv,
     PlayerLabel
-} from "./CpuMenu.Styled.ts";
+} from "../../Styles/CpuMenu.Styled.ts";
 import Dropzone from "react-dropzone";
 
 function CpuMenu() {
