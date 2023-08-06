@@ -56,7 +56,11 @@ function GameCPU() {
     function showWinnerPopup(winnerText: string): void {
         setWinnerPopUpDisplay('block');
         setOverlayDisplay('block');
-        setConfettiOpacity(1);
+        if (winnerText === "it's a tie") {
+            setConfettiOpacity(0);
+        } else {
+            setConfettiOpacity(1);
+        }
         setWinnerText(winnerText);
     }
 
@@ -88,14 +92,14 @@ function GameCPU() {
                 setShowImgArray(updatedBoardForImgsForBot);
             }
 
-            const cpuWinSign = winCondition(updatedBoardForBot);
-            if (cpuWinSign) {
-                if (cpuWinSign === player1.sign) {
+            const winSign = winCondition(updatedBoardForBot);
+            if (winSign) {
+                if (winSign === player1.sign) {
                     player1.score += 1;
                     setScoreP1(player1.score);
                     setCountTurn(0);
                     showWinnerPopup(player1.name + " is the winner");
-                } else if (cpuWinSign === player2.sign) {
+                } else if (winSign === player2.sign) {
                     player2.score += 1;
                     setScoreP2(player2.score);
                     setCountTurn(0);
