@@ -19,7 +19,7 @@ import {
     Popup,
     PopupButton,
     PopupHeader,
-} from "../../Styles/GamePvp.Styled.ts";
+} from "../../Styles/GameModes/PVP/GamePvp.Styled.ts";
 
 
 function GamePvp() {
@@ -153,46 +153,46 @@ function GamePvp() {
     }
 
     return (
-    <div>
-        <PlayerInfoDiv>
-            <Label id="player1Label">
-                <PlayerImg id="player1Img" src={player1.sign} alt="X"/>: {player1.name} - {p1score}
-            </Label>
-            <Label id="player2Label">
-                <PlayerImg id="player2Img" src={player2.sign} alt="O"/>: {player2.name} - {p2score}
-            </Label>
-        </PlayerInfoDiv>
+        <div>
+            <PlayerInfoDiv>
+                <Label id="player1Label">
+                    <PlayerImg id="player1Img" src={player1.sign} alt="X"/>: {player1.name} - {p1score}
+                </Label>
+                <Label id="player2Label">
+                    <PlayerImg id="player2Img" src={player2.sign} alt="O"/>: {player2.name} - {p2score}
+                </Label>
+            </PlayerInfoDiv>
 
-        <GridContainer>{createGrid()}</GridContainer>
+            <GridContainer>{createGrid()}</GridContainer>
 
-        <CurrentLabelDiv>
-            <CurrLabelName>
-                <Label id={"currentPlayer"}>current player: {currentName}</Label>
-            </CurrLabelName>
-            <CurrLabelSign>
-                <Label id={"currentSign"}>current sign: <ImgLbl id="imgLbl" src={currentSign} alt=""/></Label>
-            </CurrLabelSign>
-        </CurrentLabelDiv>
+            <CurrentLabelDiv>
+                <CurrLabelName>
+                    <Label id={"currentPlayer"}>current player: {currentName}</Label>
+                </CurrLabelName>
+                <CurrLabelSign>
+                    <Label id={"currentSign"}>current sign: <ImgLbl id="imgLbl" src={currentSign} alt=""/></Label>
+                </CurrLabelSign>
+            </CurrentLabelDiv>
 
-        <Overlay id="overlay"
-                 style={{display: overlayDisplay}}>
-            <Confetti id="conf"
-                      style={{opacity: confettiOpacity}}/>
-        </Overlay>
+            <Overlay id="overlay"
+                     style={{display: overlayDisplay}}>
+                <Confetti id="conf"
+                          style={{opacity: confettiOpacity}}/>
+            </Overlay>
 
-        <Popup style={{display: winnerPopUpDisplay}}>
-            <PopupHeader id="winnerText">{winnerText}</PopupHeader>
-            <Link to="/leaderboard">
-                <PopupButton id="leadboardButton" onClick={addToLeaderboard}>leaderboard</PopupButton>
-            </Link>
-            <Link to="/">
-                <PopupButton id="retMenuButton" onClick={addToLeaderboard}>back to menu</PopupButton>
-            </Link>
-            <PopupButton id="boardReseter" onClick={resetBoard}>
-                reset grid
-            </PopupButton>
-        </Popup>
-    </div>
+            <Popup style={{display: winnerPopUpDisplay}}>
+                <PopupHeader id="winnerText">{winnerText}</PopupHeader>
+                <Link to="/leaderboard">
+                    <PopupButton id="leadboardButton" onClick={addToLeaderboard}>leaderboard</PopupButton>
+                </Link>
+                <Link to="/">
+                    <PopupButton id="retMenuButton" onClick={addToLeaderboard}>back to menu</PopupButton>
+                </Link>
+                <PopupButton id="boardReseter" onClick={resetBoard}>
+                    reset grid
+                </PopupButton>
+            </Popup>
+        </div>
     );
 }
 

@@ -14,7 +14,7 @@ import {
     Popup,
     PopupButton,
     PopupHeader
-} from "../../Styles/GameCpu.Styled.ts";
+} from "../../Styles/GameModes/CPU/GameCpu.Styled.ts";
 import {useState} from "react";
 
 function GameCPU() {
