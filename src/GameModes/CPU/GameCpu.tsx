@@ -62,7 +62,6 @@ function GameCPU() {
 
     function handleCellClick(cellId: string) {
         if (board[+cellId] === "") {
-            let winnerText;
             const tieText = "it's a tie";
             const updatedBoardForPlayer = board.slice();
             updatedBoardForPlayer[+cellId] = player1.sign;
@@ -95,14 +94,12 @@ function GameCPU() {
                     player1.score += 1;
                     setScoreP1(player1.score);
                     setCountTurn(0);
-                    winnerText = player1.name + " is the winner";
-                    showWinnerPopup(winnerText);
+                    showWinnerPopup(player1.name + " is the winner");
                 } else if (cpuWinSign === player2.sign) {
                     player2.score += 1;
                     setScoreP2(player2.score);
                     setCountTurn(0);
-                    winnerText = player2.name + " is the winner";
-                    showWinnerPopup(winnerText);
+                    showWinnerPopup(player2.name + " is the winner");
                 }
             }
             if (countTurn === 4) {
