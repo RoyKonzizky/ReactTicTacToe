@@ -49,7 +49,7 @@ function PvpMenu() {
         setPlayer2Sign(imageUrl);
     };
 
-    function submitPlayers() {
+    const submitPlayers = () => {
         player1.name = player1Name;
         player2.name = player2Name;
 
@@ -68,9 +68,9 @@ function PvpMenu() {
             setP2Check(true);
         }
         checkInput();
-    }
+    };
 
-    function checkInput() {
+    const checkInput = () => {
         checkIfImageExists(player1.sign, (existsP1: any) => {
             if (existsP1) {
                 setP1Check(true);
@@ -106,7 +106,7 @@ function PvpMenu() {
         }
     }
 
-    function showLabel() {
+    const showLabel = () => {
         if (toValue === "" && !error) {
             setError("input not entered");
         }

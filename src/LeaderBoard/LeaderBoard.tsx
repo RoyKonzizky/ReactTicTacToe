@@ -24,7 +24,7 @@ function LeaderBoard() {
 
     playersData.sort((a, b) => b.score - a.score);
 
-    function createBoard() {
+    const createLeaderBoard = () => {
         if (playersData.length > 0) {
             return (
                 playersData.map((player: Player, index) => (
@@ -37,7 +37,7 @@ function LeaderBoard() {
         } else {
             return null;
         }
-    }
+    };
 
     return (
         <div>
@@ -50,7 +50,7 @@ function LeaderBoard() {
                     </tr>
                     </thead>
                     <tbody>
-                    {createBoard()}
+                    {createLeaderBoard()}
                     </tbody>
                 </CustomTable>
             </TableDiv>

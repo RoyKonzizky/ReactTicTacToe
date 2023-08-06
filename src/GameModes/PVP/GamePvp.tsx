@@ -35,7 +35,7 @@ function GamePvp() {
     const [showImgArray, setShowImgArray] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     const [winnerPopUpDisplay, setWinnerPopUpDisplay] = useState('none');
 
-    function winCondition(cellValues: (string | null)[]): string | null {
+    const winCondition = (cellValues: (string | null)[]) => {
         const winConditions: number[][] = [
             [0, 1, 2],
             [3, 4, 5],
@@ -58,9 +58,9 @@ function GamePvp() {
             }
         }
         return "";
-    }
+    };
 
-    function handleCellClick(cellId: string) {
+    const handleCellClick = (cellId: string) => {
         if (board[+cellId] === "") {
             const updatedBoardForPlayer = board.slice();
             updatedBoardForPlayer[+cellId] = currentSign;
@@ -101,21 +101,25 @@ function GamePvp() {
                 setCurrentSign(currentSign === player1.sign ? player2.sign : player1.sign);
             }
         }
-    }
+    };
 
-    function showWinnerPopup(winnerText: string): void {
+    const showWinnerPopup = (winnerText: string) => {
         setWinnerPopUpDisplay('block');
         setOverlayDisplay('block');
-        setConfettiOpacity(1);
+        if (winnerText === "it's a tie") {
+            setConfettiOpacity(0);
+        } else {
+            setConfettiOpacity(1);
+        }
         setWinnerText(winnerText);
-    }
+    };
 
-    function addToLeaderboard() {
+    const addToLeaderboard = () => {
         localStorage.setItem(player1.name, String(p1score));
         localStorage.setItem(player2.name, String(p2score));
     }
 
-    function resetBoard() {
+    const resetBoard = () => {
         setBoard(['', '', '', '', '', '', '', '', '']);
         setShowImgArray([0, 0, 0, 0, 0, 0, 0, 0, 0]);
         setCountTurn(0);
@@ -124,7 +128,7 @@ function GamePvp() {
         setConfettiOpacity(0);
     }
 
-    function createGrid() {
+    const createGrid = () => {
         const cellIds: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
         return (
             <GridContainer>

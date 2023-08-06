@@ -38,7 +38,7 @@ function CpuMenu() {
         setPlayer1Sign(imageUrl);
     };
 
-    function submitPlayers() {
+    const submitPlayers = () => {
         player1.name = player1Name;
         player2.name = player2Name;
 
@@ -55,7 +55,7 @@ function CpuMenu() {
         checkInput();
     }
 
-    function checkInput() {
+    const checkInput = () => {
         checkIfImageExists(player1.sign, (existsP1: any) => {
             if (existsP1) {
                 setP1Check(true);
@@ -81,7 +81,7 @@ function CpuMenu() {
         }
     }
 
-    function showLabel() {
+    const showLabel = () => {
         if (toValue === "" && !error) {
             setError("input not entered");
         }

@@ -28,7 +28,7 @@ function GameCPU() {
     const [confettiOpacity, setConfettiOpacity] = useState(0);
     const [winnerText, setWinnerText] = useState("");
 
-    function winCondition(cellValues: (string | null)[]): string | null {
+    const winCondition = (cellValues: (string | null)[]) => {
         const winConditions: number[][] = [
             [0, 1, 2],
             [3, 4, 5],
@@ -51,9 +51,9 @@ function GameCPU() {
             }
         }
         return "";
-    }
+    };
 
-    function showWinnerPopup(winnerText: string): void {
+    const showWinnerPopup = (winnerText: string) => {
         setWinnerPopUpDisplay('block');
         setOverlayDisplay('block');
         if (winnerText === "it's a tie") {
@@ -64,7 +64,7 @@ function GameCPU() {
         setWinnerText(winnerText);
     }
 
-    function handleCellClick(cellId: string) {
+    const handleCellClick = (cellId: string) => {
         if (board[+cellId] === "") {
             const tieText = "it's a tie";
             const updatedBoardForPlayer = board.slice();
@@ -111,9 +111,9 @@ function GameCPU() {
                 showWinnerPopup(tieText);
             }
         }
-    }
+    };
 
-    function bestMove(updatedBoardForBot: string[]) {
+    const bestMove = (updatedBoardForBot: string[]) => {
         let bestMove = -1;
         let bestScore = -Infinity;
         for (let i = 0; i < updatedBoardForBot.length; i++) {
@@ -130,7 +130,7 @@ function GameCPU() {
         return bestMove;
     }
 
-    function minmax(board: (string | null)[], isMaximizing: boolean, depth: number): number {
+    const minmax = (board: (string | null)[], isMaximizing: boolean, depth: number) => {
         const availableMoves = [];
         for (let i = 0; i < board.length; i++) {
             if (board[i] === "") {
@@ -170,21 +170,21 @@ function GameCPU() {
             }
         }
         return bestScore;
-    }
+    };
 
 
-    function resetBoard() {
+    const resetBoard = () => {
         setBoard(['', '', '', '', '', '', '', '', '']);
         setShowImgArray([0, 0, 0, 0, 0, 0, 0, 0, 0]);
         setCountTurn(0);
+        setConfettiOpacity(0);
         setWinnerPopUpDisplay('none');
         setOverlayDisplay('none');
-        setConfettiOpacity(0);
     }
 
 
-    function createGrid() {
-        const cellIds: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
+    const createGrid = () => {
+        const cellIds = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
         return (
             <GridContainer>
                 <GridWrapper>
