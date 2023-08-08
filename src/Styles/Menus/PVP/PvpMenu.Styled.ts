@@ -17,7 +17,7 @@ export const LinkDiv = styled.div`
   justify-content: center;
   display: inline-block;
   color: white;
-  margin-top: var(--margin-unit);
+  margin-top: 10px;
 `
 
 export const DivLinkLabel = styled.div`

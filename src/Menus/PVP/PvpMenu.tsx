@@ -17,7 +17,8 @@ import Dropzone from "react-dropzone";
 
 function PvpMenu() {
     const [toValue, setToValue] = useState('');
-    const [error, setError] = useState('');
+    const [error1, setError1] = useState('');
+    const [error2, setError2] = useState('');
     const [p1Check, setP1Check] = useState(false);
     const [p2Check, setP2Check] = useState(false);
     const [player1Name, setPlayer1Name] = useState('');
@@ -77,7 +78,7 @@ function PvpMenu() {
             } else {
                 setP1Check(false);
                 setToValue('');
-                setError("player1, change image path");
+                setError1("player1, change image path");
             }
         });
 
@@ -87,28 +88,30 @@ function PvpMenu() {
             } else {
                 setP2Check(false);
                 setToValue('');
-                setError("player2, change image path");
+                setError2("player2, change image path");
             }
         });
 
         if (player1.name.length === 0) {
-            setError("player1, add name");
+            setError1("player1, add name");
             setToValue('');
         }
         if (player2.name.length === 0) {
-            setError("player2, add name");
+            setError2("player2, add name");
             setToValue('');
         }
 
         if (player1.name.length > 0 && player2.name.length > 0 && p1Check && p2Check) {
             setToValue('/gamepvp');
-            setError('');
+            setError1('');
+            setError2('');
         }
     }
 
     const showLabel = () => {
-        if (toValue === "" && !error) {
-            setError("input not entered");
+        if (toValue === "" && !error1 && !error2) {
+            setError1("input not entered");
+            setError2("input not entered");
         }
     }
 
@@ -140,6 +143,13 @@ function PvpMenu() {
                         onChange={handlePlayer1NameChange}
                         value={player1Name}
                     />
+
+                    <LabelDiv>
+                        <ErrorLabel className={error1 ? "errorLabel visible" : "errorLabel"}>
+                            {error1}
+                        </ErrorLabel>
+                    </LabelDiv>
+
                     <div>
                         <CustomHeader>Player 1's Sign:</CustomHeader>
                         <div>
@@ -164,6 +174,13 @@ function PvpMenu() {
                         onChange={handlePlayer2NameChange}
                         value={player2Name}
                     />
+
+                    <LabelDiv>
+                        <ErrorLabel className={error2 ? "errorLabel visible" : "errorLabel"}>
+                            {error2}
+                        </ErrorLabel>
+                    </LabelDiv>
+
                     <div>
                         <CustomHeader>Player 2's Sign:</CustomHeader>
                         <div>
@@ -188,12 +205,6 @@ function PvpMenu() {
                     </CustomLink>
                 </LinkDiv>
 
-                <LabelDiv>
-                    <ErrorLabel className={error ? "errorLabel visible" : "errorLabel"}>
-                        {error}
-                    </ErrorLabel>
-                </LabelDiv>
-
                 <LinkDiv className="linkDiv">
                     <CustomLink to={"/"}>
                         Mode Selection
@@ -205,4 +216,3 @@ function PvpMenu() {
 }
 
 export default PvpMenu;
-//TODO player specific warnings
